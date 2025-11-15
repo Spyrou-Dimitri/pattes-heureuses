@@ -1,5 +1,9 @@
 @import 'tailwindcss';
+@import "./burger.css";
 @import '../../vendor/livewire/flux/dist/flux.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -7,6 +11,7 @@
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
 @custom-variant dark (&:where(.dark, .dark *));
+
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -52,7 +57,7 @@
 }
 
 [data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+    @apply !mb-0 !leading-tight;
 }
 
 input:focus[data-flux-control],
@@ -64,3 +69,72 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+
+@theme {
+
+    --color-white-break: oklch(0.98 0.002 95);
+    --color-main-blue: oklch(0.74 0.13 184);
+    --color-orange-cta: oklch(0.73 0.21 57);
+
+    --shadow-black-color: oklch(0 0 0 / 0.16);
+    --shadow-black-sm: 0px 1px 4px var(--shadow-black-color);
+
+    --shadow-color: oklch(0 0 0 / 0.16);
+    --shadow-lg: 0px 8px 24px var(--shadow-color);
+    --shadow-main-blue-lg: 0px 8px 16px oklch(from var(--color-main-blue) l c h / 0.2);
+
+    --font-poppins: "Poppins", sans-serif;
+    --font-fredoka: "Fredoka", sans-serif;
+}
+
+.nav-link {
+    @apply text-3xl font-fredoka relative;
+
+    &:before {
+        content: '';
+        @apply w-full h-0.5 absolute bottom-0 left-0 bg-orange-cta origin-center scale-x-0 rounded-lg
+    }
+    &:hover {
+        @apply font-semibold text-orange-cta
+    }
+
+    &:hover:before {
+        @apply scale-100 duration-400
+    }
+
+    @apply md:text-xl
+}
+
+
+
+
+
+strong {
+    @apply text-orange-cta
+}
+
+
+
+.cta-primary {
+    @apply font-fredoka  text-xl text-white bg-orange-cta rounded-lg px-5 py-4 font-semibold duration-400 border-2 border-orange-cta;
+
+    &:hover {
+        @apply bg-white text-orange-cta  duration-400;
+    }
+
+
+}
+img {
+    width: 100%;
+    height: auto;
+}
+
+.bg-paws {
+    background-image: url('../../public/img/background.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.bg-white-break {
+    background: #F9F4F4;
+}

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('client.home');
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
@@ -33,3 +33,7 @@ Route::middleware(['auth'])->group(function () {
         )
         ->name('two-factor.show');
 });
+
+Route::view('about', 'client.about')->name('about');
+Route::view('animals', 'client.animals')->name('animals');
+Route::view('contact', 'client.contact')->name('contact');

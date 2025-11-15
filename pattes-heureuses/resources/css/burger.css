@@ -1,0 +1,40 @@
+@import 'tailwindcss';
+@import '../../vendor/livewire/flux/dist/flux.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
+@source '../../vendor/livewire/flux/stubs/**/*.blade.php';
+
+
+#burger__button {
+    @apply absolute top-1/2 right-[30px] w-[40px] h-[40px] m-0 cursor-pointer appearance-none z-50 transform -translate-y-1/2;
+
+    @apply md:hidden;
+
+    &:checked ~ .nav__lists {
+        @apply translate-x-0 transition-transform duration-300 ease-in-out;
+    }
+    &:checked ~ .burger__wrapper {
+        @apply duration-300 ease-in-out bg-orange-cta
+    }
+
+    &:checked .burger__wrapper .burger__wrapper__lines {
+        @apply bg-white
+    }
+
+}
+.burger__wrapper {
+
+    @apply absolute top-1/2 right-[30px] p-2.5 flex flex-col gap-1.5 rounded-[5px] cursor-pointer z-40 transform -translate-y-1/2 border-1 border-orange-cta bg-white duration-300 ease-in-out;
+
+    @apply md:hidden;
+
+    .burger__wrapper__lines {
+        content: "";
+        @apply block w-[22px] min-h-[2px] rounded-lg bg-orange-cta;
+    }
+
+}
