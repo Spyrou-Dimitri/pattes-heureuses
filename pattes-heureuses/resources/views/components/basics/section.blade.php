@@ -1,6 +1,7 @@
 @props(
     [
-        'bg'=> ''
+        'bg'=> '',
+        'py'=> ''
 ]
 )
 @php
@@ -10,10 +11,17 @@
         'paws' => "bg-paws",
         ];
 
-    $bg_variant = $bg_variants[$bg] ?? $bg_variants['primary']
+    $bg_variant = $bg_variants[$bg] ?? $bg_variants['primary'];
+
+$py_variants = [
+            'landing' => 'py-8 md:py-12',
+        'basic' => 'py-8 md: py-24',
+        ];
+    $py_variant = $py_variants[$py] ?? $py_variants['basic'];
+
 @endphp
 
 
-<section class="py-8 md:py-12 {{$bg_variant}}">
+<section class="{{$py_variant}} {{$bg_variant}}">
     {{$slot}}
 </section>

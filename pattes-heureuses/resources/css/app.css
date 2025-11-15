@@ -85,6 +85,7 @@ select:focus[data-flux-control] {
 
     --font-poppins: "Poppins", sans-serif;
     --font-fredoka: "Fredoka", sans-serif;
+
 }
 
 .nav-link {
@@ -94,6 +95,7 @@ select:focus[data-flux-control] {
         content: '';
         @apply w-full h-0.5 absolute bottom-0 left-0 bg-orange-cta origin-center scale-x-0 rounded-lg
     }
+
     &:hover {
         @apply font-semibold text-orange-cta
     }
@@ -106,13 +108,9 @@ select:focus[data-flux-control] {
 }
 
 
-
-
-
 strong {
     @apply text-orange-cta
 }
-
 
 
 .cta-primary {
@@ -124,6 +122,7 @@ strong {
 
 
 }
+
 img {
     width: 100%;
     height: auto;
@@ -135,6 +134,34 @@ img {
     background-position: center;
     background-repeat: no-repeat;
 }
+
 .bg-white-break {
     background: #F9F4F4;
+}
+
+.h2-landing {
+    @apply font-fredoka text-5xl font-semibold leading-14
+}
+
+.h2-section {
+    @apply font-fredoka text-[2rem] font-semibold leading-12
+}
+
+.h3-article {
+    @apply font-fredoka text-2xl font-semibold leading-8
+}
+
+
+
+article:nth-child(even) > div:first-child {
+    @media (min-width: 1024px) {
+        order: 2;
+
+    }
+}
+article:nth-child(even) > div:last-child {
+    @media (min-width: 1024px) {
+        order: 1;
+
+    }
 }
