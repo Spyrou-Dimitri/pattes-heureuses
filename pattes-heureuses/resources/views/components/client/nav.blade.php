@@ -1,5 +1,5 @@
 <div class="max-w-[1200px] mx-auto">
-    <nav class="relative flex flex-col px-8 py-4 max-w-full mx-auto md:flex-row md:justify-between">
+    <nav class="relative flex flex-col px-8 py-4 max-w-full mx-auto md:w-auto md:flex-row md:justify-between">
         <h2 aria-level="2">
         </h2>
 

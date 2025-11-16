@@ -10,7 +10,7 @@
 
 
 #burger__button {
-    @apply absolute top-1/2 right-[30px] w-[40px] h-[40px] m-0 cursor-pointer appearance-none z-50 transform -translate-y-1/2;
+    @apply z-99 absolute top-1/2 right-[30px] w-[40px] h-[40px] m-0 cursor-pointer appearance-none z-50 transform -translate-y-1/2;
 
     @apply md:hidden;
 

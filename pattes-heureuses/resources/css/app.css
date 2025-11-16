@@ -153,15 +153,32 @@ img {
 
 
 
-article:nth-child(even) > div:first-child {
+.item-adoption:nth-child(even) article > div:first-child {
     @media (min-width: 1024px) {
         order: 2;
 
     }
 }
-article:nth-child(even) > div:last-child {
+.item-adoption:nth-child(odd) article > div:last-child {
     @media (min-width: 1024px) {
         order: 1;
 
     }
 }
+
+article:has(.button-faq:checked) {
+    @apply bg-white border-2 border-orange-cta;
+
+    & h4 {
+        @apply text-black;
+    }
+}
+.button-faq {
+
+
+    &:checked ~ p {
+        @apply max-h-100 scale-y-100 mt-6;
+    }
+
+}
+
