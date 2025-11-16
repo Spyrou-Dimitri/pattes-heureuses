@@ -16,11 +16,11 @@
     <h2 class="h2-landing">
         {!! $title !!}
     </h2>
-    <p class="font-poppins text-xl md:w-4/5">
+    <p class="font-poppins md:w-4/5">
         {{$paragraph}}
     </p>
     <x-basics.cta :href="$cta_href"
-                  :title="$cta_href_title.' '.$cta">
+                  :title="$cta_href_title">
         {{$cta}}
     </x-basics.cta>
 

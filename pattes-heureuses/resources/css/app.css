@@ -114,7 +114,7 @@ strong {
 
 
 .cta-primary {
-    @apply font-fredoka  text-xl text-white bg-orange-cta rounded-lg px-5 py-4 font-semibold duration-400 border-2 border-orange-cta;
+    @apply font-fredoka text-white bg-orange-cta rounded-lg px-5 py-4 font-semibold duration-400 border-2 border-orange-cta;
 
     &:hover {
         @apply bg-white text-orange-cta  duration-400;
@@ -154,16 +154,12 @@ img {
 
 
 .item-adoption:nth-child(even) article > div:first-child {
-    @media (min-width: 1024px) {
-        order: 2;
 
-    }
+    @apply md:order-2
 }
 .item-adoption:nth-child(odd) article > div:last-child {
-    @media (min-width: 1024px) {
-        order: 1;
 
-    }
+    @apply md:order-1
 }
 
 article:has(.button-faq:checked) {

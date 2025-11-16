@@ -3,8 +3,8 @@
 @endphp
 
 <x-basics.section :py="'basic'" :bg="'gray'">
-    <div class="relative max-w-[1200px] m-auto px-8 flex flex-col gap-12 justify-center items-center lg:grid lg:grid-cols-2 lg:items-baseline">
-        <div class="flex flex-col gap-4 items-start lg:items-baseline lg:sticky lg:top-10">
+    <div class="relative max-w-[1200px] m-auto px-8 flex flex-col gap-12 justify-center items-center md:grid md:grid-cols-2 md:items-baseline">
+        <div class="flex flex-col gap-4 items-start md:items-baseline md:sticky md:top-10">
             <h2 class="h2-section">
                 {!! __('client/home/faq/faq.title')  !!}
             </h2>
@@ -19,7 +19,7 @@
             <x-basics.cta :href="route('contact')" :title="__('client/home/faq/faq.cta-title'). ' ' .'contact'">
                 {{__('client/home/faq/faq.cta')}}
             </x-basics.cta>
-            <div class="hidden lg:block lg:w-4/5 lg:mx-auto">
+            <div class="hidden md:block md:w-4/5 md:mx-auto">
                 <img src="{{asset('img/chienCurieux.png')}}" alt="{{__('client/home/faq/faq.alt')}}">
             </div>
         </div>

@@ -11,7 +11,7 @@ return
                 'alt' => 'Un homme et une femme qui cherche une information sur leur ordinateur',
                 'src' => asset('img/adoptions/step1.jpg'),
                 'cta_text' => 'Nos animaux',
-                'cta_title' => 'Accéder à la page',
+                'cta_title' => 'Accéder à la page des animaux',
             ],
             'form' => [
                 'title' => 'Remplissez votre demande',
