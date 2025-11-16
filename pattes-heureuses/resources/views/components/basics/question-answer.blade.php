@@ -6,7 +6,7 @@
 )
 
 <article class="bg-orange-cta p-8 overflow-hidden relative rounded-lg duration-300">
-    <h4 class="w-3/4 text-xl font-fredoka font-semibold text-white">{{ $question }}</h4>
+    <h4 class="w-3/4 text-xl font-poppins font-bold text-white">{{ $question }}</h4>
 
     <input id="faq-{{ $question }}"  type="checkbox" class="button-faq hidden absolute right-8 top-6 z-5">
 
@@ -18,7 +18,7 @@
         </svg>
     </label>
 
-    <p class="max-h-0 scale-y-0 origin-top duration-300">
+    <p class="font-poppins max-h-0 scale-y-0 origin-top duration-300">
         {{ $answer }}
     </p>
 </article>
