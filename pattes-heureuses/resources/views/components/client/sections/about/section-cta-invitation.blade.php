@@ -8,7 +8,7 @@
                 {{__('client/about/cta-invitation/cta-invitation.content')}}
 
             </p>
-            <x-basics.cta :href="route('animals')" :title="__('client/home/cta-invitation/cta-invitation.cta-title')">
+            <x-basics.cta :href="route('animals.index')" :title="__('client/home/cta-invitation/cta-invitation.cta-title')">
                 {{__('client/about/cta-invitation/cta-invitation.cta')}}
             </x-basics.cta>
         </div>

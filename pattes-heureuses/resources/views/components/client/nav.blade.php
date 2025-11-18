@@ -96,7 +96,7 @@
                 </li>
                 <li class="nav__container__items">
                     <x-basics.cta :title="__('client/nav.title'). ' ' .__('client/nav.animals')"
-                                  :href="route('animals')" :class="'nav'">
+                                  :href="route('animals.index')" :class="'nav'">
                         {{ __('client/nav.animals') }}
                     </x-basics.cta>
                 </li>

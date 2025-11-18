@@ -8,13 +8,12 @@
                 {{__('client/about/team/team.content')}}
             </p>
         </div>
-        <ul class="flex justify-center items-center mx-auto flex-row flex-wrap w-full gap-12  md:justify-between md:gap-12 md:items-stretch">
+        <ul class="flex justify-center items-center mx-auto flex-row flex-wrap w-full gap-12 md:grid md:grid-cols-3 md:gap-x-12 md:gap-y-4  md:items-stretch">
             @for($i = 0; $i < 4; $i++)
                 <x-basics.team-card :img_src="asset('img/personnel/moi.jpg')"
                                     :img_alt="'Photo de moi'"
                                     :title="'Dimitri Spyrou'"
                                     :role="'Dieu du front'">
-
                 </x-basics.team-card>
             @endfor
         </ul>

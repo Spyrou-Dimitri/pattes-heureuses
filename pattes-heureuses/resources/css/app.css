@@ -114,7 +114,7 @@ strong {
 
 
 .cta-primary {
-    @apply font-fredoka text-white bg-orange-cta rounded-lg px-5 py-4 font-semibold duration-400 border-2 border-orange-cta;
+    @apply font-fredoka text-white bg-orange-cta rounded-lg px-4 py-3 font-semibold duration-400 border-2 border-orange-cta;
 
     &:hover {
         @apply bg-white text-orange-cta  duration-400;
@@ -176,5 +176,8 @@ article:has(.button-faq:checked) {
         @apply max-h-100 scale-y-100 mt-6;
     }
 
+}
+.caracteristic-animal {
+    @apply text-xl border border-main-blue p-2 rounded-full
 }
 

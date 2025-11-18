@@ -35,5 +35,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::view('about', 'client.about')->name('about');
-Route::view('animals', 'client.animals')->name('animals');
+
+
+Route::view('animals', 'client.animals.index')->name('animals.index');
+
 Route::view('contact', 'client.contact')->name('contact');
