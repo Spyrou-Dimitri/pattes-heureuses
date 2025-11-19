@@ -93,11 +93,11 @@ select:focus[data-flux-control] {
 
     &:before {
         content: '';
-        @apply w-full h-0.5 absolute bottom-0 left-0 bg-orange-cta origin-center scale-x-0 rounded-lg
+        @apply w-full h-0.5 absolute bottom-0 left-0 bg-orange-cta origin-center scale-x-0 rounded-lg duration-400
     }
 
     &:hover {
-        @apply font-semibold text-orange-cta
+        @apply  text-orange-cta
     }
 
     &:hover:before {
@@ -179,5 +179,8 @@ article:has(.button-faq:checked) {
 }
 .caracteristic-animal {
     @apply text-xl border border-main-blue p-2 rounded-full
+}
+body:has(#burger__button:checked) {
+    overflow-y: hidden;
 }
 
