@@ -46,7 +46,7 @@
     <div class="max-w-[1200px] m-auto px-8 flex flex-col gap-4">
 
         <h2 class="h2-section">
-            {{__('client/animals/index/landing.Result')}}
+            {{__('client/animals/index/landing.Result')}} (4)
         </h2>
         <ul class="flex justify-center items-center mx-auto flex-row flex-wrap w-full gap-12 md:grid md:grid-cols-3 md:gap-x-12 md:gap-y-12  md:items-stretch">
             @for($i = 0 ; $i < 4 ; $i++)
@@ -54,11 +54,10 @@
                                       :img_alt="'test'"
                                       :title="'Jean'"
                                       :breed="'Golden retriever'"
-                                      :sexe="'Male'"
+                                      :sexe="'male'"
                                       :year="'2 ans'"
-                                      :behavior="'Sympatoche'"
+                                      :behaviors="['Sociable', 'Calme', 'Malicieux', 'Minotaure']"
                                       :adopt_me="'Adoptez-moi'">
-
                 </x-basics.animal-card>
             @endfor
 

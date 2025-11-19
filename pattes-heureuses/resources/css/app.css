@@ -171,7 +171,6 @@ article:has(.button-faq:checked) {
 }
 .button-faq {
 
-
     &:checked ~ p {
         @apply max-h-100 scale-y-100 mt-6;
     }
@@ -183,4 +182,6 @@ article:has(.button-faq:checked) {
 body:has(#burger__button:checked) {
     overflow-y: hidden;
 }
+
+
 
