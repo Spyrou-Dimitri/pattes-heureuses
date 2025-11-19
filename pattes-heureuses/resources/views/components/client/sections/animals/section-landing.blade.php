@@ -48,7 +48,7 @@
         <h2 class="h2-section">
             {{__('client/animals/index/landing.Result')}}
         </h2>
-        <ul class="flex justify-center items-center mx-auto flex-row flex-wrap w-full gap-12 md:grid md:grid-cols-3 md:gap-x-12 md:gap-y-4  md:items-stretch">
+        <ul class="flex justify-center items-center mx-auto flex-row flex-wrap w-full gap-12 md:grid md:grid-cols-3 md:gap-x-12 md:gap-y-12  md:items-stretch">
             @for($i = 0 ; $i < 4 ; $i++)
                 <x-basics.animal-card :img_src="asset('img/animal/Jean.jpeg')"
                                       :img_alt="'test'"

@@ -16,7 +16,7 @@
     @endif
 </head>
 <body>
-<header class="bg-white-break border-b-1 border-b-main-blue">
+<header class="bg-white border-b-1 border-b-main-blue">
     <x-client.nav>
 
     </x-client.nav>

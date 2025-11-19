@@ -12,7 +12,7 @@
 #burger__button {
     @apply z-99 absolute top-1/2 right-[30px] w-[40px] h-[40px] m-0 cursor-pointer appearance-none z-50 transform -translate-y-1/2;
 
-    @apply md:hidden;
+    @apply lg:hidden;
 
     &:checked ~ .nav__lists {
         @apply translate-x-0 transition-transform duration-300 ease-in-out;
@@ -30,7 +30,7 @@
 
     @apply absolute top-1/2 right-[30px] p-2.5 flex flex-col gap-1.5 rounded-[5px] cursor-pointer z-40 transform -translate-y-1/2 border-1 border-orange-cta bg-white duration-300 ease-in-out;
 
-    @apply md:hidden;
+    @apply lg:hidden;
 
     .burger__wrapper__lines {
         content: "";

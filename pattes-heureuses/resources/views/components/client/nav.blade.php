@@ -1,5 +1,5 @@
 <div class="max-w-[1200px] mx-auto">
-    <nav class="relative flex flex-col px-8 py-4 max-w-full mx-auto md:w-auto md:flex-row md:justify-between">
+    <nav class="relative flex flex-col px-8 py-4 max-w-full mx-auto lg:w-auto lg:flex-row lg:justify-between">
         <h2 aria-level="2">
         </h2>
 
@@ -78,10 +78,10 @@
             </span>
         </a>
         <x-basics.burger></x-basics.burger>
-        <div class="bg-white-break fixed top-0 right-0 z-30 transform translate-x-[100%] transition-all duration-300 ease-in-out w-full min-h-screen
+        <div class="bg-white fixed top-0 right-0 z-30 transform translate-x-[100%] transition-all duration-300 ease-in-out w-full min-h-screen
             flex flex-col py-40 items-center justify-around nav__lists
-            md:static md:translate-x-0 md:right-auto md:top-auto md:min-h-auto md:flex-row md:py-0 md:w-auto md: ml-auto    ">
-            <ul class="flex flex-col gap-8 items-center md:flex-row md:gap-20">
+            lg:static lg:translate-x-0 lg:right-auto lg:top-auto lg:min-h-auto lg:flex-row lg:py-0 lg:w-auto lg: ml-auto    ">
+            <ul class="flex flex-col gap-8 items-center lg:flex-row lg:gap-20">
                 <li class="nav__container__items">
                     <x-basics.cta :title="__('client/nav.title'). ' ' .__('client/nav.home')" :href="route('home')"
                                   :class="'nav'">
