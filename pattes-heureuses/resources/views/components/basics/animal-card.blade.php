@@ -52,7 +52,7 @@
                 @endforeach
             </ul>
 
-            <a class="cta-primary text-center" href="#">{{$adopt_me}}</a>
+            <a class="cta-primary text-center" href="{{ route('animals.show-test') }}">{{$adopt_me}}</a>
 
         </div>
 

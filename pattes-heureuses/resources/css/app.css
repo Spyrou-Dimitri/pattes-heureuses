@@ -122,6 +122,15 @@ strong {
 
 
 }
+.cta-secondary {
+    @apply font-fredoka  bg-white rounded-lg px-4 py-3 font-semibold duration-400 border-2 border-orange-cta;
+
+    &:hover {
+        @apply bg-orange-cta text-white duration-400;
+    }
+
+
+}
 
 img {
     width: 100%;

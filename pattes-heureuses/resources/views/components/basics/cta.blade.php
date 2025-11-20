@@ -6,6 +6,7 @@
 @php
     $classes_variants = [
             'primary' => 'cta-primary',
+            'secondary' => 'cta-secondary',
             'nav' => 'nav-link'
         ];
 

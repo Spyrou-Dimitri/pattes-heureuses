@@ -38,5 +38,10 @@ Route::view('about', 'client.about')->name('about');
 
 
 Route::view('animals', 'client.animals.index')->name('animals.index');
+// Route temporaire pour accéder au template show sans paramètre
+Route::view('animals/show-test', 'client.animals.show')->name('animals.show-test');
+
+
+//Route::view('animals/{animal}', 'client.animals.show')->name('animals.show');
 
 Route::view('contact', 'client.contact')->name('contact');

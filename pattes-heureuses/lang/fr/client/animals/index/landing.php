@@ -8,5 +8,6 @@ return [
     'img_alt' => 'Un Jack Russell avec une loupe',
     'filter' => 'Filtres',
     'filter-title' => "Accéder à l'onglet des filtres",
-    'Result' => 'Resultats'
+    'Result' => 'Resultats',
+    'other-results' => 'Autres résultats'
 ];

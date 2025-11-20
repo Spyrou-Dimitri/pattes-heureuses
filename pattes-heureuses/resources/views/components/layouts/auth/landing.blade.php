@@ -19,6 +19,7 @@
     <p class="font-poppins md:w-4/5">
         {{$paragraph}}
     </p>
+
     <x-basics.cta :href="$cta_href"
                   :title="$cta_href_title">
         {{$cta}}
