@@ -13,8 +13,8 @@
 
 ]
 )
- <article class="flex flex-col gap-4 md:grid md:grid-cols-2 md:items-center md:gap-12">
-    <div class="flex flex-col gap-4 items-start md:gap-6">
+ <article class="flex flex-col gap-4 md:grid md:grid-cols-12 md:items-center md:gap-12">
+    <div class="flex flex-col gap-4 items-start md:gap-6 md:col-span-6">
         <h3 class="h3-article">
             {!! $title !!}
         </h3>
@@ -32,7 +32,7 @@
             <a href="#" class="underline hover:text-orange-cta duration-300">{{$address}}</a>
         @endif
     </div>
-    <div class="">
+    <div class="md: col-span-6">
         <img src="{{$img_src}}" alt="{{$img_alt}}"
              class="w-full h-auto block aspect-auto object-cover rounded-lg border-1 border-main-blue shadow-main-blue-lg">
     </div>

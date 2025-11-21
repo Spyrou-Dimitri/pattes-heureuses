@@ -3,11 +3,12 @@
 @endphp
 
 <x-basics.section :py="'basic'" :bg="'paws'">
-    <div class="max-w-[1200px] m-auto px-8 flex flex-col gap-12">
-        <h2 class="h2-section">
+    <x-basics.grid class="md:gap-8">
+
+        <h2 class="h2-section md:col-span-full">
             {!! __('client/home/adoptions/adoptions.title') !!}
         </h2>
-        <ul class="flex flex-col gap-14 lg:gap-40">
+        <ul class="flex flex-col gap-14 lg:gap-40 col-span-full">
             @foreach($storySteps as $key => $step)
                 <li class="item-adoption">
                     <x-layouts.auth.article
@@ -26,6 +27,6 @@
 
         </ul>
 
-    </div>
+    </x-basics.grid>
 
 </x-basics.section>

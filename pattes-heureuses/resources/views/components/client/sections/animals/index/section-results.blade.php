@@ -1,12 +1,12 @@
-<x-basics.section :py="'basic'" :bg="'paws'">
-    <div class="max-w-[1200px] m-auto px-8 flex flex-col gap-4">
+<x-basics.section :py="'basic'" :bg="'paws'" class="md:col-span-2">
+    <x-basics.grid class="md:gap-4">
 
-        <h2 class="h2-section">
-            {{__('client/animals/index/landing.other-results')}}
+
+        <h2 class="h2-section md:col-span-full">
+            {{__('client/animals/index/landing.Result')}} (4)
         </h2>
-        <ul class="flex justify-center items-center mx-auto flex-row flex-wrap w-full gap-12 md:grid md:grid-cols-12 md:gap-x-12 md:gap-y-12  md:items-stretch">
-
-            @for($i = 0 ; $i < 3 ; $i++)
+        <ul class=" md:col-span-12 flex justify-center items-center mx-auto flex-row flex-wrap w-full gap-12 md:grid md:grid-cols-12 md:gap-x-12 md:gap-y-12  md:items-stretch">
+            @for($i = 0 ; $i < 4 ; $i++)
                 <x-basics.animal-card :img_src="asset('img/animal/Jean.jpeg')"
                                       :img_alt="'test'"
                                       :title="'Jean'"
@@ -17,6 +17,8 @@
                                       :adopt_me="'Adoptez-moi'">
                 </x-basics.animal-card>
             @endfor
+
         </ul>
-    </div>
+    </x-basics.grid>
+
 </x-basics.section>

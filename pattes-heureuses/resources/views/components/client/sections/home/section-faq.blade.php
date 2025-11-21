@@ -3,8 +3,9 @@
 @endphp
 
 <x-basics.section :py="'basic'" :bg="'gray'">
-    <div class="relative max-w-[1200px] m-auto px-8 flex flex-col gap-12 justify-center items-center md:grid md:grid-cols-2 md:items-baseline">
-        <div class="flex flex-col gap-4 items-start md:items-baseline md:sticky md:top-10">
+    <x-basics.grid class="md:items-baseline">
+
+        <div class="flex flex-col gap-4 items-start  md:items-baseline md:sticky md:top-10 md:col-span-6">
             <h2 class="h2-section">
                 {!! __('client/home/faq/faq.title')  !!}
             </h2>
@@ -23,7 +24,7 @@
                 <img src="{{asset('img/chienCurieux.png')}}" alt="{{__('client/home/faq/faq.alt')}}">
             </div>
         </div>
-        <div class="flex flex-col gap-12">
+        <div class="flex flex-col gap-12 md:col-span-6 ">
             @foreach($faq_categories as $category_key => $category)
                 @php
                     $questions_list = $category['faq'];
@@ -42,8 +43,13 @@
             @endforeach
         </div>
 
-    </div>
+    </x-basics.grid>
 </x-basics.section>
+
+{{--
+    <div class="relative max-w-[1200px] m-auto px-8 flex flex-col gap-12 justify-center items-center md:grid md:grid-cols-2 md:items-baseline">
+
+--}}
 
 
 

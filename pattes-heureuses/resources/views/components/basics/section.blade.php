@@ -15,7 +15,7 @@
 
 $py_variants = [
             'landing' => 'py-8 md:py-12',
-        'basic' => 'py-8 md: py-24',
+        'basic' => 'py-8 md:py-24',
         ];
     $py_variant = $py_variants[$py] ?? $py_variants['basic'];
 

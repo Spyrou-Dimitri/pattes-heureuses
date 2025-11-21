@@ -45,3 +45,5 @@ Route::view('animals/show-test', 'client.animals.show')->name('animals.show-test
 //Route::view('animals/{animal}', 'client.animals.show')->name('animals.show');
 
 Route::view('contact', 'client.contact')->name('contact');
+
+Route::view('adoption', 'client.adoption-create')->name('adoption.create');

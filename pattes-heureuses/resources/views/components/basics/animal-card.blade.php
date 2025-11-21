@@ -11,7 +11,7 @@
 ]
 )
 
-<li class="bg-white flex flex-col shadow-main-blue-lg rounded-lg max-w-[400px] md:w-full ">
+<li class="bg-white flex flex-col shadow-main-blue-lg rounded-lg max-w-[400px] md:w-full md:col-span-4">
     <article class="flex flex-col">
         <img src="{{$img_src}}" alt="{{$img_alt}}" class="rounded-t-lg aspect-square">
         <div class="flex flex-col p-5 gap-4">

@@ -3,13 +3,13 @@
 @endphp
 
 <x-basics.section :py="'basic'" :bg="'paws'">
-    <div class="max-w-[1200px] m-auto px-8 flex flex-col gap-12">
-        <h2 class="h2-section">
+    <x-basics.grid class="gap-8">
+        <h2 class="h2-section md:col-span-full md:row-auto">
             {!! __('client/home/adoptions/adoptions.title') !!}
         </h2>
-        <ol class="flex flex-col gap-14 lg:gap-40">
+        <ol class="md:row-auto flex flex-col gap-14 lg:gap-40 md:col-span-full">
             @foreach($adoptionSteps as $key => $step)
-                <li class="item-adoption">
+                <li class="item-adoption ">
                     <x-layouts.auth.article
                             :title="$step['title']"
                             :paragraph="$step['content']"
@@ -25,6 +25,10 @@
 
         </ol>
 
-    </div>
+    </x-basics.grid>
 
 </x-basics.section>
+
+{{--
+    <div class="max-w-[1200px] m-auto px-8 flex flex-col gap-12">
+--}}

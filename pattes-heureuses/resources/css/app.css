@@ -113,8 +113,8 @@ strong {
 }
 
 
-.cta-primary {
-    @apply font-fredoka text-white bg-orange-cta rounded-lg px-4 py-3 font-semibold duration-400 border-2 border-orange-cta;
+.cta-primary, button[type="submit"] {
+    @apply cursor-pointer font-fredoka text-white bg-orange-cta rounded-lg px-4 text-xl py-2.5 font-semibold duration-400 border-2 border-orange-cta;
 
     &:hover {
         @apply bg-white text-orange-cta  duration-400;
@@ -123,7 +123,7 @@ strong {
 
 }
 .cta-secondary {
-    @apply font-fredoka  bg-white rounded-lg px-4 py-3 font-semibold duration-400 border-2 border-orange-cta;
+    @apply text-xl font-fredoka  bg-white rounded-lg px-4 py-3 font-semibold duration-400 border-2 border-orange-cta;
 
     &:hover {
         @apply bg-orange-cta text-white duration-400;
@@ -192,5 +192,15 @@ body:has(#burger__button:checked) {
     overflow-y: hidden;
 }
 
+legend {
+    @apply font-poppins font-bold text-2xl w-full contents
+}
+
+form {
+    @apply p-6 border border-main-blue rounded-lg bg-white
+}
+input:focus, textarea:focus {
+    @apply outline-0
+}
 
 

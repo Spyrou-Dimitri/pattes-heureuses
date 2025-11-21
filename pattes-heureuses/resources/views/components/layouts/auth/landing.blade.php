@@ -12,11 +12,11 @@
 ]
 )
 
-<div class="flex flex-col gap-4 items-start md:gap-6">
+<div class="flex flex-col gap-4 items-start md:gap-6 md:col-span-6">
     <h2 class="h2-landing">
         {!! $title !!}
     </h2>
-    <p class="font-poppins md:w-4/5">
+    <p class="font-poppins">
         {{$paragraph}}
     </p>
 
@@ -26,8 +26,7 @@
     </x-basics.cta>
 
 </div>
-
-<div>
+<div class="md:col-span-6">
     <img src="{{$img_src}}" alt="{{$img_alt}}"
          class="w-full h-auto block aspect-auto object-cover rounded-lg">
 </div>

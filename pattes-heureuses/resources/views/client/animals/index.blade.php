@@ -1,5 +1,5 @@
 <x-layouts.auth>
-    <x-client.sections.animals.section-landing :title="__('client/animals/index/landing.title')"
+    <x-client.sections.animals.index.section-landing :title="__('client/animals/index/landing.title')"
                                                :paragraph="__('client/animals/index/landing.content')"
                                                :img_src="asset('img/chien-loupe.png')"
                                                :img_alt="__('client/animals/index/landing.img_alt')"
@@ -9,5 +9,8 @@
 
 
 
-    </x-client.sections.animals.section-landing>
+    </x-client.sections.animals.index.section-landing>
+    <x-client.sections.animals.index.section-results>
+
+    </x-client.sections.animals.index.section-results>
 </x-layouts.auth>

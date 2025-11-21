@@ -1,5 +1,6 @@
 <x-basics.section :py="'basic'" :bg="'paws'">
-    <div class="max-w-[1200px] m-auto flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
+    <x-basics.grid>
+
         <x-layouts.auth.landing
                 :title="__('client/about/landing/landing.title')"
                 :paragraph="__('client/about/landing/landing.content')"
@@ -11,6 +12,6 @@
 
         </x-layouts.auth.landing>
 
-    </div>
+    </x-basics.grid>
 
 </x-basics.section>

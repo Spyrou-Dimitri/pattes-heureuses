@@ -15,7 +15,7 @@
  $icon = $icons_stats[$icons] ?? $icons_stats['hearth']
 
 @endphp
-<li class="bg-white flex flex-col w-full justify-center items-center shadow-main-blue-lg gap-4 p-6 rounded-lg border-1 border-main-blue max-w-[450px] md:w-full">
+<li class="bg-white flex flex-col w-full justify-center items-center shadow-main-blue-lg gap-4 p-6 rounded-lg border-1 border-main-blue max-w-[450px] md:col-span-3 md:w-full">
     <div>
         {!! $icon !!}
     </div>

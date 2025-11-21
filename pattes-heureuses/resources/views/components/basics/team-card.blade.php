@@ -8,7 +8,7 @@
 )
 
 
-<li class="bg-white flex flex-col w-full justify-center items-center shadow-main-blue-lg gap-4 rounded-lg border-1 border-main-blue max-w-[400px] md:w-full">
+<li class="bg-white flex flex-col w-full justify-center items-center shadow-main-blue-lg gap-4 rounded-lg border-1 border-main-blue max-w-[400px] md:w-full md:col-span-4">
     <article class="relative">
         <div>
             <img src="{{$img_src}}" alt="{{$img_alt}}" class="rounded-lg">

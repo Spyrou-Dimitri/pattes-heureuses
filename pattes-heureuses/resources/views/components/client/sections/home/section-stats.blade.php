@@ -1,6 +1,6 @@
 <x-basics.section :py="'basic'" :bg="'gray'">
-    <div class="max-w-[1200px] m-auto px-8 flex flex-col gap-12 justify-center items-center">
-        <div class="flex flex-col gap-3 items-start">
+    <x-basics.grid class="md:gap-y-6">
+        <div class="flex flex-col gap-3 items-start md:col-span-full">
             <h2 class="h2-section mx-auto">
                 {!! __('client/home/stats/stats.title') !!}
             </h2>
@@ -8,7 +8,7 @@
                 {{__('client/home/stats/stats.content')}}
             </p>
         </div>
-        <ul class="flex items-center mx-auto flex-col w-full gap-12 md:flex-row md:justify-between md:gap-12 md:items-stretch">
+        <ul class="md:col-span-full flex items-center mx-auto flex-col w-full gap-12 md:grid md:grid-cols-12 md:items-stretch">
             <x-basics.stat-card :title="__('client/home/stats/stats.card-adoption-title')"
                          :number="'39'"
                          :icons="'hearth'">
@@ -30,6 +30,10 @@
 
             </x-basics.stat-card>
         </ul>
-    </div>
+    </x-basics.grid>
 </x-basics.section>
 
+{{--
+    <div class="max-w-[1200px] m-auto px-8 flex flex-col gap-12 justify-center items-center">
+
+--}}
