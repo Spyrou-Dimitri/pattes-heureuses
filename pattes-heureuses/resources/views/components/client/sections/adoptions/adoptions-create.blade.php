@@ -16,8 +16,8 @@
 @endphp
 
 
-<x-basics.section :py="'landing'" :bg="'paws'">
-<x-basics.grid class="md:items-start lg:relative lg:grid lg:grid-cols-12">
+<x-layouts.section :py="'landing'" :bg="'paws'">
+<x-layouts.grid class="md:items-start lg:relative lg:grid lg:grid-cols-12">
     <div class="flex flex-col gap-4 md:gap-6 lg:col-span-7">
         <h2 class="h2-section">
             Adoption de <strong>Jean</strong>
@@ -35,31 +35,31 @@
                     Informations personnelles
                 </legend>
                 <div class="flex flex-col gap-4 border-t-2 border-t-main-blue pt-5 lg:flex-row lg:justify-between">
-                    <x-basics.input :name="'last-name'"
+                    <x-forms.input :name="'last-name'"
                                     :type="'text'"
                                     :label="'Nom'"
                                     :placeholder="'Doe'">
-                    </x-basics.input>
-                    <x-basics.input :name="'first-name'"
+                    </x-forms.input>
+                    <x-forms.input :name="'first-name'"
                                     :type="'text'"
                                     :label="'Prénom'"
                                     :placeholder="'John'">
 
-                    </x-basics.input>
+                    </x-forms.input>
                 </div>
                 <div class="flex flex-col gap-4 lg:flex-row lg:justify-between">
-                    <x-basics.input :name="'email'"
+                    <x-forms.input :name="'email'"
                                     :type="'email'"
                                     :label="'Email'"
                                     :placeholder="'john.doe@gmail.com'">
 
-                    </x-basics.input>
-                    <x-basics.input :name="'telephone'"
+                    </x-forms.input>
+                    <x-forms.input :name="'telephone'"
                                     :type="'tel'"
                                     :label="'Téléphone'"
                                     :placeholder="'0485 48 48 30'">
 
-                    </x-basics.input>
+                    </x-forms.input>
                 </div>
             </fieldset>
             <fieldset class="flex flex-col gap-4">
@@ -67,18 +67,18 @@
                     Informations sur votre logement
                 </legend>
                 <div class="flex flex-col gap-4 border-t-2 border-t-main-blue pt-5 lg:flex-row lg:justify-between">
-                    <x-basics.input :name="'housing'"
+                    <x-forms.input :name="'housing'"
                                     :type="'text'"
                                     :label="'Type de logement'"
                                     :placeholder="'Appartement'">
 
-                    </x-basics.input>
-                    <x-basics.input :name="'environment'"
+                    </x-forms.input>
+                    <x-forms.input :name="'environment'"
                                     :type="'text'"
                                     :label="'Environnement'"
                                     :placeholder="'Jardin / forêt'">
 
-                    </x-basics.input>
+                    </x-forms.input>
                 </div>
             </fieldset>
             <fieldset class="flex flex-col gap-4">
@@ -86,31 +86,31 @@
                     Expériences et motivations
                 </legend>
                 <div class="flex flex-col gap-4 border-t-2 border-t-main-blue pt-5">
-                    <x-basics.textarea
+                    <x-forms.textarea
                     :name="'experience_motivation'"
                     :label="'Pourquoi souhaitez-vous adopter ?'"
                     :placeholder="'Je souhaite adopté Jean parce que je veux pouvoir lui donner un nouveaux foyer...'">
 
-                    </x-basics.textarea>
+                    </x-forms.textarea>
                 </div>
 
             </fieldset>
-            <x-basics.submit>
+            <x-forms.submit>
 
-            </x-basics.submit>
+            </x-forms.submit>
 
         </form>
     </div>
-    <x-basics.animal-data class="lg:col-span-5 lg:sticky lg:top-20 lg:right-0"
+    <x-cards.animal-data class="lg:col-span-5 lg:sticky lg:top-20 lg:right-0"
                           :name="'Jean'"
                           :sexe="'male'"
                           :data_animals_profile="$profile"
                           :data_animals_behavior="$behavior">
 
-    </x-basics.animal-data>
-</x-basics.grid>
+    </x-cards.animal-data>
+</x-layouts.grid>
 
 
 
-</x-basics.section>
+</x-layouts.section>
 

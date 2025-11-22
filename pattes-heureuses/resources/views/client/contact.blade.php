@@ -1,6 +1,6 @@
 <x-layouts.auth>
 
-    <x-basics.section :bg="'paws'" :py="'landing'">
+    <x-layouts.section :bg="'paws'" :py="'landing'">
         @php
 
             $infos = [
@@ -23,7 +23,7 @@
 
     ]
         @endphp
-        <x-basics.grid>
+        <x-layouts.grid>
             <div class="md:col-span-5 flex flex-col gap-10">
                 <h2 class="h2-section text-center">
                     Formulaire de contact
@@ -46,43 +46,43 @@
             <div class="md:col-span-7">
                 <form action="" method="POST" class="flex flex-col gap-8">
                     <div class="flex flex-col md:flex-row md:justify-between gap-4">
-                        <x-basics.input :name="'last-name'"
+                        <x-forms.input :name="'last-name'"
                                         :type="'text'"
                                         :label="'Nom'"
                                         :placeholder="'Doe'">
-                        </x-basics.input>
-                        <x-basics.input :name="'first-name'"
+                        </x-forms.input>
+                        <x-forms.input :name="'first-name'"
                                         :type="'text'"
                                         :label="'Prénom'"
                                         :placeholder="'John'">
-                        </x-basics.input>
+                        </x-forms.input>
                     </div>
-                    <x-basics.input :name="'email'"
+                    <x-forms.input :name="'email'"
                                     :type="'email'"
                                     :label="'Email'"
                                     :placeholder="'john.doe@gmail.com'">
-                    </x-basics.input>
-                    <x-basics.input :name="'telephone'"
+                    </x-forms.input>
+                    <x-forms.input :name="'telephone'"
                                     :type="'tel'"
                                     :label="'Téléphone'"
                                     :placeholder="'+32 (0) 78 68 67 99'">
-                    </x-basics.input>
+                    </x-forms.input>
                     <div class="flex flex-col gap-4">
-                        <x-basics.textarea :name="'message'"
+                        <x-forms.textarea :name="'message'"
                                            :label="'Message'"
                                            :placeholder="'Je souhaite vous parler de...'">
 
-                        </x-basics.textarea>
+                        </x-forms.textarea>
                     </div>
 
-                    <x-basics.submit>
+                    <x-forms.submit>
 
-                    </x-basics.submit>
+                    </x-forms.submit>
 
 
                 </form>
             </div>
-        </x-basics.grid>
-    </x-basics.section>
+        </x-layouts.grid>
+    </x-layouts.section>
 
 </x-layouts.auth>

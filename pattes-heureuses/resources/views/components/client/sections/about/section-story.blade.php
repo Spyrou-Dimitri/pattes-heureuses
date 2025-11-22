@@ -2,8 +2,8 @@
     $storySteps = __('client/about/story/story.steps');
 @endphp
 
-<x-basics.section :py="'basic'" :bg="'paws'">
-    <x-basics.grid class="md:gap-8">
+<x-layouts.section :py="'basic'" :bg="'paws'">
+    <x-layouts.grid class="md:gap-8">
 
         <h2 class="h2-section md:col-span-full">
             {!! __('client/home/adoptions/adoptions.title') !!}
@@ -11,7 +11,7 @@
         <ul class="flex flex-col gap-14 lg:gap-40 col-span-full">
             @foreach($storySteps as $key => $step)
                 <li class="item-adoption">
-                    <x-layouts.auth.article
+                    <x-layouts.article
                             :title="$step['title']"
                             :paragraph="$step['content']"
                             :cta_href="isset($step['cta_href']) ? $step['cta_href'] : null"
@@ -27,6 +27,6 @@
 
         </ul>
 
-    </x-basics.grid>
+    </x-layouts.grid>
 
-</x-basics.section>
+</x-layouts.section>

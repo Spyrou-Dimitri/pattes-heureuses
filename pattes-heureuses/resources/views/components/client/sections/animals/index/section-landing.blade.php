@@ -14,8 +14,8 @@
 ]
 )
 
-<x-basics.section :py="'landing'" :bg="'paws'">
-    <x-basics.grid class="md:items-center">
+<x-layouts.section :py="'landing'" :bg="'paws'">
+    <x-layouts.grid class="md:items-center">
         <div class="flex flex-col gap-4 items-start md:gap-6 md:col-span-6">
             <h2 class="h2-landing">
                 {!! $title !!}
@@ -23,12 +23,12 @@
             <p class="font-poppins">
                 {{$paragraph}}
             </p>
-            <x-basics.input :type="'search'"
+            <x-forms.input :type="'search'"
                             :name="'search-bar'"
                             :label="__('client/animals/index/landing.search-bar-label')"
                             :placeholder="__('client/animals/index/landing.search-bar-placerholder')">
 
-            </x-basics.input>
+            </x-forms.input>
             <x-basics.cta :href="$filter_href"
                           :title="$filter_href_title">
                 {{$filter}}
@@ -40,7 +40,7 @@
             <img src="{{$img_src}}" alt="{{$img_alt}}"
                  class="w-full h-auto block aspect-auto object-cover rounded-lg">
         </div>
-    </x-basics.grid>
-</x-basics.section>
+    </x-layouts.grid>
+</x-layouts.section>
 
 

@@ -1,6 +1,6 @@
-<x-basics.section :py="'landing'" :bg="'paws'">
-    <x-basics.grid class="md:items-center">
-        <x-layouts.auth.landing
+<x-layouts.section :py="'landing'" :bg="'paws'">
+    <x-layouts.grid class="md:items-center">
+        <x-layouts.landing
             :title="__('client/home/landing/landing.title')"
             :paragraph="__('client/home/landing/landing.content')"
             :cta="__('client/home/landing/landing.cta')"
@@ -9,10 +9,9 @@
             :img_src="asset('img/TrioLanding.png')"
             :img_alt="__('client/img-alt.trio-landing')">
 
-        </x-layouts.auth.landing>
+        </x-layouts.landing>
         `
-    </x-basics.grid>
+    </x-layouts.grid>
 
 
-</x-basics.section>
-{{--<div class="max-w-[1200px] m-auto px-8 flex flex-col gap-4 md:grid md:grid-cols-2 md:items-center">--}}
+</x-layouts.section>

@@ -2,8 +2,8 @@
     $faq_categories = __('client/home/faq/faq.categories');
 @endphp
 
-<x-basics.section :py="'basic'" :bg="'gray'">
-    <x-basics.grid class="md:items-baseline">
+<x-layouts.section :py="'basic'" :bg="'gray'">
+    <x-layouts.grid class="md:items-baseline">
 
         <div class="flex flex-col gap-4 items-start  md:items-baseline md:sticky md:top-10 md:col-span-6">
             <h2 class="h2-section">
@@ -35,7 +35,7 @@
                     </h3>
                     <div class="flex flex-col gap-8">
                         @foreach($questions_list as $faqs => $faq)
-                            <x-basics.question-answer :question="$faq['question']" :answer="$faq['answer']"/>
+                            <x-layouts.question-answer :question="$faq['question']" :answer="$faq['answer']"/>
                         @endforeach
                     </div>
 
@@ -43,8 +43,8 @@
             @endforeach
         </div>
 
-    </x-basics.grid>
-</x-basics.section>
+    </x-layouts.grid>
+</x-layouts.section>
 
 {{--
     <div class="relative max-w-[1200px] m-auto px-8 flex flex-col gap-12 justify-center items-center md:grid md:grid-cols-2 md:items-baseline">

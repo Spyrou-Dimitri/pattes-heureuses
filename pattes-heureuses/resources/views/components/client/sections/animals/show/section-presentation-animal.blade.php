@@ -15,8 +15,8 @@
     ];
 @endphp
 
-<x-basics.section :bg="'paws'" :py="'landing'">
-    <x-basics.grid>
+<x-layouts.section :bg="'paws'" :py="'landing'">
+    <x-layouts.grid>
         <h2 class="h2-section text-center col-span-full">
             {{__('client/animals/show/show.title')}} <strong>Jean</strong>
         </h2>
@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <x-basics.animal-data class="md:col-span-6"
+            <x-cards.animal-data class="md:col-span-6"
                 :name="'Jean'"
                 :sexe="'male'"
                 :data_animals_profile="$profile"
@@ -70,10 +70,10 @@
                 </p>
             </article>
         </div>
-    </x-basics.grid>
+    </x-layouts.grid>
 
 
-</x-basics.section>
+</x-layouts.section>
 {{--
 <div class="max-w-[1200px] m-auto px-8 flex flex-col gap-12 justify-center items-center">
 --}}

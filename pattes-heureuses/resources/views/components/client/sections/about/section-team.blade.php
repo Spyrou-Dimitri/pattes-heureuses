@@ -1,5 +1,5 @@
-<x-basics.section :py="'basic'" :bg="'gray'">
-    <x-basics.grid>
+<x-layouts.section :py="'basic'" :bg="'gray'">
+    <x-layouts.grid>
 
         <div class="flex flex-col gap-3 items-start md:col-span-full">
             <h2 class="h2-section mx-auto">
@@ -11,13 +11,13 @@
         </div>
         <ul class="md:col-span-full flex justify-center items-center mx-auto flex-row flex-wrap w-full gap-12 md:grid md:grid-cols-12 md:gap-x-12 md:gap-y-4  md:items-stretch">
             @for($i = 0; $i < 8; $i++)
-                <x-basics.team-card :img_src="asset('img/personnel/moi.jpg')"
+                <x-cards.team-card :img_src="asset('img/personnel/moi.jpg')"
                                     :img_alt="'Photo de moi'"
                                     :title="'Dimitri Spyrou'"
                                     :role="'Dieu du front'">
-                </x-basics.team-card>
+                </x-cards.team-card>
             @endfor
         </ul>
-    </x-basics.grid>
-</x-basics.section>
+    </x-layouts.grid>
+</x-layouts.section>
 
