@@ -33,8 +33,31 @@
     @apply lg:hidden;
 
     .burger__wrapper__lines {
-        content: "";
-        @apply block w-[22px] min-h-[2px] rounded-lg bg-orange-cta;
+
+        @apply content-[''] block w-[22px] min-h-[2px] rounded-lg bg-orange-cta;
     }
 
+}
+
+.up, .middle, .down {
+    @apply duration-200 ease-in-out;
+
+}
+
+nav:has(#burger__button:checked) .burger__wrapper {
+    .burger__wrapper__lines {
+        @apply bg-white
+    }
+    .up {
+        @apply translate-y-2 rotate-45 duration-200 ease-in-out
+
+    }
+    .middle {
+        @apply opacity-0 duration-200 ease-in-out
+
+    }
+    .down {
+        @apply -translate-y-2 -rotate-45 duration-200 ease-in-out
+
+    }
 }
