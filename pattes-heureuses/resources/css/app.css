@@ -153,11 +153,11 @@ img {
 }
 
 .h2-section {
-    @apply font-fredoka text-[2rem] font-semibold leading-12
+    @apply font-fredoka text-4xl font-semibold leading-12
 }
 
 .h3-article {
-    @apply font-fredoka text-2xl font-semibold leading-8
+    @apply font-fredoka text-3xl font-semibold leading-8
 }
 
 

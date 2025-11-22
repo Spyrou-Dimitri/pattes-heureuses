@@ -28,7 +28,7 @@
             l’adoption dans les meilleures conditions.
         </p>
 
-        <form class="flex flex-col gap-8">
+        <form class="flex flex-col gap-8" action="" method="POST">
             <fieldset class="flex flex-col gap-4">
 
                 <legend>
@@ -86,21 +86,18 @@
                     Expériences et motivations
                 </legend>
                 <div class="flex flex-col gap-4 border-t-2 border-t-main-blue pt-5">
-                    <label class="block text-xl" for="experience_motivation">
-                        Pourquoi souhaitez-vous adopter ?
-                    </label>
-                    <textarea
-                        class="py-2.5 px-4 border-1 rounded-lg border-orange-cta"
-                        rows="10"
-                        name="experience_motivation" id="experience_motivation"
-                        placeholder="Je souhaite adopté Jean parce que je veux pouvoir lui donner un nouveaux foyer...">
-                    </textarea>
+                    <x-basics.textarea
+                    :name="'experience_motivation'"
+                    :label="'Pourquoi souhaitez-vous adopter ?'"
+                    :placeholder="'Je souhaite adopté Jean parce que je veux pouvoir lui donner un nouveaux foyer...'">
+
+                    </x-basics.textarea>
                 </div>
 
             </fieldset>
-            <button type="submit">
-                Envoyer
-            </button>
+            <x-basics.submit>
+
+            </x-basics.submit>
 
         </form>
     </div>
@@ -116,3 +113,4 @@
 
 
 </x-basics.section>
+

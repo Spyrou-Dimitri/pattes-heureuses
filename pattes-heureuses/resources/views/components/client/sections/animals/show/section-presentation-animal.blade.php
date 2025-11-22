@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <x-basics.animal-data
+            <x-basics.animal-data class="md:col-span-6"
                 :name="'Jean'"
                 :sexe="'male'"
                 :data_animals_profile="$profile"
