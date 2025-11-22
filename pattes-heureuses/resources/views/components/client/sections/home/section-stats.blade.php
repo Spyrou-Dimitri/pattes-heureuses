@@ -1,3 +1,29 @@
+@php
+
+    $stats = [
+        [
+            'title' => __('client/home/stats/stats.card-adoption-title'),
+            'value' => '39',
+            'icon' => 'hearth',
+        ],
+        [
+            'title' => __('client/home/stats/stats.card-benevole-title'),
+            'value' => '48',
+            'icon' => 'benevole',
+        ],
+        [
+            'title' => __('client/home/stats/stats.card-animals-title'),
+            'value' => '29',
+            'icon' => 'paws',
+        ],
+        [
+            'title' => __('client/home/stats/stats.card-dispo-title'),
+            'value' => '19',
+            'icon' => 'house',
+        ]
+    ];
+@endphp
+
 <x-layouts.section :py="'basic'" :bg="'gray'">
     <x-layouts.grid class="md:gap-y-6">
         <div class="flex flex-col gap-3 items-start md:col-span-full">
@@ -9,31 +35,16 @@
             </p>
         </div>
         <ul class="md:col-span-full flex items-center mx-auto flex-col w-full gap-12 md:grid md:grid-cols-12 md:items-stretch">
-            <x-cards.stat-card :title="__('client/home/stats/stats.card-adoption-title')"
-                         :number="'39'"
-                         :icons="'hearth'">
+            @foreach($stats as $stat)
+                <x-cards.stat-card :title="$stat['title']"
+                                   :number="$stat['value']"
+                                   :icons="$stat['icon']">
 
-            </x-cards.stat-card>
-            <x-cards.stat-card :title="__('client/home/stats/stats.card-benevole-title')"
-                         :number="'48'"
-                         :icons="'benevole'">
+                </x-cards.stat-card>
+            @endforeach
 
-            </x-cards.stat-card>
-            <x-cards.stat-card :title="__('client/home/stats/stats.card-animals-title')"
-                         :number="'29'"
-                         :icons="'paws'">
-
-            </x-cards.stat-card>
-            <x-cards.stat-card :title="__('client/home/stats/stats.card-dispo-title')"
-                         :number="'19'"
-                         :icons="'house'">
-
-            </x-cards.stat-card>
         </ul>
     </x-layouts.grid>
 </x-layouts.section>
 
-{{--
-    <div class="max-w-[1200px] m-auto px-8 flex flex-col gap-12 justify-center items-center">
 
---}}
