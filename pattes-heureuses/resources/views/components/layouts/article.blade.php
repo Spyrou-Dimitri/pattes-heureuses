@@ -23,7 +23,7 @@
         </p>
         @if($cta)
             <x-basics.cta :href="$cta_href"
-                          :title="$cta_href_title.' '.$cta">
+                          :title="$cta_href_title">
                 {{$cta}}
             </x-basics.cta>
 
