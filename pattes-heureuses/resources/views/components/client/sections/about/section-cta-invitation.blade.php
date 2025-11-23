@@ -14,7 +14,7 @@
         </div>
 
         <div class="hidden lg:block lg:absolute lg:right-1/12 lg:bottom-[-70px] lg:w-full lg: max-w-[450px]">
-            <img src="{{asset('img/chatBureau-cta-contact.png')}}" alt="{{__('client/about/cta-invitation/cta-invitation.alt')}}">
+            <img src="{{asset('img/800x800/cat-desktop.png')}}" alt="{{__('client/about/cta-invitation/cta-invitation.alt')}}">
         </div>
 
     </div>
