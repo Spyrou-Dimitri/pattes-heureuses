@@ -35,7 +35,8 @@
                     <ul class="flex flex-col gap-5">
                         @foreach($infos as $info)
                             <li>
-                                <a class="lg:text-xl font-poppins" href="{!! $info['href'] !!}" title="{!!$info['title']!!}">{{$info['label']}}</a>
+                                <a class="lg:text-xl font-poppins" href="{!! $info['href'] !!}"
+                                   title="{!!$info['title']!!}">{{$info['label']}}</a>
                             </li>
                         @endforeach
 
@@ -47,30 +48,33 @@
                 <form action="" method="POST" class="flex flex-col gap-8">
                     <div class="flex flex-col md:flex-row md:justify-between gap-4">
                         <x-forms.input :name="'last-name'"
-                                        :type="'text'"
-                                        :label="'Nom'"
-                                        :placeholder="'Doe'">
+                                       :type="'text'"
+                                       :label="'Nom'"
+                                       :placeholder="'Doe'"
+                                       :required="true">
                         </x-forms.input>
                         <x-forms.input :name="'first-name'"
-                                        :type="'text'"
-                                        :label="'Prénom'"
-                                        :placeholder="'John'">
+                                       :type="'text'"
+                                       :label="'Prénom'"
+                                       :placeholder="'John'"
+                                       :required="true">
                         </x-forms.input>
                     </div>
                     <x-forms.input :name="'email'"
-                                    :type="'email'"
-                                    :label="'Email'"
-                                    :placeholder="'john.doe@gmail.com'">
+                                   :type="'email'"
+                                   :label="'Email'"
+                                   :placeholder="'john.doe@gmail.com'"
+                                   :required="true">
                     </x-forms.input>
                     <x-forms.input :name="'telephone'"
-                                    :type="'tel'"
-                                    :label="'Téléphone'"
-                                    :placeholder="'+32 (0) 78 68 67 99'">
+                                   :type="'tel'"
+                                   :label="'Téléphone'"
+                                   :placeholder="'+32 (0) 78 68 67 99'">
                     </x-forms.input>
                     <div class="flex flex-col gap-4">
                         <x-forms.textarea :name="'message'"
-                                           :label="'Message'"
-                                           :placeholder="'Je souhaite vous parler de...'">
+                                          :label="'Message'"
+                                          :placeholder="'Je souhaite vous parler de...'">
 
                         </x-forms.textarea>
                     </div>
