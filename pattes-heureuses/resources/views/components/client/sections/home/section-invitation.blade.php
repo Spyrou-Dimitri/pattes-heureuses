@@ -1,21 +1,16 @@
 <x-layouts.section :bg="'paws'">
-    <div class="relative mx-8 max-w-[1200px] p-8 flex flex-col justify-center items-center bg-main-blue rounded-lg lg:grid lg:grid-cols-2 lg:p-16 xl:mx-auto">
-        <div class="flex flex-col gap-4 items-center lg:items-start lg:gap-6">
-            <h2 class="h2-section  text-center text-white">
-                {{__('client/home/cta-invitation/cta-invitation.title')}}
-            </h2>
-            <p class="font-poppins text-center text-white lg:text-left">
-                {{__('client/home/cta-invitation/cta-invitation.content')}}
+    <x-layouts.cta-section
+        :title="__('client/home/cta-invitation/cta-invitation.title')"
+        :paragraph="__('client/home/cta-invitation/cta-invitation.content')"
+        :href_cta="route('animals.index')"
+        :href_cta_title="__('client/home/cta-invitation/cta-invitation.cta-title')"
+        :cta="__('client/home/cta-invitation/cta-invitation.cta')"
+        :img_src_480="asset('img/480x480/cat-contact.png')"
+        :img_src_600="asset('img/600x600/cat-contact.png')"
+        :img_src_800="asset('img/800x800/cat-contact.png')"
+        :img_alt="__('client/home/cta-invitation/cta-invitation.alt')"
+    >
 
-            </p>
-            <x-basics.cta :href="route('animals.index')" :title="__('client/home/cta-invitation/cta-invitation.cta-title')">
-                {{__('client/home/cta-invitation/cta-invitation.cta')}}
-            </x-basics.cta>
-        </div>
-
-        <div class="hidden lg:block lg:absolute lg:right-1/12 lg:bottom-[-49px] lg:w-full lg: max-w-[450px]">
-            <img src="{{asset('img/chat-cta-animals.png')}}" alt="{{__('client/home/cta-invitation/cta-invitation.alt')}}">
-        </div>
-
-    </div>
+    </x-layouts.cta-section>
 </x-layouts.section>
+

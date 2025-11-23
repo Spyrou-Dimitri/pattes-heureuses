@@ -1,7 +1,7 @@
 @props(
     [
         'title',
-        'level_title',
+        'level_title' =>'',
         'paragraph',
         'img_src_480',
         'img_src_600',

@@ -21,7 +21,15 @@
                 {{__('client/home/faq/faq.cta')}}
             </x-basics.cta>
             <div class="hidden md:block md:w-4/5 md:mx-auto">
-                <img src="{{asset('img/chienCurieux.png')}}" alt="{{__('client/home/faq/faq.alt')}}">
+                <picture>
+                    <source media="(min-width:1000px)" srcset="{!! asset('img/600x600/dog-faq.png') !!}">
+                    <source media="(min-width:768px)" srcset="{!! asset('img/480x480/dog-faq.png') !!}">
+                    <source media="(min-width:530px)" srcset="{!! asset('img/800x800/dog-faq.png') !!}">
+                    <source media="(max-width:529px)" srcset="{!! asset('img/480x480/dog-faq.png') !!}">
+                </picture>
+
+                <img src="{!! asset('img/600x600/dog-faq.png') !!}" alt="{{__('client/home/faq/faq.alt')}}"
+                     class="w-full h-auto block aspect-auto object-cover rounded-lg">
             </div>
         </div>
         <div class="flex flex-col gap-12 md:col-span-6 ">
