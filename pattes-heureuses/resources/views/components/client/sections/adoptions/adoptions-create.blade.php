@@ -28,7 +28,7 @@
                 l’adoption dans les meilleures conditions.
             </p>
 
-            <form class="flex flex-col gap-8" action="" method="POST">
+            <form class="flex flex-col gap-8 p-6 border border-main-blue rounded-lg bg-white" action="" method="POST">
                 <fieldset class="flex flex-col gap-4">
 
                     <legend>
@@ -99,7 +99,7 @@
 
                 </fieldset>
                 <x-forms.submit>
-
+                    Envoyer
                 </x-forms.submit>
 
             </form>

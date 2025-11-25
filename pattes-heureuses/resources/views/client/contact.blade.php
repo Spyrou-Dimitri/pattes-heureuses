@@ -45,8 +45,8 @@
             </div>
 
             <div class="md:col-span-7">
-                <form action="" method="POST" class="flex flex-col gap-8">
-                    <div class="flex flex-col md:flex-row md:justify-between gap-4">
+                <form action="" method="POST" class="flex flex-col gap-6 p-6 border border-main-blue rounded-lg bg-white">
+                    <div class="flex gap-6 flex-col md:flex-row md:justify-between md:gap-4">
                         <x-forms.input :name="'last-name'"
                                        :type="'text'"
                                        :label="'Nom'"
@@ -80,7 +80,7 @@
                     </div>
 
                     <x-forms.submit>
-
+                        Envoyer
                     </x-forms.submit>
 
 
