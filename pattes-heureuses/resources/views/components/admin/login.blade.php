@@ -1,4 +1,4 @@
-<x-layouts.auth>
+<x-layouts.auth-login>
     <x-layouts.section :bg="'paws'" :py="'login'">
         <x-layouts.grid>
             <div class="md:col-span-6  flex flex-col gap-12 md:items-center md:justify-center">
@@ -63,7 +63,7 @@
                     </h2>
                 </div>
 
-                <form action="#" method="POST" class="flex flex-col gap-6">
+                <form action="{{route('login.store')}}" method="POST" class="flex flex-col gap-6">
                     @csrf
                     <fieldset class="flex flex-col gap-4">
                         <legend>
@@ -108,6 +108,6 @@
 
 
     </x-layouts.section>
-</x-layouts.auth>
+</x-layouts.auth-login>
 
 
