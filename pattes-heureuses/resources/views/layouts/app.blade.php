@@ -22,7 +22,7 @@
     </x-admin.nav>
 </header>
 
-<main class="lg:col-span-1 p-6 lg:ml-0">
+<main class="lg:col-span-1 p-12 lg:ml-0">
     {{$slot}}
 </main>
 

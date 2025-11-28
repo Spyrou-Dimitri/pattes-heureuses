@@ -97,7 +97,7 @@ select:focus[data-flux-control] {
     }
 
     &:hover {
-        @apply  text-orange-cta
+        @apply text-orange-cta
     }
 
     &:hover:before {
@@ -144,6 +144,7 @@ strong {
 
 
 }
+
 .cta-secondary {
     @apply text-xl font-fredoka  bg-white rounded-lg px-4 py-3 font-semibold duration-400 border-2 border-orange-cta;
 
@@ -157,6 +158,19 @@ strong {
 img {
     width: 100%;
     height: auto;
+}
+
+.img-table {
+    border-radius: 0.5rem;
+    @media (min-width: 768px) {
+
+        margin: auto;
+        border-radius: 50%;
+        object-fit: cover;
+        width: 4rem;
+        height: 4rem;
+
+    }
 }
 
 .bg-paws {
@@ -177,17 +191,22 @@ img {
 .h2-section {
     @apply font-fredoka text-4xl font-semibold leading-12
 }
+.h2-admin {
+    @apply font-fredoka text-3xl font-medium leading-10
+
+
+}
 
 .h3-article {
     @apply font-fredoka text-3xl font-semibold leading-8
 }
 
 
-
 .item-adoption:nth-child(even) article > div:first-child {
 
     @apply md:order-2
 }
+
 .item-adoption:nth-child(odd) article > div:last-child {
 
     @apply md:order-1
@@ -200,6 +219,7 @@ article:has(.button-faq:checked) {
         @apply text-black;
     }
 }
+
 .button-faq {
 
     &:checked ~ p {
@@ -207,9 +227,11 @@ article:has(.button-faq:checked) {
     }
 
 }
+
 .caracteristic-animal {
     @apply text-xl border border-main-blue p-2 rounded-full
 }
+
 body:has(#burger__button:checked) {
     overflow: hidden;
 }
