@@ -15,9 +15,12 @@
         required
            @endif
            value="{{old($name) ?? $value}}"
-           class="
+           class="bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full"
+           @if($type === 'search')
+               wire:model.live.debounce="term"
+        @endif
 
-            bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full">
+    >
     @if($type !== 'search')
         <span class="text-xs text-red-500 absolute left-0 -bottom-4">
         @error($name)

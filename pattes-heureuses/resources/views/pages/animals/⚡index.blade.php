@@ -1,52 +1,26 @@
 <?php
 
+use App\Models\Animal;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component {
-    //
+
+    public string $term = '';
+
+    #[Computed]
+    public function animals()
+    {
+        return Animal::select('avatar', 'name', 'type', 'breed', 'state', 'id')
+            ->where('name', 'like', '%' . $this->term . '%')
+            ->orderBy('name', 'asc')
+            ->get();
+    }
+
+
 };
 ?>
 
-@php
-
-
-    $datas_table = [
-        [
-            'img/animal/jean.jpeg',
-            'Mina',
-            'Chat',
-            'Européen',
-            'Disponible',
-            12,
-        ],
-        [
-            'img/animal/Carlos.jpg',
-            'Rex',
-            'Chien',
-            'Berger Allemand',
-            'En soin',
-            47,
-        ],
-        [
-             'img/animal/Larry.jpg',
-             'Fluffy',
-             'Lapin',
-             'Nain',
-             'Adopté',
-            83,
-        ],
-        [
-             'img/animal/Samantha.jpg',
-             'Shadow',
-             'Chat',
-             'Siamois',
-             'Disponible',
-            105,
-        ],
-
-    ];
-
-@endphp
 
 
 <div class="flex flex-col gap-12">
@@ -96,8 +70,8 @@ new class extends Component {
                 </li>
             </ul>
             <x-forms.input :type="'search'" :name="'animal-search'" :label="'Rechercher un animal'"
-                           :placeholder="'Barre de recherche'">
-            </x-forms.input>
+                           :placeholder="'Barre de recherche'"/>
+
             <div class="flex justify-between md:gap-4 md:justify-start">
                 <a href="" class="cta-secondary">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24">
@@ -113,8 +87,36 @@ new class extends Component {
                 </x-basics.cta>
             </div>
         </div>
-        <x-admin.table :header="'animals'"
-                       :datas_table="$datas_table">
+        <x-admin.table :header="'animals'">
+            @foreach($this->animals() as $animal)
+            <x-admin.tr wire:key="{{$animal->id}}">
+                <x-admin.td >
+                    <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
+                </x-admin.td>
+                <x-admin.td >
+                    {{$animal->name}}
+                </x-admin.td>
+                <x-admin.td >
+                    {{$animal->type}}
+                </x-admin.td>
+                <x-admin.td >
+                    {{$animal->breed}}
+                </x-admin.td>
+                <x-admin.td >
+                    {{$animal->state}}
+                </x-admin.td>
+                <x-admin.td>
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open">…</button>
+                        <div x-show="open" @click.outside="open = false" class="absolute bg-white shadow p-2">
+                            <a href="#" wire:click="delete({{ $animal->id }})">Supprimer</a>
+                            <a href="#">Modifier</a>
+                        </div>
+                    </div>
+                </x-admin.td>
+            </x-admin.tr>
+            @endforeach
+
         </x-admin.table>
 
 
