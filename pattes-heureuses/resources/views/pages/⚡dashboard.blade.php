@@ -75,6 +75,7 @@ new class extends Component {
             :title="'Nouveaux animaux'"
             :number="3">
 
+
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'hearth'"
                                :title="'Nouvelles adoptions'"
@@ -86,6 +87,8 @@ new class extends Component {
                                :number="8">
 
             </x-cards.stat-card>
+
+
 
         </ul>
 

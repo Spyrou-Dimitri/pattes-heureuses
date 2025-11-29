@@ -5,5 +5,8 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
     Route::livewire('dashboard', 'pages::⚡dashboard')
         ->middleware(['auth', 'verified'])
         ->name('dashboard');
+    Route::livewire('animals', 'pages::⚡animals')
+        ->middleware(['auth', 'verified'])
+        ->name('animals');
 });
 

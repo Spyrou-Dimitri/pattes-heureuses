@@ -8,9 +8,9 @@
         ],
         [
             'title' => __('admin/nav.title'). ' ' .__('admin/nav.animals'),
-            'href' => route('about'),
+            'href' => route('animals'),
             'label' => __('client/nav.animals'),
-            'route' => 'dashboar'
+            'route' => 'animals'
 
         ],
         [
