@@ -25,6 +25,6 @@ class DatabaseSeeder extends Seeder
 
         /* Animals seeding */
 
-        Animal::factory(10)->create();
+        Animal::factory(50)->create();
     }
 }

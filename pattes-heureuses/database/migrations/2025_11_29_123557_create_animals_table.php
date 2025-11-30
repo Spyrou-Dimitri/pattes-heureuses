@@ -11,9 +11,11 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('coat');
+            $table->integer('age');
             $table->string('type');
             $table->string('breed');
             $table->string('state');
+            $table->string('author');
             $table->string('avatar');
             $table->timestamps();
         });

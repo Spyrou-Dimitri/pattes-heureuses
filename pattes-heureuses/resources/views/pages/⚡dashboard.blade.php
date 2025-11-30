@@ -1,13 +1,20 @@
 <?php
 
+use App\Enums\AnimalStatus;
+use App\Models\Animal;
 use Livewire\Component;
 
 new class extends Component {
-    //
+
+    public function animals_pending()
+    {
+        return $animals_pending = Animal::where('state', AnimalStatus::Pending->value)->get();
+    }
+
 };
 ?>
-
 <div class="flex flex-col gap-12">
+
     <div class="fixed top-2 left-2 z-50 px-2 py-1 text-white text-sm font-bold rounded bg-black/70">
         <span class="block sm:hidden">XS ( < 640px )</span>
         <span class="hidden sm:block md:hidden">SM ( ≥ 640px )</span>
@@ -18,62 +25,13 @@ new class extends Component {
     </div>
     <?php
 
-    $animals = [
-        [
-            'img/animal/jean.jpeg',
-            'Jean',
-            'Chien',
-            'Golden retriever',
-            '5 ans',
-            'Vilain Dominique',
-        ],
-        [
-           'img/animal/bastien.jpg',
-            'Bastien',
-            'Chat',
-            'Siamois',
-            '3 ans',
-            'Dupont Alice',
-        ],
-        [
-            'img/animal/carlos.jpg',
-            'Carlos',
-            'Lapin',
-            'Nain hollandais',
-            '2 ans',
-            'Martin Paul',
-        ],
-    ];
-    $adoptions = [
-        [
-            'Chien',
-            'Golden Retriever',
-            'Jean',
-            'Martin Sophie',
-            '12/03/2025',
-        ],
-        [
-            'Chat',
-            'Siamois',
-            'Bastien',
-            'Durand Thomas',
-            '28/02/2025',
-        ],
-        [
-            'Lapin',
-            'Nain hollandais',
-            'Carlos',
-            'Lefèvre Julie',
-            '04/01/2025',
-        ],
-    ];
 
     ?>
     <x-admin.section :title="'Bienvenue Dimitri'">
         <ul class="flex flex-col gap-6 md:flex-row md:gap-12">
             <x-cards.stat-card :icons="'paws'"
-            :title="'Nouveaux animaux'"
-            :number="3">
+                               :title="'Nouveaux animaux'"
+                               :number="3">
 
 
             </x-cards.stat-card>
@@ -89,21 +47,42 @@ new class extends Component {
             </x-cards.stat-card>
 
 
-
         </ul>
 
     </x-admin.section>
 
 
     <x-admin.section :title="'Nouveaux animaux'">
-        <x-admin.table :header="'new_animals'"
-                       :datas_table="$animals">
+        <x-admin.table :header="'new_animals'">
+            @foreach($this->animals_pending() as $animal_pending)
+                <x-admin.tr>
+                    <x-admin.td>
+                        <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
+                    </x-admin.td>
+                    <x-admin.td>
+                        {{$animal_pending->name}}
+                    </x-admin.td>
+                    <x-admin.td>
+                        {{$animal_pending->type}}
+                    </x-admin.td>
+                    <x-admin.td>
+                        {{$animal_pending->breed}}
+                    </x-admin.td>
+                    <x-admin.td>
+                        {{$animal_pending->age}}
+                    </x-admin.td>
+                    <x-admin.td>
+                        {{$animal_pending->author}}
+                    </x-admin.td>
+
+                </x-admin.tr>
+            @endforeach
 
         </x-admin.table>
     </x-admin.section>
     <x-admin.section :title="'Nouvelles adoptions'">
-        <x-admin.table :header="'new_adoptions'"
-                       :datas_table="$adoptions">
+        <x-admin.table :header="'new_adoptions'">
+
 
         </x-admin.table>
     </x-admin.section>

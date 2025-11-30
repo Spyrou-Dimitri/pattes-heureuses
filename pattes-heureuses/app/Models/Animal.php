@@ -13,6 +13,8 @@ class Animal extends Model
         'name',
         'coat',
         'type',
+        'age',
+        'author',
         'breed',
         'state',
         'avatar'

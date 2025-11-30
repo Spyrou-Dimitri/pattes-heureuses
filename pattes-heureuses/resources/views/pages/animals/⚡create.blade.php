@@ -84,7 +84,6 @@ new class extends Component {
                         <div class="flex w-full gap-2 flex-col">
                             <x-forms.textarea :name="'animal-description'" :label="'Notes'" :placeholder="'Ajouter votre note ici...'"/>
                         </div>
-
                     </div>
                 </div>
 

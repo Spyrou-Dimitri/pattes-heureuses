@@ -7,24 +7,36 @@ use Livewire\Component;
 new class extends Component {
 
     public string $term = '';
+    public string $filter_tag = '';
+
+
 
     #[Computed]
     public function animals()
     {
-        return Animal::select('avatar', 'name', 'type', 'breed', 'state', 'id')
+        return $animals = Animal::select('avatar', 'name', 'type', 'breed', 'state', 'id')
             ->where('name', 'like', '%' . $this->term . '%')
             ->orderBy('name', 'asc')
             ->get();
+        dd($animals);
+    }
+
+    public function set_tag($state)
+    {
+        $this->filter_tag = $state;
+    }
+    public function apply_tag()
+    {
+        if ($this->filter_tag) {
+            return $this->animals = Animal::where('state', $this->filter_tag)->get();
+        }
     }
 
 
 };
 ?>
 
-
-
 <div class="flex flex-col gap-12">
-
     <x-admin.section :title="'Statistiques'">
         <ul class="flex flex-col gap-6 md:flex-row md:gap-12">
             <x-cards.stat-card :icons="'paws'"
@@ -50,23 +62,19 @@ new class extends Component {
         <div class="flex flex-col gap-4 justify-between md:items-center md:flex-row flex-wrap">
             <ul class="flex gap-4 md:gap-8 text-poppins flex-wrap">
                 <li>
-                    <a href="" class="filter_link">Tous</a>
+                    <a href="#all" wire:click="set_tag('all')" class="filter_link">Tous</a>
                 </li>
                 <li>
-                    <a href="" class="filter_link">Disponibles</a>
-
+                    <a href="#adoptable" wire:click="set_tag('adoptable')" class="filter_link">Adoptable</a>
                 </li>
                 <li>
-                    <a href="" class="filter_link">En soin</a>
-
+                    <a href="#underCare" wire:click="set_tag('underCare')" class="filter_link">En soin</a>
                 </li>
                 <li>
-                    <a href="" class="filter_link">Adopté</a>
-
+                    <a href="#adopted" wire:click="set_tag('adopted')" class="filter_link">Adopté</a>
                 </li>
                 <li>
-                    <a href="" class="filter_link">Décédé</a>
-
+                    <a href="#deceased" wire:click="set_tag('deceased')" class="filter_link">Décédé</a>
                 </li>
             </ul>
             <x-forms.input :type="'search'" :name="'animal-search'" :label="'Rechercher un animal'"
@@ -83,40 +91,40 @@ new class extends Component {
                 </span>
                 </a>
                 <x-basics.cta :title="'Créer une nouvelle fiche'"
-                :href="route('animals-create')"
-                :cta_title="'Créer une nouvelle fiche'">
+                              :href="route('animals-create')"
+                              :cta_title="'Créer une nouvelle fiche'">
                     Nouveau
                 </x-basics.cta>
             </div>
         </div>
         <x-admin.table :header="'animals'">
-            @foreach($this->animals() as $animal)
-            <x-admin.tr wire:key="{{$animal->id}}">
-                <x-admin.td >
-                    <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
-                </x-admin.td>
-                <x-admin.td >
-                    {{$animal->name}}
-                </x-admin.td>
-                <x-admin.td >
-                    {{$animal->type}}
-                </x-admin.td>
-                <x-admin.td >
-                    {{$animal->breed}}
-                </x-admin.td>
-                <x-admin.td >
-                    {{$animal->state}}
-                </x-admin.td>
-                <x-admin.td>
-                    <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open">…</button>
-                        <div x-show="open" @click.outside="open = false" class="absolute bg-white shadow p-2">
-                            <a href="#" wire:click="delete({{ $animal->id }})">Supprimer</a>
-                            <a href="#">Modifier</a>
+            @foreach($this->animals as $animal)
+                <x-admin.tr wire:key="{{$animal->id}}">
+                    <x-admin.td>
+                        <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
+                    </x-admin.td>
+                    <x-admin.td>
+                        {{$animal->name}}
+                    </x-admin.td>
+                    <x-admin.td>
+                        {{$animal->type}}
+                    </x-admin.td>
+                    <x-admin.td>
+                        {{$animal->breed}}
+                    </x-admin.td>
+                    <x-admin.td>
+                        {{$animal->state}}
+                    </x-admin.td>
+                    <x-admin.td>
+                        <div x-data="{ open: false }" class="relative">
+                            <button @click="open = !open">…</button>
+                            <div x-show="open" @click.outside="open = false" class="absolute bg-white shadow p-2">
+                                <a href="#" wire:click="delete({{ $animal->id }})">Supprimer</a>
+                                <a href="#">Modifier</a>
+                            </div>
                         </div>
-                    </div>
-                </x-admin.td>
-            </x-admin.tr>
+                    </x-admin.td>
+                </x-admin.tr>
             @endforeach
 
         </x-admin.table>
