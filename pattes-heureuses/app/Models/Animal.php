@@ -17,6 +17,4 @@ class Animal extends Model
         'state',
         'avatar'
     ];
-
-    
 }

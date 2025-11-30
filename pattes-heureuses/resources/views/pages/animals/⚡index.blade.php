@@ -82,7 +82,9 @@ new class extends Component {
                     Filtres
                 </span>
                 </a>
-                <x-basics.cta :title="'Créer une nouvelle fiche'">
+                <x-basics.cta :title="'Créer une nouvelle fiche'"
+                :href="route('animals-create')"
+                :cta_title="'Créer une nouvelle fiche'">
                     Nouveau
                 </x-basics.cta>
             </div>
