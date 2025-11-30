@@ -119,6 +119,8 @@ select:focus[data-flux-control] {
     &:hover:before {
         @apply scale-100 duration-400
     }
+
+
 }
 
 .active {

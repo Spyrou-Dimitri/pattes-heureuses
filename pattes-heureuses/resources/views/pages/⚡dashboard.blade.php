@@ -2,13 +2,16 @@
 
 use App\Enums\AnimalStatus;
 use App\Models\Animal;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component {
 
+    #[Computed]
     public function animals_pending()
     {
         return $animals_pending = Animal::where('state', AnimalStatus::Pending->value)->get();
+        dd($animals_pending);
     }
 
 };
@@ -31,7 +34,7 @@ new class extends Component {
         <ul class="flex flex-col gap-6 md:flex-row md:gap-12">
             <x-cards.stat-card :icons="'paws'"
                                :title="'Nouveaux animaux'"
-                               :number="3">
+                               :number="$this->animals_pending->count()">
 
 
             </x-cards.stat-card>
@@ -54,7 +57,7 @@ new class extends Component {
 
     <x-admin.section :title="'Nouveaux animaux'">
         <x-admin.table :header="'new_animals'">
-            @foreach($this->animals_pending() as $animal_pending)
+            @foreach($this->animals_pending as $animal_pending)
                 <x-admin.tr>
                     <x-admin.td>
                         <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">

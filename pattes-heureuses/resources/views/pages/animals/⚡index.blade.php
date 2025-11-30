@@ -62,19 +62,19 @@ new class extends Component {
         <div class="flex flex-col gap-4 justify-between md:items-center md:flex-row flex-wrap">
             <ul class="flex gap-4 md:gap-8 text-poppins flex-wrap">
                 <li>
-                    <a href="#all" wire:click="set_tag('all')" class="filter_link">Tous</a>
+                    <a href="#all" wire:click="set_tag('all')" class="filter_link {{$filter_tag === 'all' ? 'active': ''}}">Tous</a>
                 </li>
                 <li>
-                    <a href="#adoptable" wire:click="set_tag('adoptable')" class="filter_link">Adoptable</a>
+                    <a href="#adoptable" wire:click="set_tag('adoptable')" class="filter_link {{$filter_tag === 'adoptable' ? 'active': ''}}">Adoptable</a>
                 </li>
                 <li>
-                    <a href="#underCare" wire:click="set_tag('underCare')" class="filter_link">En soin</a>
+                    <a href="#underCare" wire:click="set_tag('underCare')" class="filter_link {{$filter_tag === 'underCare' ? 'active': ''}}">En soin</a>
                 </li>
                 <li>
-                    <a href="#adopted" wire:click="set_tag('adopted')" class="filter_link">Adopté</a>
+                    <a href="#adopted" wire:click="set_tag('adopted')" class="filter_link {{$filter_tag === 'adopted' ? 'active': ''}}">Adopté</a>
                 </li>
                 <li>
-                    <a href="#deceased" wire:click="set_tag('deceased')" class="filter_link">Décédé</a>
+                    <a href="#deceased" wire:click="set_tag('deceased')" class="filter_link {{$filter_tag === 'deceased' ? 'active': ''}}">Décédé</a>
                 </li>
             </ul>
             <x-forms.input :type="'search'" :name="'animal-search'" :label="'Rechercher un animal'"
