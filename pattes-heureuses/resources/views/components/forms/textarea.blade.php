@@ -1,4 +1,4 @@
-<label class="block text-xl" for="{!! $name !!}">
+<label class="block text-xl font-medium font-poppins" for="{!! $name !!}">
     {{$label}}
 </label>
 <textarea

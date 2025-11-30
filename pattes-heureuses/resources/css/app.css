@@ -147,6 +147,9 @@ select:focus[data-flux-control] {
 strong {
     @apply text-orange-cta
 }
+label {
+    @apply font-poppins;
+}
 
 
 .cta-primary, button[type="submit"] {

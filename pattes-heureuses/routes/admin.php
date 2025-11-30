@@ -7,9 +7,12 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
         ->name('dashboard');
 
 
-
+    /* Animaux */
     Route::livewire('animals', 'pages::animals.index')
         ->middleware(['auth', 'verified'])
         ->name('animals');
+    Route::livewire('animals-create', 'pages::animals.create')
+        ->middleware(['auth'])
+        ->name('animals-create');
 });
 
