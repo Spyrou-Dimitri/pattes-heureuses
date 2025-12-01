@@ -2,7 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Enums\RoleVolunteer;
+use App\Enums\SexeVolunteer;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 /**
@@ -23,10 +26,15 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'avatar' => UploadedFile::fake()->image('photo.jpg'),
+            'last_name' => fake()->lastName(),
+            'first_name' => fake()->firstName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= 'password',
+            'telephone' => fake()->phoneNumber(),
+            'role' => RoleVolunteer::cases()[array_rand(RoleVolunteer::cases())]->value,
+            'sexe' => SexeVolunteer::cases()[array_rand(SexeVolunteer::cases())]->value,
             'remember_token' => Str::random(10),
             'two_factor_secret' => Str::random(10),
             'two_factor_recovery_codes' => Str::random(10),

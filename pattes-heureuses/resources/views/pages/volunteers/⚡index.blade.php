@@ -1,79 +1,63 @@
 <?php
 
-use App\Models\Animal;
+use App\Models\User;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component {
-
     public string $term = '';
     public string $filter_tag = '';
 
 
-
     #[Computed]
-    public function animals()
+    public function staff()
     {
-        return $animals = Animal::select('avatar', 'name', 'type', 'breed', 'state', 'id')
-            ->where('name', 'like', '%' . $this->term . '%')
+        return $staff = User::select('avatar', 'first_name', 'last_name', 'email', 'telephone', 'id')
+            ->where('first_name', 'like', '%' . $this->term . '%')
+            ->orWhere('last_name', 'like', '%' . $this->term . '%')
             ->orderBy('name', 'asc')
             ->get();
+        dd($staff);
     }
+
 
     public function set_tag($state)
     {
         $this->filter_tag = $state;
     }
+
     public function apply_tag()
     {
         if ($this->filter_tag) {
-            return $this->animals = Animal::where('state', $this->filter_tag)->get();
+            return $this->animals = User::where('state', $this->filter_tag)->get();
         }
     }
-
-
 };
 ?>
 
-<div class="flex flex-col gap-12">
-    <x-admin.section :title="'Statistiques'">
-        <ul class="flex flex-col gap-6 md:flex-row md:gap-12">
-            <x-cards.stat-card :icons="'paws'"
-                               :title="'Animaux'"
-                               :number="3">
-
-
-            </x-cards.stat-card>
-            <x-cards.stat-card :icons="'dog'"
-                               :title="'Chiens'"
-                               :number="5">
-
-            </x-cards.stat-card>
-            <x-cards.stat-card :icons="'cat'"
-                               :title="'Chats'"
-                               :number="8">
-            </x-cards.stat-card>
-
-        </ul>
-
-    </x-admin.section>
-    <x-admin.section :title="'Liste des animaux'">
+<div>
+    <x-admin.section :title="'Liste du personnels'">
         <div class="flex flex-col gap-4 justify-between md:items-center md:flex-row flex-wrap">
             <ul class="flex gap-4 md:gap-8 text-poppins flex-wrap">
                 <li>
-                    <a href="#all" wire:click="set_tag('all')" class="filter_link {{$filter_tag === 'all' ? 'active': ''}}">Tous</a>
+                    <a href="#all" wire:click="set_tag('all')"
+                       class="filter_link {{$filter_tag === 'all' ? 'active': ''}}">Tous</a>
                 </li>
                 <li>
-                    <a href="#adoptable" wire:click="set_tag('adoptable')" class="filter_link {{$filter_tag === 'adoptable' ? 'active': ''}}">Adoptable</a>
+                    <a href="#adoptable" wire:click="set_tag('adoptable')"
+                       class="filter_link {{$filter_tag === 'adoptable' ? 'active': ''}}">Adoptable</a>
                 </li>
                 <li>
-                    <a href="#underCare" wire:click="set_tag('underCare')" class="filter_link {{$filter_tag === 'underCare' ? 'active': ''}}">En soin</a>
+                    <a href="#underCare" wire:click="set_tag('underCare')"
+                       class="filter_link {{$filter_tag === 'underCare' ? 'active': ''}}">En soin</a>
                 </li>
                 <li>
-                    <a href="#adopted" wire:click="set_tag('adopted')" class="filter_link {{$filter_tag === 'adopted' ? 'active': ''}}">Adopté</a>
+                    <a href="#adopted" wire:click="set_tag('adopted')"
+                       class="filter_link {{$filter_tag === 'adopted' ? 'active': ''}}">Adopté</a>
                 </li>
                 <li>
-                    <a href="#deceased" wire:click="set_tag('deceased')" class="filter_link {{$filter_tag === 'deceased' ? 'active': ''}}">Décédé</a>
+                    <a href="#deceased" wire:click="set_tag('deceased')"
+                       class="filter_link {{$filter_tag === 'deceased' ? 'active': ''}}">Décédé</a>
                 </li>
             </ul>
             <x-forms.input :type="'search'" :name="'animal-search'" :label="'Rechercher un animal'"
@@ -96,29 +80,26 @@ new class extends Component {
                 </x-basics.cta>
             </div>
         </div>
-        <x-admin.table :header="'animals'">
-            @foreach($this->animals as $animal)
-                <x-admin.tr wire:key="{{$animal->id}}">
+        <x-admin.table :header="'volunteers'">
+            @foreach($this->staff as $user)
+                <x-admin.tr wire:key="{{$user->id}}">
                     <x-admin.td>
                         <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
                     </x-admin.td>
                     <x-admin.td>
-                        {{$animal->name}}
+                        {{$user->first_name . ' ' . $user->last_name}}
                     </x-admin.td>
                     <x-admin.td>
-                        {{$animal->type}}
+                        {{$user->email}}
                     </x-admin.td>
                     <x-admin.td>
-                        {{$animal->breed}}
-                    </x-admin.td>
-                    <x-admin.td>
-                        {{$animal->state}}
+                        {{$user->telephone}}
                     </x-admin.td>
                     <x-admin.td>
                         <div x-data="{ open: false }" class="relative">
                             <button @click="open = !open">…</button>
                             <div x-show="open" @click.outside="open = false" class="absolute bg-white shadow p-2">
-                                <a href="#" wire:click="delete({{ $animal->id }})">Supprimer</a>
+                                <a href="#" wire:click="delete({{ $user->id }})">Supprimer</a>
                                 <a href="#">Modifier</a>
                             </div>
                         </div>
@@ -131,4 +112,3 @@ new class extends Component {
 
     </x-admin.section>
 </div>
-

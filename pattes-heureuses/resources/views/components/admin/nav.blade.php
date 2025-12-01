@@ -28,10 +28,10 @@
 
         ],
         [
-            'title' => __('admin/nav.title'). ' ' .__('admin/nav.adoptions'),
-            'href' => route('contact'),
+            'title' => __('admin/nav.title'). ' ' .__('admin/nav.volunteers'),
+            'href' => route('volunteers'),
             'label' => __('admin/nav.volunteers'),
-            'route' => 'dashboar'
+            'route' => 'volunteers'
         ],
 ]
 @endphp
