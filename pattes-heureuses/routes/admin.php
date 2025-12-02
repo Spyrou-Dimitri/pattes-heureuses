@@ -17,9 +17,11 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
 
 
     /* Bénévoles */
-
     Route::livewire('volunteers', 'pages::volunteers.index')
         ->middleware(['auth', 'verified'])
         ->name('volunteers');
+    Route::livewire('volunteers-create', 'pages::volunteers.create')
+        ->middleware(['auth', 'verified'])
+        ->name('volunteers-create');
 });
 
