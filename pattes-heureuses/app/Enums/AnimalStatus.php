@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum AnimalStatus: String
 {
-    case Pending = 'A traité';
-    case Adoptable = 'Adoptable';
-    case UnderCare = 'En soin';
-    case Adopted = 'Adopté';
-    case Deceased = 'Décédé';
+    case Pending = 'pending';
+    case Adoptable = 'adoptable';
+    case UnderCare = 'under_care';
+    case Adopted = 'adopted';
+    case Deceased = 'deceased';
 }
