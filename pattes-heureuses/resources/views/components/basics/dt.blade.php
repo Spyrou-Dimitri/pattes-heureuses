@@ -1,3 +1,3 @@
-<dt class="text-xl font-poppins font-bold inline-block">
+<dt class="text-xl text-left font-poppins font-bold inline-block">
     {{$slot}}
 </dt>

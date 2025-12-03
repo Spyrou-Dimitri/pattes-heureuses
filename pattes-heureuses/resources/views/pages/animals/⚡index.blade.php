@@ -10,7 +10,6 @@ new class extends Component {
     public string $filter_tag = '';
 
 
-
     #[Computed]
     public function animals()
     {
@@ -19,8 +18,7 @@ new class extends Component {
                 ->where('name', 'like', '%' . $this->term . '%')
                 ->orderBy('name', 'asc')
                 ->get();
-        }
-        else {
+        } else {
             return $animals = Animal::select('avatar', 'name', 'type', 'breed', 'state', 'id')
                 ->where('state', $this->filter_tag)
                 ->orderBy('name', 'asc')
@@ -29,13 +27,16 @@ new class extends Component {
 
     }
 
-
     public function set_tag($state)
     {
         $this->filter_tag = $state;
         unset($this->animals);
     }
 
+    public function access_show($id)
+    {
+        return redirect()->route('animals-show', $id);
+    }
 
 
 };
@@ -72,7 +73,8 @@ new class extends Component {
                 @foreach(\App\Enums\AnimalStatus::cases() as $status)
 
                     <li>
-                        <a href="#{{$status->value}}" wire:click="set_tag('{{$status->value}}')" class="filter_link {{ $filter_tag === $status->value ? 'active' : '' }}">{{$status->value}}</a>
+                        <a href="#{{$status->value}}" wire:click="set_tag('{{$status->value}}')"
+                           class="filter_link {{ $filter_tag === $status->value ? 'active' : '' }}">{{$status->value}}</a>
                     </li>
                 @endforeach
 
@@ -99,7 +101,7 @@ new class extends Component {
         </div>
         <x-admin.table :header="'animals'">
             @foreach($this->animals as $animal)
-                <x-admin.tr wire:key="{{$animal->id}}">
+                <x-admin.tr wire:click="access_show({{ $animal->id }})" wire:key="{{ $animal->id }}">
                     <x-admin.td>
                         <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
                     </x-admin.td>

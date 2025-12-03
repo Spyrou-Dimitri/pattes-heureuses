@@ -3,6 +3,7 @@
     'sexe',
     'data_animals_profile' => [],
     'data_animals_behavior' => [],
+
     ]
 )
 
@@ -54,7 +55,16 @@
         @endforeach
     </dl>
 
-    @if(!request()->is('adoption*'))
+    @if(str_contains(request()->getHost(), 'admin'))
+        <div class="flex justify-around">
+            <x-basics.cta :href="route('adoption.create')" :class="'primary'">
+                Modifier
+            </x-basics.cta>
+            <x-basics.cta :href="'#'" :class="'secondary'">
+                Supprimer
+            </x-basics.cta>
+        </div>
+    @elseif(!request()->is('adoption*'))
         <div class="flex justify-around">
             <x-basics.cta :href="route('adoption.create')" :class="'primary'">
                 Rencontrer

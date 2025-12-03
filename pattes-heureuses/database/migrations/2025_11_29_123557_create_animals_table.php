@@ -11,12 +11,16 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('coat');
+            $table->string('description');
             $table->integer('age');
             $table->string('type');
             $table->string('breed');
             $table->string('state');
             $table->string('author');
             $table->string('avatar');
+            $table->boolean('accept_kids');
+            $table->boolean('accept_dogs');
+            $table->boolean('accept_cats');
             $table->timestamps();
         });
     }

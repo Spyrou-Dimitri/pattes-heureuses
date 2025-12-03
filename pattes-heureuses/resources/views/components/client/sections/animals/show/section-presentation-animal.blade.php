@@ -74,6 +74,4 @@
 
 
 </x-layouts.section>
-{{--
-<div class="max-w-[1200px] m-auto px-8 flex flex-col gap-12 justify-center items-center">
---}}
+

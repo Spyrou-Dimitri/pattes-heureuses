@@ -2,8 +2,11 @@
 
 return [
     'title'  => 'Fiche de',
+    'name' => 'Nom',
     'type' => 'Type',
     'breed'=> 'Race',
+    'coat' => 'Pelage',
+    'age'=> 'Age',
     'year' => 'Age',
     'skin' => 'Pelage',
     'behavior' => 'Caractères',
