@@ -1,7 +1,6 @@
 <?php
-
 return [
-    'pending'    => 'À traiter',
+    'pending'    => 'A traité',
     'adoptable'  => 'Adoptable',
     'under_care' => 'En soin',
     'adopted'    => 'Adopté',

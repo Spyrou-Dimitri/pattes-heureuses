@@ -9,4 +9,6 @@ enum AnimalStatus: String
     case UnderCare = 'under_care';
     case Adopted = 'adopted';
     case Deceased = 'deceased';
+
+
 }

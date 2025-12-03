@@ -28,22 +28,27 @@ class Animal extends Model
     ];
 
 
+    protected function booleanToOuiNon(): Attribute
+    {
+        return Attribute::make(
+            get: fn (bool $value) => $value ? 'Oui' : 'Non',
+        );
+    }
+
     protected function acceptCats(): Attribute
     {
-        return Attribute::make(
-            get: fn (bool $value) => $value ? 'Oui' : 'Non',
-        );
+        return $this->booleanToOuiNon();
     }
+
     protected function acceptKids(): Attribute
     {
-        return Attribute::make(
-            get: fn (bool $value) => $value ? 'Oui' : 'Non',
-        );
+        return $this->booleanToOuiNon();
     }
+
     protected function acceptDogs(): Attribute
     {
-        return Attribute::make(
-            get: fn (bool $value) => $value ? 'Oui' : 'Non',
-        );
+        return $this->booleanToOuiNon();
     }
+
+
 }

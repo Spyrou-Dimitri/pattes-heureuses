@@ -5,7 +5,9 @@ use Livewire\Component;
 
 new class extends Component {
     public $animal;
-    public $animal_profil;
+    public $animal_profil_value;
+    public $animal_behavior_value;
+
     public function mount($id)
     {
         $this->animal = Animal::findOrFail($id);

@@ -14,23 +14,12 @@ new class extends Component {
     {
         return $staff = User::select('avatar', 'first_name', 'last_name', 'email', 'telephone', 'id')
             ->where('first_name', 'like', '%' . $this->term . '%')
-            ->orWhere('last_name', 'like', '%' . $this->term . '%')
             ->orderBy('name', 'asc')
             ->get();
-        dd($staff);
     }
-
-
-    public function set_tag($state)
+    public function access_user($id)
     {
-        $this->filter_tag = $state;
-    }
-
-    public function apply_tag()
-    {
-        if ($this->filter_tag) {
-            return $this->animals = User::where('state', $this->filter_tag)->get();
-        }
+        return redirect()->route('volunteers-show', $id);
     }
 };
 ?>
@@ -38,28 +27,6 @@ new class extends Component {
 <div>
     <x-admin.section :title="'Liste du personnels'">
         <div class="flex flex-col gap-4 justify-between md:items-center md:flex-row flex-wrap">
-            <ul class="flex gap-4 md:gap-8 text-poppins flex-wrap">
-                <li>
-                    <a href="#all" wire:click="set_tag('all')"
-                       class="filter_link {{$filter_tag === 'all' ? 'active': ''}}">Tous</a>
-                </li>
-                <li>
-                    <a href="#adoptable" wire:click="set_tag('adoptable')"
-                       class="filter_link {{$filter_tag === 'adoptable' ? 'active': ''}}">Adoptable</a>
-                </li>
-                <li>
-                    <a href="#underCare" wire:click="set_tag('underCare')"
-                       class="filter_link {{$filter_tag === 'underCare' ? 'active': ''}}">En soin</a>
-                </li>
-                <li>
-                    <a href="#adopted" wire:click="set_tag('adopted')"
-                       class="filter_link {{$filter_tag === 'adopted' ? 'active': ''}}">Adopté</a>
-                </li>
-                <li>
-                    <a href="#deceased" wire:click="set_tag('deceased')"
-                       class="filter_link {{$filter_tag === 'deceased' ? 'active': ''}}">Décédé</a>
-                </li>
-            </ul>
             <x-forms.input :type="'search'" :name="'animal-search'" :label="'Rechercher un animal'"
                            :placeholder="'Barre de recherche'"/>
 
@@ -82,7 +49,7 @@ new class extends Component {
         </div>
         <x-admin.table :header="'volunteers'">
             @foreach($this->staff as $user)
-                <x-admin.tr wire:key="{{$user->id}}">
+                <x-admin.tr wire:click="access_user({{$user->id}})" wire:key="{{$user->id}}">
                     <x-admin.td>
                         <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
                     </x-admin.td>

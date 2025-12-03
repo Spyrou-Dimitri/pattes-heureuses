@@ -26,5 +26,8 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
     Route::livewire('volunteers/create', 'pages::volunteers.create')
         ->middleware(['auth', 'verified'])
         ->name('volunteers-create');
+    Route::livewire('volunteers/{id}', 'pages::volunteers.show')
+        ->middleware(['auth'])
+        ->name('volunteers-show');
 });
 

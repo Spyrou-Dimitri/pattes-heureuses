@@ -1,3 +1,3 @@
-<dd class="font-poppins inline-block text-right text-xl">
+<dd class="font-poppins sm:text-right text-xl">
     {{$slot}}
 </dd>

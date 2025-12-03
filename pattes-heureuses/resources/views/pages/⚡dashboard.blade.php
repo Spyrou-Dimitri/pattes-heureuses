@@ -11,7 +11,11 @@ new class extends Component {
     public function animals_pending()
     {
         return $animals_pending = Animal::where('state', AnimalStatus::Pending->value)->get();
-        dd($animals_pending);
+    }
+
+    public function access_show($id)
+    {
+        return redirect()->route('animals-show', $id);
     }
 
 };
@@ -58,7 +62,7 @@ new class extends Component {
     <x-admin.section :title="'Nouveaux animaux'">
         <x-admin.table :header="'new_animals'">
             @foreach($this->animals_pending as $animal_pending)
-                <x-admin.tr>
+                <x-admin.tr wire:click="access_show({{ $animal_pending->id }})" wire:key="{{ $animal_pending->id }}">
                     <x-admin.td>
                         <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
                     </x-admin.td>

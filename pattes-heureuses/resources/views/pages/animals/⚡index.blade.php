@@ -27,6 +27,7 @@ new class extends Component {
 
     }
 
+
     public function set_tag($state)
     {
         $this->filter_tag = $state;
@@ -74,7 +75,7 @@ new class extends Component {
 
                     <li>
                         <a href="#{{$status->value}}" wire:click="set_tag('{{$status->value}}')"
-                           class="filter_link {{ $filter_tag === $status->value ? 'active' : '' }}">{{$status->value}}</a>
+                           class="filter_link {{ $filter_tag === $status->value ? 'active' : '' }}">{!! __('admin/filter_tag.' .$status->value)!!}</a>
                     </li>
                 @endforeach
 
@@ -115,7 +116,7 @@ new class extends Component {
                         {{$animal->breed}}
                     </x-admin.td>
                     <x-admin.td>
-                        {{$animal->state}}
+                        {{ __('admin/filter_tag.' . $animal->state) }}
                     </x-admin.td>
                     <x-admin.td>
                         <div x-data="{ open: false }" class="relative">

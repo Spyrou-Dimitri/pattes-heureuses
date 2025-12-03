@@ -29,14 +29,16 @@
         @endif
 
     </div>
-    <dl class="grid grid-cols-2 gap-5 border-b-2 border-b-main-blue pb-5 items-center">
+    <dl class="flex flex-col gap-5 border-b-2 border-b-main-blue pb-5 items-center">
         @foreach($data_animals_profile as $label => $value)
-            <x-basics.dt>
-                {{ __("client/animals/show/show.$label") }}
-            </x-basics.dt>
-            <x-basics.dd>
-                {{ $value }}
-            </x-basics.dd>
+            <div class="flex flex-col sm:flex-row justify-between w-full">
+                <x-basics.dt>
+                    {{ __("client/animals/show/show.$label") }}
+                </x-basics.dt>
+                <x-basics.dd>
+                    {{ $value }}
+                </x-basics.dd>
+            </div>
         @endforeach
     </dl>
     <dl class="grid grid-cols-2 gap-5
