@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\AnimalStatus;
 use App\Models\Animal;
+use App\Models\Breed;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\UploadedFile;
@@ -18,11 +19,10 @@ class AnimalFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'coat' => $this->faker->word(),
-            'type' => $this->faker->word(),
             'description' => $this->faker->sentence(50),
             'author' => $this->faker->word(),
             'age' => rand(1, 20),
-            'breed' => $this->faker->word(),
+            'breed_id' => Breed::factory(),
             'state' => AnimalStatus::cases()[array_rand(AnimalStatus::cases())]->value,
             'avatar' => UploadedFile::fake()->image('photo.jpg'),
             'accept_kids' => $this->faker->boolean(),
