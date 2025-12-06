@@ -5,3 +5,4 @@
     <x-client.sections.about.section-invitation></x-client.sections.about.section-invitation>
 
 </x-layouts.auth>
+

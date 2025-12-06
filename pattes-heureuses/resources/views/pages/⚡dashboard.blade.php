@@ -70,10 +70,10 @@ new class extends Component {
                         {{$animal_pending->name}}
                     </x-admin.td>
                     <x-admin.td>
-                        {{$animal_pending->type}}
+                        {{$animal_pending->breed->specie->name}}
                     </x-admin.td>
                     <x-admin.td>
-                        {{$animal_pending->breed}}
+                        {{$animal_pending->breed->name}}
                     </x-admin.td>
                     <x-admin.td>
                         {{$animal_pending->age}}

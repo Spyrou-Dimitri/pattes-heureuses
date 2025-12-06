@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Animal;
+use App\Models\Behavior;
 use App\Models\Breed;
+use App\Models\Coat;
 use App\Models\Specie;
 use App\Models\User;
 
@@ -64,13 +66,43 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        /* Seeding coat */
 
+        $coats = [
+            'Noir', 'Doré', 'Brun', 'Roux'
+        ];
+
+        foreach ($coats as $coat) {
+            $coat = Coat::create(['name' => $coat]);
+        }
+
+        $allCoats = Coat::all();
+
+        /* Seeding behaviors */
+
+        $behaviors = [
+           'Malicieux', 'Foutu', 'Exponentiel', 'Verbe irrégulier', 'La Croatie'
+        ];
+        foreach ($behaviors as $behavior) {
+            $behavior = Behavior::create(['name' => $behavior]);
+        }
+        $allBehaviors = Behavior::all();
         /* Animals seeding */
         for ($i = 0; $i < 50; $i++) {
-            Animal::factory()->create([
+            $animals = Animal::factory()->create([
                 'breed_id' => $seedingBreeds[array_rand($seedingBreeds)]
             ]);
+
+            $animals->coats()->attach(
+                $allCoats->random(rand(1, 2))->pluck('id')->toArray()
+            );
+
+            $animals->behaviors()->attach(
+                $allBehaviors->random(rand(1,3))->pluck('id')->toArray()
+            );
+
         }
 
     }
+
 }

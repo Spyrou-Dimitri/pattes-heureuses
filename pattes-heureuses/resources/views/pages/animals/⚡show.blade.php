@@ -13,10 +13,10 @@ new class extends Component {
         $this->animal = Animal::findOrFail($id);
         $this->animal_profil_value = [
             'name' => $this->animal->name,
-            'type' => $this->animal->type,
-            'breed' => $this->animal->breed,
+            'type' => $this->animal->breed->specie->name,
+            'breed' => $this->animal->breed->name,
             'age' => $this->animal->age,
-            'coat' => $this->animal->coat,
+            'coat' => $this->animal->coats->pluck('name')->join(' / '),
         ];
         $this->animal_behavior_value = [
             'place' => $this->animal->place,

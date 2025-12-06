@@ -24,7 +24,7 @@
         placeholder="{{ $placeholder ?? '' }}"
         @if($required) required @endif
         value="{{ old($name) ?? $value }}"
-        {{ $attributes->merge(['class' => 'bg-white border-1 border-orange-cta rounded-md py-3 px-4 text-xl w-full']) }}
+        {{ $attributes->merge(['class' => 'bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full']) }}
         @if($type === 'search')
             wire:model.live.debounce="term"
         @endif

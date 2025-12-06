@@ -16,7 +16,6 @@ class Animal extends Model
 
     protected $fillable = [
         'name',
-        'coat',
         'description',
         'age',
         'author',
@@ -47,6 +46,16 @@ class Animal extends Model
             'id'
         );
 
+    }
+
+    public function coats(): BelongsToMany
+    {
+        return $this->belongsToMany(Coat::class, 'animal_coat', 'animal_id', 'coat_id');
+    }
+
+    public function behaviors(): BelongsToMany
+    {
+        return $this->belongsToMany(Behavior::class, 'animal_behavior', 'animal_id', 'behavior_id');
     }
 
 

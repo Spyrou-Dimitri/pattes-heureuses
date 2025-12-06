@@ -18,7 +18,6 @@ class AnimalFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'coat' => $this->faker->word(),
             'description' => $this->faker->sentence(50),
             'author' => $this->faker->word(),
             'age' => rand(1, 20),

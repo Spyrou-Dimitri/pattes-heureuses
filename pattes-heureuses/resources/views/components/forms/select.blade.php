@@ -2,24 +2,36 @@
     'name',
     'label' => '',
     'options' => [],
-    'value' => null
+    'value' => null,
+    'hasLabel' => true
 ])
 
 <div class="flex flex-col gap-2 w-full">
-    <label for="{{ $name }}" class="block text-xl font-medium">
-        {{ $label }}
-    </label>
+    @if($hasLabel)
+        <label for="{{ $name }}" class="block text-xl font-medium">
+            {{ $label }}
+        </label>
+    @endif
 
     <select
         name="{{ $name }}"
         id="{{ $name }}"
-        class="bg-white border-1 border-orange-cta rounded-md py-3 px-4 text-xl w-full">
-        @foreach($options as $option)
-            <option
-                value="{{ $option->id }}"
-                @selected($value == $option->id)
-            >
-                {{ $option->name }}
+        class="bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full">
+        @foreach($options as $key => $option)
+            @php
+                if (is_object($option)) {
+                    $optionValue = $option->id;
+                    $optionLabel = $option->name;
+                } elseif (is_array($option)) {
+                    $optionValue = $option['id'] ?? $option['name'] ?? $option;
+                    $optionLabel = $option['name'] ?? $option;
+                } else {
+                    $optionValue = $option;
+                    $optionLabel = $option;
+                }
+            @endphp
+            <option value="{{ $optionValue }}" @selected($value == $optionValue)>
+                {{ $optionLabel }}
             </option>
         @endforeach
     </select>

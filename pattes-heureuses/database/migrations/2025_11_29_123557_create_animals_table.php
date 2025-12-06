@@ -10,7 +10,6 @@ return new class extends Migration {
         Schema::create('animals', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('coat');
             $table->string('description');
             $table->integer('age');
             $table->string('state');
