@@ -19,6 +19,7 @@ new class extends Component {
             'coat' => $this->animal->coats->pluck('name')->join(' / '),
         ];
         $this->animal_behavior_value = [
+            'behavior' => $this->animal->behaviors->pluck('name')->join(' / '),
             'place' => $this->animal->place,
             'accept_dogs' => $this->animal->accept_dogs,
             'accept_kids' => $this->animal->accept_kids,

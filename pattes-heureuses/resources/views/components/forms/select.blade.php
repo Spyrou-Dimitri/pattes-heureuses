@@ -16,7 +16,10 @@
     <select
         name="{{ $name }}"
         id="{{ $name }}"
-        class="bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full">
+        class="bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full"
+        {{$attributes->whereStartsWith('wire:model')}}
+    >
+        {{$slot}}
         @foreach($options as $key => $option)
             @php
                 if (is_object($option)) {

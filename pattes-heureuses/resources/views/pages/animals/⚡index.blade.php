@@ -15,17 +15,23 @@ new class extends Component {
 
     public string $term = '';
     public array $selectedSpecies = [];
+    public array $selectedBreeds = [];
+    public array $selectedSexes = [];
+    public array $selectedCoats = [];
+    public array $selectedBehaviors = [];
+    public string $selectedAgeRange = '';
+
 
     public string $filter_tag = '';
-    public Collection $species;
-    public Collection $breeds;
-    public Collection $coats;
-    public Collection $behaviors;
     public array $tolerances = [
         'accept_dogs' => false,
         'accept_cats' => false,
         'accept_kids' => false,
     ];
+    public Collection $species;
+    public Collection $breeds;
+    public Collection $coats;
+    public Collection $behaviors;
 
 
     public function mount()
@@ -41,25 +47,73 @@ new class extends Component {
     }
 
     #[Computed]
-    public function filteredBreeds()
-    {
-        return Breed::whereIn('specie_id', $this->selectedSpecies)->get();
-    }
-
-
-    #[Computed]
     public function animals()
     {
-        if ($this->filter_tag === '') {
-            return $animals = Animal::where('name', 'like', '%' . $this->term . '%')
-                ->orderBy('name', 'asc')
-                ->get();
-        } else {
-            return $animals = Animal::with('breed.specie')
-                ->where('state', $this->filter_tag)
-                ->orderBy('name', 'asc')
-                ->get();
+
+        $animals = Animal::query();
+
+        //Filtre barre de recherche
+        if ($this->term !== '') {
+            $animals->where('name', 'like', '%' . $this->term . '%');
         }
+
+        //Filtres status
+        if ($this->filter_tag !== '') {
+            $animals->where('state', $this->filter_tag);
+        }
+
+        //Filtres espèces
+        if (!empty($this->selectedSpecies)) {
+            $animals->whereHas('breed', function ($compact_conditions) {
+                $compact_conditions->whereIn('specie_id', $this->selectedSpecies);
+            });
+        }
+
+        //Filtres races
+        if (!empty($this->selectedBreeds)) {
+            foreach ($this->selectedBreeds as $selectedBreed) {
+                $animals->where('breed_id', $selectedBreed);
+            }
+        }
+
+        //Filtres sexe
+        if (!empty($this->selectedSexes)) {
+            foreach ($this->selectedSexes as $selectedSexe) {
+                $animals->where('sexe', $selectedSexe);
+            }
+        }
+
+        //Filtres ages
+        if ($this->selectedAgeRange !== '') {
+            [$min, $max] = explode('-', $this->selectedAgeRange);
+            $animals->whereBetween('age', [$min, $max]);
+        }
+
+
+        //Filtres pelages
+        if (!empty($this->selectedCoats)) {
+            $animals->whereHas('coats', function ($compact_conditions) {
+                $compact_conditions->whereIn('coat_id', $this->selectedCoats);
+            });
+        }
+
+
+        //Filtres caractères
+        if (!empty($this->selectedBehaviors)) {
+            $animals->whereHas('behaviors', function ($compact_conditions) {
+                $compact_conditions->whereIn('behavior_id', $this->selectedBehaviors);
+            });
+        }
+
+        //Filtres tolerances
+        foreach ($this->tolerances as $column => $value) {
+            if ($value === true) {
+                $animals->where($column, true);
+            }
+        }
+
+
+        return $animals->orderBy('name', 'asc')->get();
 
     }
 
@@ -74,6 +128,12 @@ new class extends Component {
         return redirect()->route('animals-show', $id);
     }
 
+    #[Computed]
+    public function filteredBreeds()
+    {
+        return Breed::whereIn('specie_id', $this->selectedSpecies)->get();
+    }
+
 
 };
 ?>
@@ -84,18 +144,18 @@ new class extends Component {
         <ul class="flex flex-col gap-6 md:flex-row md:gap-12">
             <x-cards.stat-card :icons="'paws'"
                                :title="'Animaux'"
-                               :number="3">
+                               :number="Animal::all()->count()">
 
 
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'dog'"
                                :title="'Chiens'"
-                               :number="5">
+                               :number="Animal::whereHas('breed.specie', function($get_number){$get_number->where('name', 'Chien');})->count()">
 
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'cat'"
                                :title="'Chats'"
-                               :number="8">
+                               :number="Animal::whereHas('breed.specie', function($get_number){$get_number->where('name', 'Chat');})->count()">
             </x-cards.stat-card>
 
         </ul>
@@ -164,11 +224,19 @@ new class extends Component {
                                 <legend>
                                     Races
                                 </legend>
+
                                 <div class="flex flex-row gap-2 flex-wrap sm:gap-6">
-                                    @foreach($this->filteredBreeds as $breed)
-                                        <x-forms.checkbox :value="$breed->id" :name="$breed->name" :type="'checkbox'"
-                                                          :label="$breed->name"/>
-                                    @endforeach
+                                    @if(count($selectedSpecies) !== 0)
+                                        @foreach($this->filteredBreeds as $breed)
+                                            <x-forms.checkbox :value="$breed->id" :name="$breed->name"
+                                                              :type="'checkbox'"
+                                                              :label="$breed->name"
+                                                              wire:model.live="selectedBreeds"/>
+                                        @endforeach
+                                    @else
+                                        <p>Sélectionner un type pour accéder aux races</p>
+                                    @endif
+
                                 </div>
                             </fieldset>
                         </div>
@@ -182,7 +250,8 @@ new class extends Component {
                                         @foreach(SexeAnimal::cases() as $sexe)
                                             <x-forms.checkbox :value="$sexe->value" :name="$sexe->name"
                                                               :type="'checkbox'"
-                                                              :label="$sexe->value"/>
+                                                              :label="$sexe->name"
+                                                              wire:model.live="selectedSexes"/>
                                         @endforeach
                                     </div>
                                 </fieldset>
@@ -198,8 +267,13 @@ new class extends Component {
                                             "15-20"
                                             ];
                                     @endphp
-                                    <x-forms.select :hasLabel="false" :options="$ageTranches" :name="'age-range'"
-                                                    :label="'Age'"/>
+                                    <x-forms.select :hasLabel="false" wire:model.live="selectedAgeRange"
+                                                    :options="$ageTranches" :name="'age-range'"
+                                                    :label="'Age'"
+                                    >
+                                        <option disabled value="">--Selectionner un age--</option>
+                                    </x-forms.select>
+
                                 </fieldset>
                             </div>
                             <fieldset class="flex flex-col gap-4">
@@ -209,7 +283,8 @@ new class extends Component {
                                 <div class="flex flex-row gap-2 flex-wrap sm:gap-6">
                                     @foreach($this->coats as $coat)
                                         <x-forms.checkbox :value="$coat->id" :name="$coat->name" :type="'checkbox'"
-                                                          :label="$coat->name"/>
+                                                          :label="$coat->name"
+                                                          wire:model.live="selectedCoats"/>
                                     @endforeach
                                 </div>
                             </fieldset>
@@ -223,7 +298,8 @@ new class extends Component {
                                     @foreach($this->behaviors as $behavior)
                                         <x-forms.checkbox :value="$behavior->id" :name="$behavior->name"
                                                           :type="'checkbox'"
-                                                          :label="$behavior->name"/>
+                                                          :label="$behavior->name"
+                                                          wire:model.live="selectedBehaviors"/>
                                     @endforeach
                                 </div>
 
@@ -234,11 +310,14 @@ new class extends Component {
                                 </legend>
                                 <div class="flex flex-row gap-2 flex-wrap sm:gap-6">
                                     <x-forms.checkbox :type="'checkbox'" :name="'accept_cats'" :label="'Chats'"
-                                                      :value="1"/>
+                                                      :value="1"
+                                                      wire:model.live="tolerances.accept_cats"/>
                                     <x-forms.checkbox :type="'checkbox'" :name="'accept_dogs'" :label="'Chiens'"
-                                                      :value="1"/>
+                                                      :value="1"
+                                                      wire:model.live="tolerances.accept_dogs"/>
                                     <x-forms.checkbox :type="'checkbox'" :name="'accept_kids'" :label="'Enfants'"
-                                                      :value="1"/>
+                                                      :value="1"
+                                                      wire:model.live="tolerances.accept_kids"/>
                                 </div>
                             </fieldset>
                         </div>
@@ -287,4 +366,7 @@ new class extends Component {
         </x-admin.table>
     </x-admin.section>
 </div>
+
+
+
 

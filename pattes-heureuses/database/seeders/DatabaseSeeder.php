@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\SexeAnimal;
 use App\Models\Animal;
 use App\Models\Behavior;
 use App\Models\Breed;
@@ -86,10 +87,12 @@ class DatabaseSeeder extends Seeder
         foreach ($behaviors as $behavior) {
             $behavior = Behavior::create(['name' => $behavior]);
         }
+
         $allBehaviors = Behavior::all();
         /* Animals seeding */
         for ($i = 0; $i < 50; $i++) {
             $animals = Animal::factory()->create([
+                'sexe' => SexeAnimal::cases()[array_rand(SexeAnimal::cases())]->value,
                 'breed_id' => $seedingBreeds[array_rand($seedingBreeds)]
             ]);
 
