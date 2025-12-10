@@ -133,7 +133,7 @@ class TwoFactor extends Component
     }
 
     /**
-     * Close the two-factor authentication modal.
+     * Close the two-factor authentication modals.
      */
     public function closeModal(): void
     {
@@ -153,7 +153,7 @@ class TwoFactor extends Component
     }
 
     /**
-     * Get the current modal configuration state.
+     * Get the current modals configuration state.
      */
     public function getModalConfigProperty(): array
     {

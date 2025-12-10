@@ -17,6 +17,7 @@
     </label>
 
     <input
+        {{$attributes->whereStartsWith('wire:model')}}
         @if($multiple) multiple @endif
     type="{{ $type }}"
         id="{{ $name }}"

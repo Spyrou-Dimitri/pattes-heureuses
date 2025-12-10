@@ -113,7 +113,7 @@ new class extends Component {
         }
 
 
-        return $animals->orderBy('name', 'asc')->get();
+        return $animals->orderBy('name', 'asc')->paginate(8);
 
     }
 
@@ -224,7 +224,6 @@ new class extends Component {
                                 <legend>
                                     Races
                                 </legend>
-
                                 <div class="flex flex-row gap-2 flex-wrap sm:gap-6">
                                     @if(count($selectedSpecies) !== 0)
                                         @foreach($this->filteredBreeds as $breed)
@@ -321,9 +320,9 @@ new class extends Component {
                                 </div>
                             </fieldset>
                         </div>
-                        <x-forms.submit>
-                            Appliquer
-                        </x-forms.submit>
+                        <span class="cta-primary w-fit self-center" @click="open = false">
+                            Résultats
+                        </span>
                     </form>
                 </div>
                 <x-basics.cta :title="'Créer une nouvelle fiche'"
@@ -362,8 +361,9 @@ new class extends Component {
                     </x-admin.td>
                 </x-admin.tr>
             @endforeach
-
         </x-admin.table>
+
+
     </x-admin.section>
 </div>
 

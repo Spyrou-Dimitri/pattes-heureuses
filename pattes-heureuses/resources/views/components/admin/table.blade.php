@@ -13,7 +13,7 @@
             'new_animals' => $header_new_animals,
             'volunteers' => $header_volunteers,
             'new_adoptions' => $header_new_adoptions,
-            'animals'=> $header_animals
+            'animals'=> $header_animals,
         ];
 
     $header_choice = $header_choices[$header] ?? $header_choices['new_animals'];

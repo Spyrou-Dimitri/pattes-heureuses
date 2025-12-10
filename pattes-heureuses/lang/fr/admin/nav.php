@@ -7,5 +7,6 @@ return [
     'adoptions' => 'Adoptions',
     'volunteers' => 'Personnels',
     'deconnexion' => 'Se déconnecter',
+    'settings' => 'Paramètres'
 
 ];
