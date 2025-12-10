@@ -38,7 +38,8 @@
 
 <div class="max-w-[1200px] mx-auto">
     <nav class="relative flex flex-col px-8 py-4 max-w-full mx-auto lg:w-auto lg:flex-row lg:justify-between">
-        <h2 aria-level="2">
+        <h2 aria-level="2" class="hidden">
+            Navigation principale
         </h2>
 
         <a href="{{route('home')}}" title="Vers l'accueil" class="flex items-center gap-2">

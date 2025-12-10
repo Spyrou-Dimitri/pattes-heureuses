@@ -106,6 +106,21 @@ select:focus[data-flux-control] {
 
     @apply md:text-xl
 }
+.nav-secondary-link {
+    @apply relative;
+
+    &:before {
+        content: '';
+        @apply w-full h-0.5 absolute bottom-0 left-0 bg-white origin-center scale-x-0 rounded-lg duration-400
+    }
+
+
+    &:hover:before {
+        @apply scale-100 duration-400
+    }
+
+    @apply md:text-xl
+}
 .filter_link {
     @apply relative text-gray-500 duration-400;
     &:before {
@@ -132,6 +147,16 @@ select:focus[data-flux-control] {
 
     }
 }
+.active-secondary-nav {
+    @apply relative md:text-xl;
+
+    &:before {
+        content: '';
+        @apply w-full h-0.5 absolute bottom-0 left-0 bg-white scale-x-100 rounded-lg
+
+    }
+}
+
 
 .nav-link-admin {
     @apply text-xl font-fredoka duration-300;
