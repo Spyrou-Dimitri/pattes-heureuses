@@ -31,8 +31,8 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
         ->name('volunteers-show');
 
 
-    Route::livewire('settingssss', 'pages::settings.index')
+    Route::livewire('settings', 'pages::settings.index')
         ->middleware(['auth', 'verified'])
-        ->name('settingssss');
+        ->name('settings');
 });
 

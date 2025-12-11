@@ -6,7 +6,7 @@
                 :level_title="'h2-landing'"
                 :paragraph="__('client/about/landing/landing.content')"
                 :cta="__('client/about/landing/landing.cta')"
-                :cta_href="route('about')"
+                :cta_href="route('animals.index')"
                 :cta_href_title="__('client/about/landing/landing.title-cta')"
                 :img_src_480="asset('img/480x480/about-landing.jpg')"
                 :img_src_600="asset('img/600x600/about-landing.jpg')"

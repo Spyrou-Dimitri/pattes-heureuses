@@ -23,8 +23,14 @@
         @foreach($options as $key => $option)
             @php
                 if (is_object($option)) {
-                    $optionValue = $option->id;
-                    $optionLabel = $option->name;
+                    if ($option instanceof BackedEnum) {
+                        $optionValue = $option->value;
+                        $optionLabel = $option->value;
+                    }
+                    else {
+                        $optionValue = $option->id ?? $option->name ?? $option;
+                        $optionLabel = $option->name ?? $option;
+                    }
                 } elseif (is_array($option)) {
                     $optionValue = $option['id'] ?? $option['name'] ?? $option;
                     $optionLabel = $option['name'] ?? $option;
@@ -33,7 +39,7 @@
                     $optionLabel = $option;
                 }
             @endphp
-            <option value="{{ $optionValue }}" @selected($value == $optionValue)>
+            <option  value="{{ $optionValue }}" @selected($value ===$optionValue)>
                 {{ $optionLabel }}
             </option>
         @endforeach

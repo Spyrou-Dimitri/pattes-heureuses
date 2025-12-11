@@ -20,7 +20,7 @@ new class extends Component {
         Behavior::create([
             'name' => $this->title_behavior,
         ]);
-        $this->redirect('/settingssss');
+        $this->redirect('/settings');
     }
 
     public function delete_behavior(string $id): void

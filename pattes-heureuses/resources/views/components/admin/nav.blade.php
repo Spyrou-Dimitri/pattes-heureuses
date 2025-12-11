@@ -108,7 +108,7 @@
             </ul>
             <div>
                 <x-basics.navigation-link-admin :title="__('admin/nav.title'). ' ' .__('admin/nav.settings')"
-                                                :href="route('settingssss')"
+                                                :href="route('settings')"
                 :route="'settings'">
                     {{__('admin/nav.settings')}}
                 </x-basics.navigation-link-admin>

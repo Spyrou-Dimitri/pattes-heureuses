@@ -14,7 +14,8 @@ new class extends Component {
     {
         return $staff = User::select('avatar', 'first_name', 'last_name', 'email', 'telephone', 'id')
             ->where('first_name', 'like', '%' . $this->term . '%')
-            ->orderBy('name', 'asc')
+            ->orWhere('last_name', 'like', '%' . $this->term . '%')
+            ->orderBy('first_name', 'asc')
             ->get();
     }
     public function access_user($id)
