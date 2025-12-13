@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Behavior;
+use App\Models\Breed;
 use App\Models\Coat;
 use App\Models\Specie;
 use Livewire\Attributes\Computed;
@@ -20,6 +21,7 @@ new class extends Component {
         </h3>
         <ul class="flex gap-4 flex-wrap">
             <livewire:livewire.list-settings title="Espèce" modelClass="{{Specie::class}}"/>
+            <livewire:livewire.list-settings title="Races" modelClass="{{Breed::class}}"/>
             <livewire:livewire.list-settings title="Caractères" modelClass="{{Behavior::class}}"/>
             <livewire:livewire.list-settings title="Pelages" modelClass="{{Coat::class}}"/>
         </ul>

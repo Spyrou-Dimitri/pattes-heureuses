@@ -1,25 +1,25 @@
 <?php
 
-use App\Models\Specie;
+use App\Models\Breed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
-    public Specie $specie;
-    public string $title_specie = '';
+    public Breed $breed;
+    public string $title_breed = '';
 
     public function mount(?string $model_id = null)
     {
         if ($model_id) {
-            $this->specie = Specie::findOrFail($model_id);
-            $this->title_specie = $this->specie->name;
+            $this->breed = Breed::findOrFail($model_id);
+            $this->title_breed = $this->breed->name;
         }
     }
 
     public function create(): void
     {
-        Specie::create([
-            'name' => $this->title_specie,
+        Breed::create([
+            'name' => $this->title_breed,
         ]);
         $this->dispatch('list_changed');
         $this->dispatch('close_modal');
@@ -36,7 +36,7 @@ new class extends Component {
             <legend class="contents text-center">
                 <span>Nouveau caractère</span>
             </legend>
-            <x-forms.input wire:model="title_specie" :name="'new-specie'" :type="'text'" :label="'Titre'"/>
+            <x-forms.input wire:model="title_breed" :name="'new-breed'" :type="'text'" :label="'Titre'"/>
             <x-forms.submit>
                 Créer
             </x-forms.submit>
