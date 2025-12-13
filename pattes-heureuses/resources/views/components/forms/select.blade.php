@@ -16,6 +16,7 @@
     <select
         name="{{ $name }}"
         id="{{ $name }}"
+        value="{{$value}}"
         class="bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full"
         {{$attributes->whereStartsWith('wire:model')}}
     >

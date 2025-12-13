@@ -1,6 +1,7 @@
 @props([
     'name',
     'data_volunteer' => [],
+    'id' => '',
     ]
 )
 
@@ -26,13 +27,10 @@
 
         @endforeach
     </dl>
-    @if(str_contains(request()->getHost(), 'admin'))
+    @if(auth()->user()->id === $id)
         <div class="flex justify-around">
-            <x-basics.cta :href="route('adoption.create')" :class="'primary'">
+            <x-basics.cta :href="route('volunteers-edit', $id)" :class="'primary'">
                 Modifier
-            </x-basics.cta>
-            <x-basics.cta :href="'#'" :class="'secondary'">
-                Supprimer
             </x-basics.cta>
         </div>
     @endif

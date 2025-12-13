@@ -46,6 +46,9 @@ new class extends Component {
         unset($this->filteredBreeds);
     }
 
+    public function applyFilters() {}
+
+
     #[Computed]
     public function animals()
     {
@@ -111,6 +114,8 @@ new class extends Component {
                 $animals->where($column, true);
             }
         }
+
+
 
 
         return $animals->orderBy('name', 'asc')->paginate(8);
@@ -206,7 +211,7 @@ new class extends Component {
                             </g>
                         </svg>
                     </div>
-                    <form action="" method="get" class="flex flex-col gap-8">
+                    <form wire:submit.prevent="applyFilters" class="flex flex-col gap-8">
                         <div class="flex flex-col gap-8 lg:grid lg:grid-cols-2 lg:gap-x-16  ">
                             <fieldset class="flex flex-col gap-4">
                                 <legend>
@@ -230,7 +235,7 @@ new class extends Component {
                                             <x-forms.checkbox :value="$breed->id" :name="$breed->name"
                                                               :type="'checkbox'"
                                                               :label="$breed->name"
-                                                              wire:model.live="selectedBreeds"/>
+                                                              wire:model.defer="selectedBreeds"/>
                                         @endforeach
                                     @else
                                         <p>Sélectionner un type pour accéder aux races</p>
@@ -250,7 +255,7 @@ new class extends Component {
                                             <x-forms.checkbox :value="$sexe->value" :name="$sexe->name"
                                                               :type="'checkbox'"
                                                               :label="$sexe->name"
-                                                              wire:model.live="selectedSexes"/>
+                                                              wire:model.defer="selectedSexes"/>
                                         @endforeach
                                     </div>
                                 </fieldset>
@@ -266,7 +271,7 @@ new class extends Component {
                                             "15-20"
                                             ];
                                     @endphp
-                                    <x-forms.select :hasLabel="false" wire:model.live="selectedAgeRange"
+                                    <x-forms.select :hasLabel="false" wire:model.defer="selectedAgeRange"
                                                     :options="$ageTranches" :name="'age-range'"
                                                     :label="'Age'"
                                     >
@@ -283,7 +288,7 @@ new class extends Component {
                                     @foreach($this->coats as $coat)
                                         <x-forms.checkbox :value="$coat->id" :name="$coat->name" :type="'checkbox'"
                                                           :label="$coat->name"
-                                                          wire:model.live="selectedCoats"/>
+                                                          wire:model.defer="selectedCoats"/>
                                     @endforeach
                                 </div>
                             </fieldset>
@@ -298,7 +303,7 @@ new class extends Component {
                                         <x-forms.checkbox :value="$behavior->id" :name="$behavior->name"
                                                           :type="'checkbox'"
                                                           :label="$behavior->name"
-                                                          wire:model.live="selectedBehaviors"/>
+                                                          wire:model.defer="selectedBehaviors"/>
                                     @endforeach
                                 </div>
 
@@ -310,19 +315,19 @@ new class extends Component {
                                 <div class="flex flex-row gap-2 flex-wrap sm:gap-6">
                                     <x-forms.checkbox :type="'checkbox'" :name="'accept_cats'" :label="'Chats'"
                                                       :value="1"
-                                                      wire:model.live="tolerances.accept_cats"/>
+                                                      wire:model.defer="tolerances.accept_cats"/>
                                     <x-forms.checkbox :type="'checkbox'" :name="'accept_dogs'" :label="'Chiens'"
                                                       :value="1"
-                                                      wire:model.live="tolerances.accept_dogs"/>
+                                                      wire:model.defer="tolerances.accept_dogs"/>
                                     <x-forms.checkbox :type="'checkbox'" :name="'accept_kids'" :label="'Enfants'"
                                                       :value="1"
-                                                      wire:model.live="tolerances.accept_kids"/>
+                                                      wire:model.defer="tolerances.accept_kids"/>
                                 </div>
                             </fieldset>
                         </div>
-                        <span class="cta-primary w-fit self-center" @click="open = false">
+                        <x-forms.submit>
                             Résultats
-                        </span>
+                        </x-forms.submit>
                     </form>
                 </div>
                 <x-basics.cta :title="'Créer une nouvelle fiche'"
@@ -362,8 +367,6 @@ new class extends Component {
                 </x-admin.tr>
             @endforeach
         </x-admin.table>
-
-
     </x-admin.section>
 </div>
 

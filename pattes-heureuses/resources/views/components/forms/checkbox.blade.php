@@ -7,7 +7,7 @@
 <div class="flex flex-row">
     <input type="checkbox" value="{{$value}}" id="{{ $name }}" name="{{ $name }}"
            {{$attributes->whereStartsWith('wire:model')}}
-           class="peer visible: hidden">
+           class="peer sr-only">
 
     <label
         for="{{ $name }}"

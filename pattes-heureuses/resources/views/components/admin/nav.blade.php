@@ -42,11 +42,19 @@
         </h2>
 
         <a href="{{route('home')}}" title="Vers l'accueil" class="flex items-center gap-2">
-            <svg width="75" height="75" id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196.55 172.92">
+            <svg width="75" height="75" id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 196.55 172.92">
                 <defs>
                     <style>
-                        .paws { fill: #39b9b5; stroke: none; }
-                        .hearth { fill: #eb770f; stroke: none; }
+                        .paws {
+                            fill: #39b9b5;
+                            stroke: none;
+                        }
+
+                        .hearth {
+                            fill: #eb770f;
+                            stroke: none;
+                        }
                     </style>
                 </defs>
                 <g id="Calque_1-2" data-name="Calque 1">
@@ -96,26 +104,44 @@
         <div class="bg-white fixed top-0 right-0 z-30 transform -translate-x-[100%] transition-all duration-300 ease-in-out w-full min-h-screen
             flex flex-col py-20 items-center justify-around nav__lists
             lg:static lg:flex-1 lg:translate-x-0 lg:right-auto lg:top-auto lg:min-h-auto lg:py-0">
-            <ul class="flex flex-col gap-4 items-center w-full">
+            <ul class="flex flex-col gap-4  items-center w-full">
                 @foreach($navigations as $navigation)
                     <x-basics.navigation-link-admin
-                            :href="$navigation['href']"
-                            :title="$navigation['title']"
-                            :route="$navigation['route']">
+                        :href="$navigation['href']"
+                        :title="$navigation['title']"
+                        :route="$navigation['route']">
                         {{$navigation['label']}}
                     </x-basics.navigation-link-admin>
+
                 @endforeach
-            </ul>
-            <div>
                 <x-basics.navigation-link-admin :title="__('admin/nav.title'). ' ' .__('admin/nav.settings')"
                                                 :href="route('settings')"
-                :route="'settings'">
+                                                :route="'settings'">
                     {{__('admin/nav.settings')}}
                 </x-basics.navigation-link-admin>
+            </ul>
+            <div class="flex flex-col gap-4 lg:w-full">
+                <div class="relative p-4 flex flex-row  items-center gap-2">
+                    <a href="{{route('volunteers-show', auth()->user()->id)}}" class="absolute inset-0 z-10">
+                        <span class="sr-only">
+                            Compte
+                        </span>
+                    </a>
+                    <img class="img-profil" src="{{asset('img/animal/jean.jpeg')}}" alt="">
+                    <div class="flex flex-col font-fredoka text-xl">
+                        <span>
+                            {{auth()->user()->last_name}}
+                        </span>
+                        <small>
+                            {{auth()->user()->role}}
+                        </small>
+                    </div>
+                </div>
+
                 <form action="{{route('logout')}}" method="post" class="w-full">
                     @csrf
                     <button
-                        class="hover:duration-300 duration-300 cursor-pointer font-fredoka text-xl transition-all flex gap-2 items-center justify-center text-center hover:bg-red-600 py-6 rounded-lg w-full text-red-600 hover:text-white">
+                        class=" p-4 hover:duration-300 duration-300 cursor-pointer font-fredoka text-xl transition-all flex gap-2 items-center justify-center text-center hover:bg-red-600 py-6 rounded-lg w-full text-red-600 hover:text-white">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M12.5 17.5H15.8333C16.2754 17.5 16.6993 17.3244 17.0118 17.0118C17.3244 16.6993 17.5 16.2754 17.5 15.8333V4.16667C17.5 3.72464 17.3244 3.30072 17.0118 2.98816C16.6993 2.67559 16.2754 2.5 15.8333 2.5H12.5"
@@ -126,7 +152,7 @@
                             <path d="M2.5 10H12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                   stroke-linejoin="round"/>
                         </svg>
-                        Se déconnecter
+                        Déconnexion
                     </button>
                 </form>
             </div>

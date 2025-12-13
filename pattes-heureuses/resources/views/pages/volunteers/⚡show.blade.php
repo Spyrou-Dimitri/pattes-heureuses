@@ -29,11 +29,11 @@ new class extends Component {
         <div class="flex w-full flex-col gap-6 lg:grid lg:grid-cols-2">
             <x-cards.volunteer-data
                 :name="$this->volunteer->first_name . ' '. $this->volunteer->last_name"
-                :data_volunteer="$this->datas_volunteer">
+                :data_volunteer="$this->datas_volunteer"
+            :id="$this->volunteer->id">
             </x-cards.volunteer-data>
             <img src="{{asset('img/animal/jean.jpeg')}}" alt="Photo de jean"
                  class="w-full aspect-square rounded-lg shadow-main-blue-lg">
-
         </div>
     </x-admin.section>
 </div>

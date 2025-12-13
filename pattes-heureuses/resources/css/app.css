@@ -178,16 +178,23 @@ label {
     @apply font-poppins;
 }
 
-
-.cta-primary, button[type="submit"] {
+.delete {
+    @apply cursor-pointer font-fredoka text-white justify-center gap-3 items-center bg-red-600 rounded-lg px-4 text-xl py-3 flex font-semibold duration-400 border-2 border-red-600;
+    &:hover {
+        @apply bg-white text-red-600  duration-300;
+    }
+}
+.cta-primary {
     @apply cursor-pointer font-fredoka text-white justify-center gap-3 items-center bg-orange-cta rounded-lg px-4 text-xl py-3 flex font-semibold duration-400 border-2 border-orange-cta;
 
     &:hover {
-        @apply bg-white text-orange-cta  duration-400;
+        @apply bg-white text-orange-cta  duration-300;
     }
 
 
 }
+
+
 
 .cta-secondary {
     @apply text-xl font-fredoka flex justify-center items-center bg-white rounded-lg px-4 py-3 font-semibold duration-400 border-2 border-orange-cta;
@@ -199,9 +206,14 @@ label {
 
 }
 
+
+
 img {
     width: 100%;
     height: auto;
+}
+.img-profil {
+   @apply rounded-full object-cover w-16 h-16
 }
 
 .img-table {
@@ -284,8 +296,8 @@ legend {
     @apply font-poppins font-bold text-2xl w-full contents
 }
 
-input:focus, textarea:focus {
-    @apply outline-0
+input[type="checkbox"]:focus + label {
+    @apply outline-2 outline-blue-600
 }
 
 

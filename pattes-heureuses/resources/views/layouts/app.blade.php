@@ -24,6 +24,9 @@
 
 <main class="lg:col-span-1 p-12 lg:ml-0 bg-paws">
     {{$slot}}
+
+    <livewire:widgets::modal/>
+
 </main>
 
 </body>
