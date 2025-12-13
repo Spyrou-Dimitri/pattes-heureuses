@@ -13,6 +13,7 @@ class Breed extends Model
 
     protected $fillable = [
         'name',
+        'specie_id',
     ];
     function specie(): BelongsTo
     {
