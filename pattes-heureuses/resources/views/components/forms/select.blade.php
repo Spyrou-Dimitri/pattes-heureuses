@@ -2,7 +2,8 @@
     'name',
     'label' => '',
     'options' => [],
-    'hasLabel' => true
+    'hasLabel' => true,
+    'multiple' => false,
 ])
 
 <div class="flex flex-col gap-2 w-full">
@@ -11,9 +12,12 @@
             {{ $label }}
         </label>
     @endif
-
     <select
+
         name="{{ $name }}"
+        @if($multiple)
+            multiple
+        @endif
         id="{{ $name }}"
         class="bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full"
         {{$attributes->whereStartsWith('wire:model')}}

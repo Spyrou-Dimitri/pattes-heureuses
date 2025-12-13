@@ -119,7 +119,7 @@ new class extends Component {
                     <div class="flex flex-col gap-2 w-full">
                         <x-forms.select wire:model.blur="selectedSexe" :name="'volunteer-sexe'" :label="'Sexe'"
                                         :options="SexeVolunteer::cases()">
-                            <option disabled value="">--Sélectionner un sexe--</option>
+                            <option selected disabled value="">--Sélectionner un sexe--</option>
 
                         </x-forms.select>
                     </div>

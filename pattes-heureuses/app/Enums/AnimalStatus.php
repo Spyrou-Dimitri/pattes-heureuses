@@ -4,11 +4,11 @@ namespace App\Enums;
 
 enum AnimalStatus: String
 {
-    case Pending = 'pending';
-    case Adoptable = 'adoptable';
-    case UnderCare = 'under_care';
-    case Adopted = 'adopted';
-    case Deceased = 'deceased';
+    case PENDING = 'pending';
+    case ADOPTABLE = 'adoptable';
+    case UNDERCARE = 'under_care';
+    case ADOPTED = 'adopted';
+    case DECEASED = 'deceased';
 
 
 }

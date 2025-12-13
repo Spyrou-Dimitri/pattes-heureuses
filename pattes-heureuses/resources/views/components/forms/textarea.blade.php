@@ -2,6 +2,7 @@
     {{$label}}
 </label>
 <textarea
+    {{$attributes->whereStartsWith('wire:model.blur')}}
     class="py-2.5 px-4 border-1 rounded-lg border-orange-cta w-full"
     rows="10"
     name="{!! $name !!}"

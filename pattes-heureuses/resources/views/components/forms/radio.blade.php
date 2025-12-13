@@ -12,6 +12,8 @@
         <div class="p-2 border-1 border-orange-cta rounded-lg">
             <label class="flex items-center gap-2">
                 <input
+                    {{$attributes->whereStartsWith('wire:model.blur')}}
+
                     type="radio"
                     name="{{ $name }}"
                     value="1"
@@ -25,6 +27,7 @@
         <div class="p-2 border-1 border-orange-cta rounded-lg">
             <label class="flex items-center gap-2">
                 <input
+                    {{$attributes->whereStartsWith('wire:model')}}
                     type="radio"
                     name="{{ $name }}"
                     value="0"

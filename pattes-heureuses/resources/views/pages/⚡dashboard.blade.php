@@ -10,7 +10,7 @@ new class extends Component {
     #[Computed]
     public function animals_pending()
     {
-        return $animals_pending = Animal::where('state', AnimalStatus::Pending->value)->get();
+        return $animals_pending = Animal::where('state', AnimalStatus::PENDING->value)->get();
     }
 
     public function access_show($id)
