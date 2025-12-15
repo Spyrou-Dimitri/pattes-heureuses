@@ -15,8 +15,8 @@ new class extends Component {
     use WithFileUploads;
 
     public string $avatar = '';
-    public string $selectedSexe = '';
-    public string $selectedRole = '';
+    public ?SexeVolunteer $selectedSexe = null;
+    public ?RoleVolunteer $selectedRole = null;
     public string $lastName = '';
     public string $firstName = '';
     public string $email = '';
@@ -34,7 +34,7 @@ new class extends Component {
             'selectedSexe' => ['required', Rule::enum(SexeVolunteer::class)],
             'selectedRole' => ['required', Rule::enum(RoleVolunteer::class)],
             'password' => 'required|min:6',
-            'tel' => 'regex:/^\+?[0-9]{10,15}$/'
+            'tel' => 'regex:/^\+?[0-9 ]{10,15}$/'
         ];
     }
 

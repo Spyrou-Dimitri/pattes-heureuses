@@ -4,16 +4,26 @@
     'options' => [],
     'hasLabel' => true,
     'multiple' => false,
+    'required' => false,
 ])
 
 <div class="flex flex-col gap-2 w-full">
     @if($hasLabel)
         <label for="{{ $name }}" class="block text-xl font-medium">
             {{ $label }}
+            @if($required)
+                <span class="text-orange-cta">
+                *
+            </span>
+            @endif
         </label>
+
+
     @endif
     <select
-
+        @if($required)
+            required
+        @endif
         name="{{ $name }}"
         @if($multiple)
             multiple

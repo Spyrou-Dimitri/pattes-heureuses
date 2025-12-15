@@ -15,7 +15,9 @@
         class="{{ $type === 'search' ? 'hidden' : 'block text-xl font-medium' }}">
         {{ $label }}
         @if($required)
-            *
+            <span class="text-orange-cta">
+                *
+            </span>
         @endif
     </label>
 

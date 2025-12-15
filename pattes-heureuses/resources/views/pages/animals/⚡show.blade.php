@@ -20,10 +20,9 @@ new class extends Component {
         ];
         $this->animal_behavior_value = [
             'behavior' => $this->animal->behaviors->pluck('name')->join(' / '),
-            'place' => $this->animal->place,
-            'accept_dogs' => $this->animal->accept_dogs,
-            'accept_kids' => $this->animal->accept_kids,
-            'accept_cats' => $this->animal->accept_cats,
+            'accept_dogs' => $this->animal->accept_dogs_label,
+            'accept_kids' => $this->animal->accept_kids_label,
+            'accept_cats' => $this->animal->accept_cats_label,
         ];
     }
 };
@@ -37,6 +36,7 @@ new class extends Component {
                                  :sexe="$this->animal->sexe"
                                  :data_animals_profile="$this->animal_profil_value"
                                  :data_animals_behavior="$this->animal_behavior_value"
+                                 :id="$this->animal->id"
             >
             </x-cards.animal-data>
             <img src="{{asset('img/animal/jean.jpeg')}}" alt="Photo de jean"

@@ -18,29 +18,47 @@ new class extends Component {
 
     use WithFileUploads;
 
-    public bool $acceptChildren = false;
-    public bool $acceptDogs = false;
-    public bool $acceptCats = false;
-    public string $description = '';
-    public string $selectedSpecie = '';
+    public bool $acceptChildren;
+    public bool $acceptDogs;
+    public bool $acceptCats;
+    public string $description;
+    public string $selectedSpecie;
     public Collection $species;
     public Collection $coats;
     public Collection $behaviors;
-    public string $avatar = '';
-    public string $name = '';
-    public string $selectedBreed = '';
+    public string $avatar;
+    public string $name;
+    public string $selectedBreed;
     public int $age;
     public SexeAnimal $sexe;
-    public string $selectedCoat = '';
-    public string $selectedBehavior = '';
+    public string $selectedCoat;
+    public string $selectedBehavior;
 
 
     public function mount($id)
     {
-        $animal = Animal::findOrFail($id)
+
+        //Générations des selects
         $this->species = Specie::all();
         $this->behaviors = Behavior::all();
         $this->coats = Coat::all();
+
+        //Génération des infos de l'animal courrant
+        $this->animal = Animal::findOrFail($id);
+        $this->acceptChildren = $this->animal->accept_kids;
+        $this->acceptDogs = $this->animal->accept_dogs;
+        $this->acceptCats = $this->animal->accept_cats;
+        $this->description = $this->animal->description;
+        $this->selectedSpecie = $this->animal->breed->specie->id;
+        $this->avatar = $this->animal->avatar;
+        $this->name = $this->animal->name;
+        $this->selectedBreed = $this->animal->breed->id;
+        $this->age = $this->animal->age;
+        $this->sexe = $this->animal->sexe;
+        $this->selectedCoat = $this->animal->coats->pluck('name');
+        $this->selectedBehavior = $this->animal->behaviors->pluck('name');
+
+
 
     }
 
@@ -148,7 +166,7 @@ new class extends Component {
 ?>
 
 <div class="flex flex-col gap-12">
-    <x-admin.section :title="'Créer une nouvelle fiche'">
+    <x-admin.section :title="'Modification de la fiche'">
         <form action="#" wire:submit="create()" method="post"
               class="flex flex-col gap-12 border-2 border-main-blue rounded-lg p-6 bg-white">
             <fieldset class="flex flex-col gap-6">

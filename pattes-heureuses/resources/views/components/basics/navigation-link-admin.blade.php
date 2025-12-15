@@ -110,7 +110,6 @@
                 @break
 
         @endswitch
-
         <span>
             {{$slot}}
         </span>

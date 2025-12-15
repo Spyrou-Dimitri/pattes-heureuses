@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\SexeAnimal;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -59,27 +60,23 @@ class Animal extends Model
         return $this->belongsToMany(Behavior::class, 'animal_behavior', 'animal_id', 'behavior_id');
     }
 
+    protected $casts = [
+        'accept_cats' => 'boolean',
+        'accept_kids' => 'boolean',
+        'accept_dogs' => 'boolean',
+        'sexe' => SexeAnimal::class,
+    ];
 
-    protected function booleanToOuiNon(): Attribute
-    {
-        return Attribute::make(
-            get: fn(bool $value) => $value ? 'Oui' : 'Non',
-        );
+    //Création de label afin de retourner oui non dans le show des animaux.
+    //Ainsi si je veux la valeur (pour un radio) => $this->animal->accept_dog & pour une valeur oui / non => $this->animal->accept_dogs_label
+    protected function getAcceptKidsLabelAttribute () {
+        return $this->accept_kids ? 'Oui' : 'Non';
     }
-
-    protected function acceptCats(): Attribute
-    {
-        return $this->booleanToOuiNon();
+    protected function getAcceptDogsLabelAttribute () {
+        return $this->accept_dogs ? 'Oui' : 'Non';
     }
-
-    protected function acceptKids(): Attribute
-    {
-        return $this->booleanToOuiNon();
-    }
-
-    protected function acceptDogs(): Attribute
-    {
-        return $this->booleanToOuiNon();
+    protected function getAcceptCatsLabelAttribute () {
+        return $this->accept_cats ? 'Oui' : 'Non';
     }
 
 

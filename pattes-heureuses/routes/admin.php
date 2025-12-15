@@ -17,6 +17,9 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
     Route::livewire('animals/{id}', 'pages::animals.show')
         ->middleware(['auth'])
         ->name('animals-show');
+    Route::livewire('animals/edit/{id}', 'pages::animals.edit')
+        ->middleware(['auth'])
+        ->name('animals-edit');
 
 
     /* Bénévoles */
