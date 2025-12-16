@@ -27,8 +27,8 @@ new class extends Component {
         $this->user = User::findOrFail($id);
         $this->lastName = $this->user->last_name;
         $this->firstName = $this->user->first_name;
-        $this->selectedSexe = $this->user->sexe;
-        $this->selectedRole = $this->user->role;
+        $this->selectedSexe = $this->user->sexe->value;
+        $this->selectedRole = $this->user->role->value;
         $this->tel = $this->user->telephone;
         $this->email = $this->user->email;
     }

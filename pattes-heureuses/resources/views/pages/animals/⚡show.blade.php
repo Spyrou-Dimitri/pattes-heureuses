@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Animal;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
@@ -25,6 +26,19 @@ new class extends Component {
             'accept_cats' => $this->animal->accept_cats_label,
         ];
     }
+
+
+    public function change_status()
+    {
+        $this->dispatch('open_modal', ['form' => 'modals::animals.change-status', 'model_id' => $this->animal->id]);
+    }
+
+    #[On('refresh_status')]
+    public function refresh_status() {
+        $this->animal = $this->animal->fresh();
+    }
+
+
 };
 ?>
 

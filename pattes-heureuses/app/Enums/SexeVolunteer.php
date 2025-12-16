@@ -4,6 +4,13 @@ namespace App\Enums;
 
 enum SexeVolunteer: string
 {
-    case Male = 'Homme';
-    case Female = 'Femme';
+    case Man = 'man';
+    case Woman = 'woman';
+
+    public function label():string {
+        return match ($this) {
+            self::Man => 'Homme',
+            self::Woman => 'Femme',
+        };
+    }
  }

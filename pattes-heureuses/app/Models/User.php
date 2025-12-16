@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\RoleVolunteer;
+use App\Enums\SexeVolunteer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,6 +32,11 @@ class User extends Authenticatable
         'sexe',
     ];
 
+    protected $casts = [
+        'sexe' => SexeVolunteer::class,
+        'role' => RoleVolunteer::class,
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -50,6 +57,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];

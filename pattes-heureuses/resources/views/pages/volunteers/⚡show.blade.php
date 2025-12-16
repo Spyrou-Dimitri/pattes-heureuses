@@ -14,10 +14,10 @@ new class extends Component {
         $this->datas_volunteer = [
             'last_name' => $this->volunteer->last_name,
             'first_name' => $this->volunteer->first_name,
-            'sexe' => $this->volunteer->sexe,
+            'sexe' => $this->volunteer->sexe->label(),
             'email' => $this->volunteer->email,
             'phone' => $this->volunteer->telephone,
-            'role' => $this->volunteer->role
+            'role' => $this->volunteer->role->label(),
         ];
     }
 };

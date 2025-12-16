@@ -38,7 +38,7 @@
                 if (is_object($option)) {
                     if ($option instanceof BackedEnum) {
                         $optionValue = $option->value;
-                        $optionLabel = $option->value;
+                        $optionLabel = $option->label();
                     }
                     else {
                         $optionValue = $option->id ?? $option->name ?? $option;
