@@ -18,6 +18,7 @@ new class extends Component {
 
     use WithFileUploads;
 
+    public Animal $animal;
     public bool $acceptChildren;
     public bool $acceptDogs;
     public bool $acceptCats;
@@ -137,13 +138,11 @@ new class extends Component {
         $this->validateOnly($property);
     }
 
-    public function create()
-
-
+    public function update_animal()
     {
         $this->validate();
 
-        $new_animal = Animal::create([
+        $this->animal->update([
             'name' => $this->name,
             'description' => $this->description,
             'sexe' => $this->sexe,
@@ -157,17 +156,19 @@ new class extends Component {
             'breed_id' => $this->selectedBreed,
         ]);
 
-        $new_animal->coats()->attach($this->selectedCoat);
-        $new_animal->behaviors()->attach($this->selectedBehavior);
+        $this->animal->coats()->attach($this->selectedCoat);
+        $this->animal->behaviors()->attach($this->selectedBehavior);
 
-        $this->redirect(route('animals-show', $new_animal));
+        $this->redirect(route('animals-show', $this->animal->id));
+        session()->flash('success', 'Animal modifié avec succès !');
+
     }
 };
 ?>
 
 <div class="flex flex-col gap-12">
     <x-admin.section :title="'Modification de la fiche'">
-        <form action="#" wire:submit="create()" method="post"
+        <form action="#" wire:submit="update_animal()" method="post"
               class="flex flex-col gap-12 border-2 border-main-blue rounded-lg p-6 bg-white">
             <fieldset class="flex flex-col gap-6">
                 <legend>

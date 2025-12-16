@@ -35,9 +35,8 @@ new class extends Component {
     public string $selectedBehavior = '';
 
 
-    public function mount($id)
+    public function mount()
     {
-        $animal = Animal::findOrFail($id)
         $this->species = Specie::all();
         $this->behaviors = Behavior::all();
         $this->coats = Coat::all();

@@ -353,7 +353,9 @@ new class extends Component {
                         {{$animal->breed->name}}
                     </x-admin.td>
                     <x-admin.td>
-                        {{ __('admin/filter_tag.' . $animal->state) }}
+                        <span class="{{$animal->state->color()}} border-2 p-2 rounded-lg bg-gray-50 font-poppins font-semibold">
+                            {{$animal->state->label() }}
+                        </span>
                     </x-admin.td>
                     <x-admin.td x-data="{ open: false }">
                         <button @click.stop="open = !open" class="text-8xl text-center">

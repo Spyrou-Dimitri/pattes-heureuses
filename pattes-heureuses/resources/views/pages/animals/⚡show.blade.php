@@ -31,8 +31,10 @@ new class extends Component {
 <div class="">
     <x-admin.section :title="'Fiche de' . ' ' . $this->animal->name"
                      :align="true">
+
         <div class="flex w-full flex-col gap-6 lg:grid lg:grid-cols-2">
             <x-cards.animal-data :name="$this->animal->name"
+                                 :state="$this->animal->state"
                                  :sexe="$this->animal->sexe"
                                  :data_animals_profile="$this->animal_profil_value"
                                  :data_animals_behavior="$this->animal_behavior_value"

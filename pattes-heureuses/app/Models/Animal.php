@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AnimalStatus;
 use App\Enums\SexeAnimal;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -65,6 +66,7 @@ class Animal extends Model
         'accept_kids' => 'boolean',
         'accept_dogs' => 'boolean',
         'sexe' => SexeAnimal::class,
+        'state' => AnimalStatus::class,
     ];
 
     //Création de label afin de retourner oui non dans le show des animaux.
