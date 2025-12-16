@@ -114,10 +114,6 @@ new class extends Component {
                 $animals->where($column, true);
             }
         }
-
-
-
-
         return $animals->orderBy('name', 'asc')->paginate(8);
 
     }
@@ -146,7 +142,7 @@ new class extends Component {
 
 <div class="flex flex-col gap-12">
     <x-admin.section :title="'Statistiques'">
-        <ul class="flex flex-col gap-6 md:flex-row md:gap-12">
+        <ul class="flex flex-col gap-6 justify-between items-center md:grid md:grid-cols-9 md:gap-12">
             <x-cards.stat-card :icons="'paws'"
                                :title="'Animaux'"
                                :number="Animal::all()->count()">
@@ -155,12 +151,12 @@ new class extends Component {
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'dog'"
                                :title="'Chiens'"
-                               :number="Animal::whereHas('breed.specie', function($get_number){$get_number->where('name', 'Chien');})->count()">
+                               :number="Animal::whereHas('breed.specie', fn($get_number) => $get_number->where('name', 'Chien'))->count()">
 
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'cat'"
                                :title="'Chats'"
-                               :number="Animal::whereHas('breed.specie', function($get_number){$get_number->where('name', 'Chat');})->count()">
+                               :number="Animal::whereHas('breed.specie', fn($get_number) => $get_number->where('name', 'Chat'))->count()">
             </x-cards.stat-card>
 
         </ul>
@@ -178,12 +174,9 @@ new class extends Component {
                            class="filter_link {{ $filter_tag === $status->value ? 'active' : '' }}">{!! __('admin/filter_tag.' .$status->value)!!}</a>
                     </li>
                 @endforeach
-
             </ul>
-
             <x-forms.input :type="'search'" :name="'animal-search'" :label="'Rechercher un animal'"
                            :placeholder="'Barre de recherche'"/>
-
             <div class="flex justify-between md:gap-4 md:justify-start" x-data="{open: false}">
                 <button class="cta-secondary cursor-pointer" @click.stop="open = !open">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24">
@@ -353,22 +346,18 @@ new class extends Component {
                         {{$animal->breed->name}}
                     </x-admin.td>
                     <x-admin.td>
+                        {{$animal->age}}
+                    </x-admin.td>
+                    <x-admin.td>
                         <span class="{{$animal->state->color()}} border-2 p-2 rounded-lg bg-gray-50 font-poppins font-semibold">
                             {{$animal->state->label() }}
                         </span>
                     </x-admin.td>
-                    <x-admin.td x-data="{ open: false }">
-                        <button @click.stop="open = !open" class="text-8xl text-center">
-                            …
-                        </button>
-                        <div x-show="open" @click.outside="open = false" class="absolute bg-white shadow p-2">
-                            <a href="#" wire:click="delete({{ $animal->id }})">Supprimer</a>
-                            <a href="#">Modifier</a>
-                        </div>
-                    </x-admin.td>
+
                 </x-admin.tr>
             @endforeach
         </x-admin.table>
+        
     </x-admin.section>
 </div>
 
