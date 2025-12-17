@@ -215,6 +215,9 @@ img {
 .img-profil {
    @apply rounded-full object-cover w-16 h-16
 }
+.img-type-file {
+    @apply w-1/2 h-auto mx-auto md:w-1/4 lg:w-200 lg:h-auto rounded-lg
+}
 
 .img-table {
     border-radius: 0.5rem;

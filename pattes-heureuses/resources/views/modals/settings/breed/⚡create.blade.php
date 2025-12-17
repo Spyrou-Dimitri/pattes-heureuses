@@ -9,7 +9,7 @@ use Livewire\Component;
 new class extends Component {
     public Breed $breed;
     public string $title_breed = '';
-    public int $specie_id;
+    public ?int $specie_id = null;
     public Collection $species;
 
     public function mount(?string $model_id = null)
@@ -40,15 +40,15 @@ new class extends Component {
 
 <div wire:click="dispatch('close_modal')"
      class="fixed flex justify-center items-center w-full min-h-screen top-0 right-0 bg-black/20">
-    <form class="bg-white p-16 rounded-lg" wire:click.stop wire:submit="create()">
+    <form class="bg-white p-16 rounded-lg" wire:click.stop wire:submit.prevent="create()">
         <fieldset class="flex flex-col justify-center gap-4">
             <legend class="contents text-center">
                 <span>Nouveau caractère</span>
             </legend>
-            <x-forms.select wire:model="specie_id" :label="'Espèce'" :name="'specie_id'" :options="$this->species">
-                <option disabled value="">--Selectionner une espèce</option>
+            <x-forms.select wire:model.live="specie_id" :label="'Espèce'" :name="'specie_id'" :options="$this->species">
+                <option value="">--Selectionner une espèce</option>
             </x-forms.select>
-            <x-forms.input wire:model="title_breed" :name="'new-breed'" :type="'text'" :label="'Race'"/>
+            <x-forms.input wire:model.live="title_breed" :name="'new-breed'" :type="'text'" :label="'Race'"/>
             <x-forms.submit>
                 Créer
             </x-forms.submit>

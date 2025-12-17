@@ -17,7 +17,7 @@
     </span>
 
     <div class="flex gap-6">
-        <div class="p-2 border-1 border-orange-cta rounded-lg">
+        <div class="p-2 border-2 border-orange-cta rounded-lg">
             <label class="flex items-center gap-2">
                 <input
                     {{$attributes->whereStartsWith('wire:model')}}
@@ -32,7 +32,7 @@
         </div>
 
 
-        <div class="p-2 border-1 border-orange-cta rounded-lg">
+        <div class="p-2 border-2 border-orange-cta rounded-lg">
             <label class="flex items-center gap-2">
                 <input
                     {{$attributes->whereStartsWith('wire:model')}}

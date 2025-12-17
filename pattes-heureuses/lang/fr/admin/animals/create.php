@@ -5,6 +5,7 @@ return [
     'legend' => 'Informations sur l\'animal',
     'avatar' => 'Photo',
     'name' => 'Nom',
+    'state' => 'Status',
     'type' => 'Espèce',
     'disabled_type' => '-- Selectionner une espèce --',
     'breed' => 'Race',

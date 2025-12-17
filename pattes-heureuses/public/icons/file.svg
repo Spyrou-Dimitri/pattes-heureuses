@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 632.96 632.96">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f8f8f8;
+        stroke: #ec770f;
+        stroke-miterlimit: 10;
+        stroke-width: 4px;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: rgba(236, 119, 15, .9);
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 6px;
+      }
+    </style>
+  </defs>
+  <g id="Calque_1-2" data-name="Calque 1">
+    <g>
+      <circle class="cls-1" cx="316.48" cy="316.48" r="314.48"/>
+      <g id="SVGRepo_iconCarrier" data-name="SVGRepo iconCarrier">
+        <path class="cls-2" d="M64.48,340.79c50.09-138.81,163.67-249.05,305.43-205.79,98.92,30.19,57.42,86.45,95.86,123.44,21.69,16.69,80.57-5.71,95.8,15.12,13.46,18.42,3.74,52.04,0,74.1-14.74,87-114.47,99.81-198.97,99.81"/>
+        <path class="cls-2" d="M180.96,279.92c-5.03,27.38-82.54,213.85-2.29,229.73,149.03,21.29,131.14-148.23,131.14-254.17"/>
+        <path class="cls-2" d="M384.48,253.48v10"/>
+      </g>
+    </g>
+  </g>
+</svg>
