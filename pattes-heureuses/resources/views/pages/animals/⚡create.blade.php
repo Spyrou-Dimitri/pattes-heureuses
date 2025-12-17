@@ -147,24 +147,24 @@ new class extends Component {
 ?>
 
 <div class="flex flex-col gap-12">
-    <x-admin.section :title="'Créer une nouvelle fiche'">
+    <x-admin.section :title="__('admin/animals/create.title')">
         <form action="#" wire:submit="create()" method="post"
               class="flex flex-col gap-12 border-2 border-main-blue rounded-lg p-6 bg-white">
             <fieldset class="flex flex-col gap-6">
                 <legend>
-                    Informations sur l'animal
+                    {{__('admin/animals/create.legend')}}
                 </legend>
                 <div class="flex flex-col gap-6 sm:flex-row sm:justify-between border-t-2 border-t-main-blue pt-5">
                     <div class="flex flex-col gap-2 w-full">
                         <x-forms.input class="w-full" wire:model.blur="avatar" :type="'file'" :name="'animal-avatar'"
-                                       :label="'Photo'"/>
+                                       :label="__('admin/animals/create.avatar')"/>
                         <span
                             class="font-poppins text-red-600 font-semibold">@error('avatar') {{ $message }} @enderror
                     </span>
                     </div>
                     <div class="flex flex-col gap-2 w-full">
                         <x-forms.input  :required="true" class="w-full" wire:model.blur="name" :type="'text'" :name="'animal-name'"
-                                       :label="'Nom'"
+                                       :label="__('admin/animals/create.name')"
                                        :placeholder="'Peanut'"/>
                         <span
                             class="font-poppins text-red-600 font-semibold">@error('name') {{ $message }} @enderror
@@ -173,18 +173,18 @@ new class extends Component {
                 </div>
                 <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                     <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select :required="true" :name="'animal-type'" wire:model.blur="selectedSpecie" :label="'Type'"
+                        <x-forms.select :required="true" :name="'animal-type'" wire:model.blur="selectedSpecie" :label="__('client/animals/show/show.type')"
                                         :options="$this->species">
-                            <option selected disabled value="">--Selectionner une espèce--</option>
+                            <option selected disabled value="">{{__('admin/animals/create.disabled_breed')}}</option>
                         </x-forms.select>
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('selectedSpecie') {{ $message }} @enderror
                         </span>
                     </div>
                     <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select required :name="'animal-breed'" wire:model.blur="selectedBreed" :label="'Race'"
+                        <x-forms.select required :name="'animal-breed'" wire:model.blur="selectedBreed" :label="__('admin/animals/create.breed')"
                                         :options="$this->breeds">
-                            <option selected disabled value="">--Selectionner une espèce--</option>
+                            <option selected disabled value="">{{__('admin/animals/create.disabled_breed')}}</option>
 
                         </x-forms.select>
                         <span class="font-poppins text-red-600 font-semibold">
@@ -195,16 +195,16 @@ new class extends Component {
                 <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                     <div class="flex flex-col gap-2 w-full">
                         <x-forms.input :required="true" class="w-full" wire:model.blur="age" :type="'number'" :name="'animal-age'"
-                                       :label="'Age'"
+                                       :label="__('admin/animals/create.age')"
                                        :placeholder="2"/>
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('age') {{ $message }} @enderror
                         </span>
                     </div>
                     <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select :required="true" :name="'animal-sexe'" wire:model.blur="sexe" :label="'Sexe'"
+                        <x-forms.select :required="true" :name="'animal-sexe'" wire:model.blur="sexe" :label="__('admin/animals/create.sexe')"
                                         :options="SexeAnimal::cases()">
-                            <option selected disabled value="">--Selectionner un sexe--</option>
+                            <option selected disabled value="">{{__('admin/animals/create.disabled_sexe')}}</option>
                         </x-forms.select>
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('sexe') {{ $message }} @enderror
@@ -213,18 +213,18 @@ new class extends Component {
                 </div>
                 <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                     <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select :required="true" wire:model.blur="selectedCoat" :name="'animal-coat'" :label="'Pelage'"
+                        <x-forms.select :required="true" wire:model.blur="selectedCoat" :name="'animal-coat'" :label="__('admin/animals/create.coat')"
                                         :options="$this->coats">
-                            <option selected disabled value="">--Selectionner un pelage--</option>
+                            <option selected disabled value="">{{__('admin/animals/create.disabled_coat')}}</option>
                         </x-forms.select>
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('selectedCoat') {{ $message }} @enderror
                         </span>
                     </div>
                     <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select :required="true" :name="'animal-state'" wire:model="selectedBehavior" :label="'Caractère'"
+                        <x-forms.select :required="true" :name="'animal-state'" wire:model="selectedBehavior" :label="__('admin/animals/create.behavior')"
                                         :options="$this->behaviors">
-                            <option selected disabled value="">--Selectionner un status--</option>
+                            <option selected disabled value="">{{__('admin/animals/create.disabled_behavior')}}</option>
                         </x-forms.select>
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('selectedBehavior') {{ $message }} @enderror
@@ -234,19 +234,19 @@ new class extends Component {
                 <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                     <div class="flex flex-col gap-2 w-full">
                         <x-forms.radio :required="true" wire:model.blur="acceptChildren" :name="'accept-children'"
-                                       :label="'Tolérance enfants'"/>
+                                       :label="__('admin/animals/create.accept_kids')"/>
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('acceptChildren') {{ $message }} @enderror
                         </span>
                     </div>
                     <div class="flex flex-col gap-2 w-full">
-                        <x-forms.radio :required="true" wire:model.blur="acceptDogs" :name="'accept-dogs'" :label="'Tolérance chiens'"/>
+                        <x-forms.radio :required="true" wire:model.blur="acceptDogs" :name="'accept-dogs'" :label="__('admin/animals/create.accept_dogs')"/>
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('acceptDogs') {{ $message }} @enderror
                         </span>
                     </div>
                     <div class="flex flex-col gap-2 w-full">
-                        <x-forms.radio :required="true" wire:model.blur="acceptCats" :name="'accept-cats'" :label="'Tolérance chats'"/>
+                        <x-forms.radio :required="true" wire:model.blur="acceptCats" :name="'accept-cats'" :label="__('admin/animals/create.accept_cats')"/>
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('acceptCats') {{ $message }} @enderror
                         </span>
@@ -255,21 +255,21 @@ new class extends Component {
             </fieldset>
             <fieldset class="flex flex-col gap-6">
                 <legend>
-                    Descriptions & Notes
+                    {{__('admin/animals/create.title_desc')}}
                 </legend>
                 <div class="border-t-2 border-t-main-blue pt-5">
                     <div class="flex gap-6">
                         <div class="flex w-full gap-2 flex-col">
                             <x-forms.textarea wire:model.blur="description" :name="'animal-description'"
-                                              :label="'Description'"
-                                              :placeholder="'Votre description ici...'"/>
+                                              :label="__('admin/animals/create.desc')"
+                                              :placeholder="__('admin/animals/create.placerholder_desc')"/>
                         </div>
                     </div>
                 </div>
 
             </fieldset>
             <x-forms.submit>
-                Créer la fiche
+                {{__('admin/animals/create.submit')}}
             </x-forms.submit>
         </form>
     </x-admin.section>

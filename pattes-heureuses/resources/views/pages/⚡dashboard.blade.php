@@ -34,21 +34,21 @@ new class extends Component {
 
 
     ?>
-    <x-admin.section :title="'Bienvenue Dimitri'">
+    <x-admin.section :title="__('admin/dashboard/dashboard.welcome')">
         <ul class="flex flex-col gap-6 md:flex-row md:gap-12">
             <x-cards.stat-card :icons="'paws'"
-                               :title="'Nouveaux animaux'"
+                               :title="__('admin/dashboard/dashboard.title_new_animals')"
                                :number="$this->animals_pending->count()">
 
 
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'hearth'"
-                               :title="'Nouvelles adoptions'"
+                               :title="__('admin/dashboard/dashboard.title_new_adoptions')"
                                :number="5">
 
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'paws'"
-                               :title="'Nouveaux animaux'"
+                               :title="__('admin/dashboard/dashboard.title_new_messages')"
                                :number="8">
 
             </x-cards.stat-card>
@@ -59,7 +59,7 @@ new class extends Component {
     </x-admin.section>
 
 
-    <x-admin.section :title="'Nouveaux animaux'">
+    <x-admin.section :title="__('admin/dashboard/dashboard.title_new_animals')">
         <x-admin.table :header="'new_animals'">
             @foreach($this->animals_pending as $animal_pending)
                 <x-admin.tr wire:click="access_show({{ $animal_pending->id }})" wire:key="{{ $animal_pending->id }}">
@@ -87,7 +87,7 @@ new class extends Component {
 
         </x-admin.table>
     </x-admin.section>
-    <x-admin.section :title="'Nouvelles adoptions'">
+    <x-admin.section :title="__('admin/dashboard/dashboard.title_new_adoptions')">
         <x-admin.table :header="'new_adoptions'">
 
 
