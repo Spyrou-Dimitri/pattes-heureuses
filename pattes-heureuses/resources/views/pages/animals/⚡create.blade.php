@@ -3,6 +3,7 @@
 use App\Enums\AnimalStatus;
 use App\Enums\SexeAnimal;
 use App\Enums\SexeVolunteer;
+use App\Jobs\ProcessUploadedImageJob;
 use App\Models\Animal;
 use App\Models\Behavior;
 use App\Models\Breed;
@@ -20,7 +21,7 @@ new class extends Component {
     use WithFileUploads;
 
 
-    public $image;
+    public $avatar;
     public AnimalStatus $status;
     public bool $acceptChildren = false;
     public bool $acceptDogs = false;
@@ -30,7 +31,6 @@ new class extends Component {
     public Collection $species;
     public Collection $coats;
     public Collection $behaviors;
-    public string $avatar = '';
     public string $name = '';
     public string $selectedBreed = '';
     public int $age;
@@ -66,6 +66,7 @@ new class extends Component {
         return [
             'avatar' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp',
             'name' => 'required|min:3',
+            'description' => 'nullable|string',
             'status' => ['required', Rule::enum(AnimalStatus::class)],
             'selectedSpecie' => 'required|exists:species,id',
             'selectedBreed' => ['required',
@@ -138,6 +139,7 @@ new class extends Component {
             $this->dispatch('open_modal', ['form' => 'modals::settings.coat.create']);
         }
     }
+
     public function updatedSelectedBehavior($value)
     {
         if ($value === 'new_behavior') {
@@ -153,28 +155,44 @@ new class extends Component {
 
     public function delete_img()
     {
-        $this->reset('image');
+        $this->reset('avatar');
     }
 
     public function create()
     {
-        $this->validate();
+        $validated = $this->validate();
+        if ($validated['avatar']) {
+            $new_original_file_name = uniqid() . '.' . config('animalavatars.image_type');
+            $full_path_to_original = Storage::putFileAs(
+                config('animalavatars.original_path'),
+                $validated['avatar'],
+                $new_original_file_name
+            );
+            if ($full_path_to_original) {
+                $validated['avatar'] = $new_original_file_name;
+                ProcessUploadedImageJob::dispatch($full_path_to_original, $new_original_file_name);
+            } else {
+                $validated['avatar'] = '';
+            }
+        }
+
         $new_animal = Animal::create([
-            'name' => $this->name,
-            'state' => $this->status,
-            'description' => $this->description,
-            'sexe' => $this->sexe,
-            'age' => $this->age,
+            'name' => $validated['name'],
+            'state' => $validated['status'],
+            'description' => $validated['description'],
+            'sexe' => $validated['sexe'],
+            'age' => $validated['age'],
             'author' => auth()->user()->last_name . ' ' . auth()->user()->first_name,
-            'avatar' => $this->avatar,
-            'accept_kids' => $this->acceptChildren,
-            'accept_dogs' => $this->acceptDogs,
-            'accept_cats' => $this->acceptCats,
-            'breed_id' => $this->selectedBreed,
+            'avatar' => $validated['avatar'],
+            'accept_kids' => $validated['acceptChildren'],
+            'accept_dogs' => $validated['acceptDogs'],
+            'accept_cats' => $validated['acceptCats'],
+            'breed_id' => $validated['selectedBreed'],
         ]);
 
-        $new_animal->coats()->attach($this->selectedCoat);
-        $new_animal->behaviors()->attach($this->selectedBehavior);
+        // ===== RELATIONS =====
+        $new_animal->coats()->attach($validated['selectedCoat']);
+        $new_animal->behaviors()->attach($validated['selectedBehavior']);
 
         $this->redirect(route('animals-show', $new_animal));
     }
@@ -192,11 +210,11 @@ new class extends Component {
                 <div
                     class="border-t-2 border-t-main-blue pt-5 flex flex-col justify-between lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-16">
                     <div class="lg:col-span-4 flex flex-col gap-2 w-full relative">
-                        <input wire:model="image" type="file" id="avatar" class="absolute inset-0 hidden" name="avatar">
+                        <input wire:model="avatar" type="file" id="avatar" class="absolute inset-0 hidden" name="avatar">
                         <label for="avatar" class="flex flex-col gap-2 items-center">
                             <img
-                                @if($this->image)
-                                    src="{!! $this->image->temporaryUrl() !!}"
+                                @if($this->avatar)
+                                    src="{!! $this->avatar->temporaryUrl() !!}"
 
                                 @else {
                                 src="{{asset('icons/file.svg')}}"
@@ -204,7 +222,7 @@ new class extends Component {
                                 @endif
                                 alt="" class="img-type-file">
 
-                            @if($this->image)
+                            @if($this->avatar)
                                 <button href="#"
                                         wire:click.prevent="delete_img()"
                                         x-data="{hover : false}"
@@ -220,7 +238,7 @@ new class extends Component {
                                     </svg>
                                 </button>
                             @endif
-                            @if($this->image === null)
+                            @if($this->avatar === null)
                                 <span class="text-xl font-poppins">
                                 Importer une image
                             </span>
@@ -247,7 +265,10 @@ new class extends Component {
                                 <x-forms.select :required="true" wire:model.live="status"
                                                 :options="AnimalStatus::cases()" class="w-full" :name="'animal-state'"
                                                 :label="__('admin/animals/create.state')"
-                                />
+                                >
+                                    <option selected
+                                            value="">{{__('admin/animals/create.disabled_sexe')}}</option>
+                                </x-forms.select>
                                 <span
                                     class="font-poppins text-red-600 font-semibold">@error('status') {{ $message }} @enderror
                     </span>
@@ -293,8 +314,9 @@ new class extends Component {
                                 <x-forms.select :required="true" :name="'animal-sexe'" wire:model.live="sexe"
                                                 :label="__('admin/animals/create.sexe')"
                                                 :options="SexeAnimal::cases()">
-                                    <option selected disabled
+                                    <option selected
                                             value="">{{__('admin/animals/create.disabled_sexe')}}</option>
+
                                 </x-forms.select>
                                 <span class="font-poppins text-red-600 font-semibold">
                             @error('sexe') {{ $message }} @enderror
@@ -316,7 +338,8 @@ new class extends Component {
                         </span>
                             </div>
                             <div class="flex flex-col gap-2 w-full">
-                                <x-forms.select :required="true" :name="'animal-state'" wire:model.live="selectedBehavior"
+                                <x-forms.select :required="true" :name="'animal-state'"
+                                                wire:model.live="selectedBehavior"
                                                 :label="__('admin/animals/create.behavior')"
                                                 :options="$this->behaviors">
                                     <option selected disabled
@@ -364,7 +387,7 @@ new class extends Component {
                 <div class="border-t-2 border-t-main-blue pt-5">
                     <div class="flex gap-6">
                         <div class="flex w-full gap-2 flex-col">
-                            <x-forms.textarea wire:model.live="description" :name="'animal-description'"
+                            <x-forms.textarea wire:model.blur="description" :name="'animal-description'"
                                               :label="__('admin/animals/create.desc')"
                                               :placeholder="__('admin/animals/create.placerholder_desc')"/>
                         </div>
