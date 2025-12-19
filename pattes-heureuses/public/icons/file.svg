@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 632.96 632.96">
+<svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 433.71 345.72">
   <defs>
     <style>
-      .cls-1 {
-        fill: #f8f8f8;
-        stroke: #ec770f;
-        stroke-miterlimit: 10;
-        stroke-width: 4px;
+      .cls-1, .cls-2 {
+        fill: #fff;
       }
 
-      .cls-2 {
+      .cls-1, .cls-3 {
+        stroke: #ec770f;
+        stroke-miterlimit: 10;
+        stroke-width: 3px;
+      }
+
+      .cls-3 {
         fill: none;
-        stroke: rgba(236, 119, 15, .9);
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-width: 6px;
       }
     </style>
   </defs>
   <g id="Calque_1-2" data-name="Calque 1">
     <g>
-      <circle class="cls-1" cx="316.48" cy="316.48" r="314.48"/>
-      <g id="SVGRepo_iconCarrier" data-name="SVGRepo iconCarrier">
-        <path class="cls-2" d="M64.48,340.79c50.09-138.81,163.67-249.05,305.43-205.79,98.92,30.19,57.42,86.45,95.86,123.44,21.69,16.69,80.57-5.71,95.8,15.12,13.46,18.42,3.74,52.04,0,74.1-14.74,87-114.47,99.81-198.97,99.81"/>
-        <path class="cls-2" d="M180.96,279.92c-5.03,27.38-82.54,213.85-2.29,229.73,149.03,21.29,131.14-148.23,131.14-254.17"/>
-        <path class="cls-2" d="M384.48,253.48v10"/>
+      <path class="cls-3" d="M196.07,299.17h161.88c18.12,0,32.8-14.69,32.8-32.8V76.16c0-18.12-14.69-32.8-32.8-32.8h-72.62l-24.63-28.91c-7-8.21-17.24-12.95-28.03-12.95h-73.07c-10.79,0-21.04,4.73-28.03,12.95l-24.63,28.91H34.3C16.19,43.36,1.5,58.05,1.5,76.16v190.21c0,18.12,14.69,32.8,32.8,32.8h161.88"/>
+      <circle class="cls-3" cx="196.18" cy="167.3" r="64.37"/>
+      <circle class="cls-3" cx="196.18" cy="167.3" r="94.89"/>
+      <circle class="cls-2" cx="362.39" cy="274.4" r="71.32"/>
+      <g>
+        <line class="cls-1" x1="317.05" y1="274.4" x2="407.74" y2="274.4"/>
+        <line class="cls-1" x1="362.39" y1="319.75" x2="362.39" y2="229.06"/>
       </g>
     </g>
   </g>

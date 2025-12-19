@@ -21,6 +21,9 @@ new class extends Component {
     use WithFileUploads;
 
 
+    public array $selectedCoat = [];
+    public array $selectedBehavior = [];
+
     public $avatar;
     public AnimalStatus $status;
     public bool $acceptChildren = false;
@@ -35,8 +38,9 @@ new class extends Component {
     public string $selectedBreed = '';
     public int $age;
     public SexeAnimal $sexe;
-    public string $selectedCoat = '';
-    public string $selectedBehavior = '';
+
+
+
 
 
     public function mount()
@@ -53,7 +57,7 @@ new class extends Component {
         return Breed::where('specie_id', $this->selectedSpecie)->get();
     }
 
-    //Remet la race à zéro si on change d'espèce
+    //Remet la race à zéro si je change d'espèce
     public function updatedSelectedSpecie()
     {
         $this->selectedBreed = '';
@@ -138,6 +142,7 @@ new class extends Component {
         if ($value === 'new_coat') {
             $this->dispatch('open_modal', ['form' => 'modals::settings.coat.create']);
         }
+        debug($this->selectedCoat);
     }
 
     public function updatedSelectedBehavior($value)
@@ -190,14 +195,16 @@ new class extends Component {
             'breed_id' => $validated['selectedBreed'],
         ]);
 
-        // ===== RELATIONS =====
         $new_animal->coats()->attach($validated['selectedCoat']);
         $new_animal->behaviors()->attach($validated['selectedBehavior']);
 
         $this->redirect(route('animals-show', $new_animal));
     }
+
 };
 ?>
+
+
 
 <div class="flex flex-col gap-12">
     <x-admin.section :title="__('admin/animals/create.title')">
@@ -210,8 +217,9 @@ new class extends Component {
                 <div
                     class="border-t-2 border-t-main-blue pt-5 flex flex-col justify-between lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-16">
                     <div class="lg:col-span-4 flex flex-col gap-2 w-full relative">
-                        <input wire:model="avatar" type="file" id="avatar" class="absolute inset-0 hidden" name="avatar">
-                        <label for="avatar" class="flex flex-col gap-2 items-center">
+                        <input wire:model="avatar" type="file" id="avatar" class="absolute inset-0 hidden"
+                               name="avatar">
+                        <label for="avatar" class="cursor-pointer flex flex-col gap-2 items-center">
                             <img
                                 @if($this->avatar)
                                     src="{!! $this->avatar->temporaryUrl() !!}"
@@ -325,28 +333,13 @@ new class extends Component {
                         </div>
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                             <div class="flex flex-col gap-2 w-full">
-                                <x-forms.select :required="true" wire:model.live="selectedCoat" :name="'animal-coat'"
-                                                :label="__('admin/animals/create.coat')"
-                                                :options="$this->coats">
-                                    <option selected disabled
-                                            value="">{{__('admin/animals/create.disabled_coat')}}</option>
-                                    <option value="new_coat">Ajouter un nouveau pelage</option>
-
-                                </x-forms.select>
+                                <livewire:livewire.select wire:model="selectedCoat" name="{{__('admin/animals/create.coat')}}" disabled="{{__('admin/animals/create.disabled_coat')}}" models="{{Coat::class}}"/>
                                 <span class="font-poppins text-red-600 font-semibold">
                             @error('selectedCoat') {{ $message }} @enderror
                         </span>
                             </div>
                             <div class="flex flex-col gap-2 w-full">
-                                <x-forms.select :required="true" :name="'animal-state'"
-                                                wire:model.live="selectedBehavior"
-                                                :label="__('admin/animals/create.behavior')"
-                                                :options="$this->behaviors">
-                                    <option selected disabled
-                                            value="">{{__('admin/animals/create.disabled_behavior')}}</option>
-                                    <option value="new_behavior">Ajouter un nouveau caractère</option>
-
-                                </x-forms.select>
+                                <livewire:livewire.select wire:model="selectedBehavior" name="{{__('admin/animals/create.behavior')}}" disabled="{{__('admin/animals/create.disabled_behavior')}}" models="{{Behavior::class}}"/>
                                 <span class="font-poppins text-red-600 font-semibold">
                             @error('selectedBehavior') {{ $message }} @enderror
                         </span>

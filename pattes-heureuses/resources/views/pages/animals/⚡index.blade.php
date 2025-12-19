@@ -46,7 +46,9 @@ new class extends Component {
         unset($this->filteredBreeds);
     }
 
-    public function applyFilters() {}
+    public function applyFilters()
+    {
+    }
 
 
     #[Computed]
@@ -166,7 +168,8 @@ new class extends Component {
         <div class="flex flex-col gap-4 justify-between md:items-center md:flex-row flex-wrap">
             <ul class="flex gap-4 md:gap-8 text-poppins flex-wrap">
                 <li>
-                    <a href="#all" wire:click="set_tag('')" class="filter_link {{$filter_tag === '' ? 'active': ''}}">{{__('admin/animals/index.filter_tag_all')}}</a>
+                    <a href="#all" wire:click="set_tag('')"
+                       class="filter_link {{$filter_tag === '' ? 'active': ''}}">{{__('admin/animals/index.filter_tag_all')}}</a>
                 </li>
                 @foreach(AnimalStatus::cases() as $status)
                     <li>
@@ -175,7 +178,8 @@ new class extends Component {
                     </li>
                 @endforeach
             </ul>
-            <x-forms.input :type="'search'" :name="'animal-search'" :label="__('client/animals/index/landing.search-bar-label')"
+            <x-forms.input :type="'search'" :name="'animal-search'"
+                           :label="__('client/animals/index/landing.search-bar-label')"
                            :placeholder="__('admin/animals/index.search_bar_placeholder')"/>
             <div class="flex justify-between md:gap-4 md:justify-start" x-data="{open: false}">
                 <button class="cta-secondary cursor-pointer" @click.stop="open = !open">
@@ -357,7 +361,8 @@ new class extends Component {
                         {{$animal->age}}
                     </x-admin.td>
                     <x-admin.td>
-                        <span class="{{$animal->state->color()}} border-2 p-2 rounded-lg bg-gray-50 font-poppins font-semibold">
+                        <span
+                            class="{{$animal->state->color()}} border-2 p-2 rounded-lg bg-gray-50 font-poppins font-semibold">
                             {{$animal->state->label() }}
                         </span>
                     </x-admin.td>
