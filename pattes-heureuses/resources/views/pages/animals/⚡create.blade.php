@@ -9,6 +9,8 @@ use App\Models\Behavior;
 use App\Models\Breed;
 use App\Models\Coat;
 use App\Models\Specie;
+use App\Models\SpecieVaccin;
+use App\Models\Vaccin;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
@@ -19,11 +21,10 @@ use Livewire\WithFileUploads;
 new class extends Component {
 
     use WithFileUploads;
-
-
+    public array $selectedVaccins = [];
     public array $selectedCoat = [];
-    public array $selectedBehavior = [];
 
+    public array $selectedBehavior = [];
     public $avatar;
     public AnimalStatus $status;
     public bool $acceptChildren = false;
@@ -40,9 +41,6 @@ new class extends Component {
     public SexeAnimal $sexe;
 
 
-
-
-
     public function mount()
     {
         $this->species = Specie::all();
@@ -56,6 +54,17 @@ new class extends Component {
     {
         return Breed::where('specie_id', $this->selectedSpecie)->get();
     }
+
+    #[Computed]
+    public function getVaccins()
+    {
+        if (!$this->selectedSpecie) {
+            return collect();
+        }
+        return Specie::find($this->selectedSpecie)->vaccins;
+    }
+
+
 
     //Remet la race à zéro si je change d'espèce
     public function updatedSelectedSpecie()
@@ -82,6 +91,8 @@ new class extends Component {
             'acceptChildren' => ['required', 'boolean'],
             'acceptDogs' => ['required', 'boolean'],
             'acceptCats' => ['required', 'boolean'],
+            'selectedVaccins' => ['required', 'exists:vaccins,id']
+
         ];
     }
 
@@ -112,6 +123,8 @@ new class extends Component {
             'acceptChildren.boolean' => 'Veuillez indiquer si l’animal accepte les enfants.',
             'acceptDogs.boolean' => 'Veuillez indiquer si l’animal accepte les chiens.',
             'acceptCats.boolean' => 'Veuillez indiquer si l’animal accepte les chats.',
+            'selectedVaccins.required' => 'Les :attribute sont requis',
+            'selectedVaccins.exists' => 'Ce :attribute n\'est pas référencé dans notre base de données',
         ];
     }
 
@@ -126,7 +139,8 @@ new class extends Component {
             'age' => 'age',
             'sexe' => 'sexe',
             'selectedCoat' => 'pelage',
-            'selectedBehavior' => 'caractère'
+            'selectedBehavior' => 'caractère',
+            'selectedVaccins' => 'vaccin',
         ];
     }
 
@@ -142,7 +156,6 @@ new class extends Component {
         if ($value === 'new_coat') {
             $this->dispatch('open_modal', ['form' => 'modals::settings.coat.create']);
         }
-        debug($this->selectedCoat);
     }
 
     public function updatedSelectedBehavior($value)
@@ -158,6 +171,7 @@ new class extends Component {
         $this->validateOnly($property);
     }
 
+    //Fonctionne pas
     public function delete_img()
     {
         $this->reset('avatar');
@@ -197,13 +211,13 @@ new class extends Component {
 
         $new_animal->coats()->attach($validated['selectedCoat']);
         $new_animal->behaviors()->attach($validated['selectedBehavior']);
+        $new_animal->vaccins()->attach($validated['selectedVaccins']);
 
         $this->redirect(route('animals-show', $new_animal));
     }
 
 };
 ?>
-
 
 
 <div class="flex flex-col gap-12">
@@ -333,15 +347,32 @@ new class extends Component {
                         </div>
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                             <div class="flex flex-col gap-2 w-full">
-                                <livewire:livewire.select wire:model="selectedCoat" name="{{__('admin/animals/create.coat')}}" disabled="{{__('admin/animals/create.disabled_coat')}}" models="{{Coat::class}}"/>
+                                <livewire:livewire.select wire:model="selectedCoat"
+                                                          :name="__('admin/animals/create.coat')"
+                                                          :disabled="__('admin/animals/create.disabled_coat')"
+                                                          :models="Coat::all()"/>
                                 <span class="font-poppins text-red-600 font-semibold">
                             @error('selectedCoat') {{ $message }} @enderror
                         </span>
                             </div>
                             <div class="flex flex-col gap-2 w-full">
-                                <livewire:livewire.select wire:model="selectedBehavior" name="{{__('admin/animals/create.behavior')}}" disabled="{{__('admin/animals/create.disabled_behavior')}}" models="{{Behavior::class}}"/>
+                                <livewire:livewire.select wire:model="selectedBehavior"
+                                                          :name="__('admin/animals/create.behavior')"
+                                                          :disabled="__('admin/animals/create.disabled_behavior')"
+                                                          :models="Behavior::all()"/>
                                 <span class="font-poppins text-red-600 font-semibold">
                             @error('selectedBehavior') {{ $message }} @enderror
+                        </span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <div class="flex flex-col gap-2 w-full">
+                                <livewire:livewire.select wire:model="selectedVaccins"
+                                                          :name="__('admin/animals/create.vaccines')"
+                                                          :disabled="__('admin/animals/create.disabled_vaccines')"
+                                                          :models="$this->getVaccins()"/>
+                                <span class="font-poppins text-red-600 font-semibold">
+                            @error('selectedVaccins') {{ $message }} @enderror
                         </span>
                             </div>
                         </div>

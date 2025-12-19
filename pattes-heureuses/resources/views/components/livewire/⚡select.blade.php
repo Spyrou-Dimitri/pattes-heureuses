@@ -2,6 +2,7 @@
 
 use App\Enums\AnimalStatus;
 use App\Models\Animal;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Modelable;
@@ -13,17 +14,12 @@ new class extends Component {
     #[Modelable]
     public array $selected = [];
 
+
+    public Collection $models;
     public string $name = '';
     public string $disabled = '';
 
-    public $models;
 
-
-    #[Computed]
-    public function items()
-    {
-        return ($this->models)::all();
-    }
 };
 ?>
 
@@ -39,9 +35,9 @@ new class extends Component {
                                                 @if(empty($this->selected))
                                                     {{$disabled}}
                                                 @else
-                                                    @foreach($this->items as $item)
-                                                        @if(in_array($item->id, $this->selected))
-                                                            {{ $item->name }} /
+                                                    @foreach($this->models as $model)
+                                                        @if(in_array($model->id, $this->selected))
+                                                            {{ $model->name }} /
                                                         @endif
                                                     @endforeach
                                                 @endif
@@ -61,19 +57,19 @@ new class extends Component {
             @click.outside="open = false"
             @keydown.escape.window="open = false"
             class="absolute top-20 z-2 mt-1 w-full  bg-white rounded-lg shadow-lg max-h-60 overflow-y-auto">
-            @foreach($this->items as $item)
+            @foreach($this->models as $model)
                 <div class="flex gap-2 hover:bg-gray-200">
                     <input
                         type="checkbox"
                         wire:model.live="selected"
-                        name="{{$item->name . '_' . $item->id}}"
-                        value="{{$item->id}}"
-                        wire:key="{{$item->id}}"
-                        id="{{$item->name . '_' . $item->id}}"
+                        name="{{$model->name . '_' . $model->id}}"
+                        value="{{$model->id}}"
+                        wire:key="{{$model->id}}"
+                        id="{{$model->name . '_' . $model->id}}"
                         class="peer sr-only">
-                    <label for="{{$item->name . '_' . $item->id}}"
+                    <label for="{{$model->name . '_' . $model->id}}"
                            class="w-full font-semibold py-3 px-8 cursor-pointer peer-checked:text-white peer-checked:bg-orange-cta peer-checked:duration-300 duration-300">
-                        {{$item->name}}
+                        {{$model->name}}
                     </label>
                 </div>
             @endforeach

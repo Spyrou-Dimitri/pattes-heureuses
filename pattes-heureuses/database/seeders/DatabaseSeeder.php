@@ -11,6 +11,7 @@ use App\Models\Specie;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Vaccin;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,7 +31,7 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        /* Species and breed seeding */
+        /* Seed des breeds par rapport aux species */
         $species = [
             'Chien' =>
                 [
@@ -66,8 +67,39 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        /* Seeding coat */
+        /* Seeding des vaccins par rapport aux species */
+        $vaccinesBySpecie = [
+            'Chien' => [
+                'Rage',
+                'CHPPi',
+                'Leptospirose',
+            ],
+            'Chat' => [
+                'Rage',
+                'Typhus félin',
+                'Coryza',
+            ],
+            'Raton-laveur' => [
+                'Rage',
+                'Maladie de Carré',
+            ],
+        ];
 
+        foreach ($vaccinesBySpecie as $specieName => $vaccines) {
+
+            $specie = Specie::where('name', $specieName)->first();
+
+            foreach ($vaccines as $vaccineName) {
+
+                $vaccine = Vaccin::firstOrCreate([
+                    'name' => $vaccineName
+                ]);
+
+                $specie->vaccins()->syncWithoutDetaching($vaccine->id);
+            }
+        }
+
+        /* Seed des coat */
         $coats = [
             'Noir', 'Doré', 'Brun', 'Roux'
         ];
@@ -78,8 +110,7 @@ class DatabaseSeeder extends Seeder
 
         $allCoats = Coat::all();
 
-        /* Seeding behaviors */
-
+        /* Seeding des behaviors */
         $behaviors = [
            'Malicieux', 'Foutu', 'Exponentiel', 'Verbe irrégulier', 'La Croatie'
         ];
@@ -88,7 +119,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $allBehaviors = Behavior::all();
-        /* Animals seeding */
+        /* Seed des animaux */
         for ($i = 0; $i < 50; $i++) {
             $animals = Animal::factory()->create([
                 'sexe' => SexeAnimal::cases()[array_rand(SexeAnimal::cases())]->value,

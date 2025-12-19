@@ -23,6 +23,8 @@ return [
     'title_desc' => 'Descriptions & Notes',
     'desc' => 'Description',
     'placerholder_desc' => 'Votre description ici...',
+    'vaccines' => 'Vaccins',
+    'disabled_vaccines' => '--Sélectionner les vaccins--',
 
     'submit' => 'Créer la fiche',
 

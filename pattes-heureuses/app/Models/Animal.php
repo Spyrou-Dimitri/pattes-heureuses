@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use phpDocumentor\Reflection\Types\Boolean;
 
@@ -61,6 +62,7 @@ class Animal extends Model
         return $this->belongsToMany(Behavior::class, 'animal_behavior', 'animal_id', 'behavior_id');
     }
 
+
     protected $casts = [
         'accept_cats' => 'boolean',
         'accept_kids' => 'boolean',
@@ -71,6 +73,10 @@ class Animal extends Model
 
     //Création de label afin de retourner oui non dans le show des animaux.
     //Ainsi si je veux la valeur (pour un radio) => $this->animal->accept_dog & pour une valeur oui / non => $this->animal->accept_dogs_label
+    public function vaccins(): BelongsToMany
+    {
+        return $this->belongsToMany(Vaccin::class, 'animal_vaccin', 'animal_id', 'vaccin_id');
+    }
     protected function getAcceptKidsLabelAttribute () {
         return $this->accept_kids ? 'Oui' : 'Non';
     }
