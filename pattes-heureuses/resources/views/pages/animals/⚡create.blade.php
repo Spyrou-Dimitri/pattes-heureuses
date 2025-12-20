@@ -188,7 +188,7 @@ new class extends Component {
             );
             if ($full_path_to_original) {
                 $validated['avatar'] = $new_original_file_name;
-                ProcessUploadedImageJob::dispatch($full_path_to_original, $new_original_file_name);
+                ProcessUploadedImageJob::dispatchSync($full_path_to_original, $new_original_file_name);
             } else {
                 $validated['avatar'] = '';
             }
@@ -212,7 +212,7 @@ new class extends Component {
         $new_animal->behaviors()->attach($validated['selectedBehavior']);
         $new_animal->vaccins()->attach($validated['selectedVaccins']);
 
-        $this->redirect(route('animals-show', $new_animal));
+        return redirect()->to(route('animals-show', $new_animal));
     }
 
 };
@@ -221,6 +221,7 @@ new class extends Component {
 
 <div class="flex flex-col gap-12">
     <x-admin.section :title="__('admin/animals/create.title')">
+
         <form action="#" wire:submit="create()" method="post"
               class="flex flex-col gap-12 border-2 border-main-blue rounded-lg p-6 bg-white">
             <fieldset class="flex flex-col gap-6">
@@ -346,6 +347,8 @@ new class extends Component {
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                             <div class="flex flex-col gap-2 w-full">
                                 <livewire:livewire.select wire:model="selectedCoat"
+                                                          wire:key="coat-selected"
+
                                                           :name="__('admin/animals/create.coat')"
                                                           :disabled="__('admin/animals/create.disabled_coat')"
                                                           :models="Coat::all()"/>
@@ -355,6 +358,7 @@ new class extends Component {
                             </div>
                             <div class="flex flex-col gap-2 w-full">
                                 <livewire:livewire.select wire:model="selectedBehavior"
+                                                          wire:key="behavior-selected"
                                                           :name="__('admin/animals/create.behavior')"
                                                           :disabled="__('admin/animals/create.disabled_behavior')"
                                                           :models="Behavior::all()"/>
@@ -365,10 +369,12 @@ new class extends Component {
                         </div>
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                             <div class="flex flex-col gap-2 w-full">
-                                <livewire:livewire.select wire:model="selectedVaccins"
+                                <livewire:livewire.select
+                                    wire:key="vaccins-select-{{ $selectedSpecie }}"
+                                    wire:model="selectedVaccins"
                                                           :name="__('admin/animals/create.vaccines')"
                                                           :disabled="__('admin/animals/create.disabled_vaccines')"
-                                                          :models="$this->getVaccins()"/>
+                                                          :models="$this->getVaccins"/>
                                 <span class="font-poppins text-red-600 font-semibold">
                             @error('selectedVaccins') {{ $message }} @enderror
                         </span>
