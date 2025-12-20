@@ -346,7 +346,12 @@ new class extends Component {
             @foreach($this->animals as $animal)
                 <x-admin.tr wire:click="access_show({{ $animal->id }})" wire:key="{{ $animal->id }}">
                     <x-admin.td>
-                        <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
+                        <picture>
+                            <source media="(min-width:768px)" srcset="{{asset('upload_img/animals/variants/128x128/' . $animal->avatar)}}">
+                            <source media="(min-width:576px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
+                            <source media="(max-width:575px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
+                            <img class="img-table" src="{{asset('upload_img/animals/originals/' . $animal->avatar)}}" alt="Photo de " . {{$animal->name}}>
+                        </picture>
                     </x-admin.td>
                     <x-admin.td>
                         {{$animal->name}}
@@ -358,7 +363,7 @@ new class extends Component {
                         {{$animal->breed->name}}
                     </x-admin.td>
                     <x-admin.td>
-                        {{$animal->age}}
+                        {{$animal->age . ' ans'}}
                     </x-admin.td>
                     <x-admin.td>
                         <span

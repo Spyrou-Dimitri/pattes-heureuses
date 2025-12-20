@@ -52,7 +52,12 @@ new class extends Component {
             @foreach($this->staff as $user)
                 <x-admin.tr wire:click="access_user({{$user->id}})" wire:key="{{$user->id}}">
                     <x-admin.td>
-                        <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
+                        <picture>
+                            <source media="(min-width:768px)" srcset="{{asset('upload_img/animals/variants/128x128/' . $user->avatar)}}">
+                            <source media="(min-width:576px)" srcset="{{asset('upload_img/users/variants/720x720/' . $user->avatar)}}">
+                            <source media="(max-width:575px)" srcset="{{asset('upload_img/users/variants/480x480/' . $user->avatar)}}">
+                            <img class="img-table" src="{{asset('upload_img/users/originals/' . $user->avatar)}}" alt="Photo de " . {{$user->name}}>
+                        </picture>
                     </x-admin.td>
                     <x-admin.td>
                         {{$user->first_name . ' ' . $user->last_name}}

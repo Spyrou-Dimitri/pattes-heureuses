@@ -23,7 +23,6 @@ new class extends Component {
     use WithFileUploads;
     public array $selectedVaccins = [];
     public array $selectedCoat = [];
-
     public array $selectedBehavior = [];
     public $avatar;
     public AnimalStatus $status;
@@ -228,8 +227,7 @@ new class extends Component {
                 <legend>
                     {{__('admin/animals/create.legend')}}
                 </legend>
-                <div
-                    class="border-t-2 border-t-main-blue pt-5 flex flex-col justify-between lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-16">
+                <div class="border-t-2 border-t-main-blue pt-5 flex flex-col justify-between lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-16">
                     <div class="lg:col-span-4 flex flex-col gap-2 w-full relative">
                         <input wire:model="avatar" type="file" id="avatar" class="absolute inset-0 hidden"
                                name="avatar">

@@ -64,7 +64,12 @@ new class extends Component {
             @foreach($this->animals_pending as $animal_pending)
                 <x-admin.tr wire:click="access_show({{ $animal_pending->id }})" wire:key="{{ $animal_pending->id }}">
                     <x-admin.td>
-                        <img class="img-table" src="{{asset('img/animal/jean.jpeg')}}" alt="">
+                        <picture>
+                            <source media="(min-width:768px)" srcset="{{asset('upload_img/animals/variants/128x128/' . $animal_pending->avatar)}}">
+                            <source media="(min-width:576px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $animal_pending->avatar)}}">
+                            <source media="(max-width:575px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $animal_pending->avatar)}}">
+                            <img class="img-table" src="{{asset('upload_img/animals/originals/' . $animal_pending->avatar)}}" alt="Photo de {{$animal_pending->name}}">
+                        </picture>
                     </x-admin.td>
                     <x-admin.td>
                         {{$animal_pending->name}}

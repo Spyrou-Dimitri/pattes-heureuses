@@ -10,8 +10,8 @@ return [
     'year' => 'Age',
     'skin' => 'Pelage',
     'behavior' => 'Caractères',
+    'vaccin' => 'Vaccins',
     'accept_cats' => 'Tolérance chats',
     'accept_dogs' => 'Tolérance chiens',
     'accept_kids' => 'Entente avec les enfants'
-
 ];

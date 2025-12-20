@@ -123,7 +123,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < 50; $i++) {
             $animals = Animal::factory()->create([
                 'sexe' => SexeAnimal::cases()[array_rand(SexeAnimal::cases())]->value,
-                'breed_id' => $seedingBreeds[array_rand($seedingBreeds)]
+                'breed_id' => $seedingBreeds[array_rand($seedingBreeds)],
             ]);
 
             $animals->coats()->attach(
@@ -134,8 +134,7 @@ class DatabaseSeeder extends Seeder
                 $allBehaviors->random(rand(1,3))->pluck('id')->toArray()
             );
 
+
         }
-
     }
-
 }

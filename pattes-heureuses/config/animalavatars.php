@@ -3,11 +3,10 @@
 return [
     'image_type' => 'jpg',
     'sizes' => [
-        'table' => ['width' => '64', 'height' => '64'],
-        'small' => ['width' => '300', 'height' => '300'],
-        'medium' => ['width' => '600', 'height' => '600'],
-        'large' => ['width' => '900', 'height' => '900'],
-        'xlarge' => ['width' => '1200', 'height' => '1200'],
+        'table' => ['width' => '128', 'height' => '128'],
+        'small' => ['width' => '480', 'height' => '480'],
+        'medium' => ['width' => '720', 'height' => '720'],
+        'large' => ['width' => '930', 'height' => '930'],
     ],
     'jpeg_compression' => 80,
     'original_path' => 'images/animals/originals',

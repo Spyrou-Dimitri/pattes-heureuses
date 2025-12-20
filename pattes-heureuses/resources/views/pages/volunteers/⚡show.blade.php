@@ -32,8 +32,15 @@ new class extends Component {
                 :data_volunteer="$this->datas_volunteer"
             :id="$this->volunteer->id">
             </x-cards.volunteer-data>
-            <img src="{{asset('img/animal/jean.jpeg')}}" alt="Photo de jean"
-                 class="w-full aspect-square rounded-lg shadow-main-blue-lg">
+            <picture>
+                <source media="(min-width:1330px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $this->volunteer->avatar)}}">
+                <source media="(min-width:1024px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $this->volunteer->avatar)}}">
+                <source media="(min-width:768px)" srcset="{{asset('upload_img/animals/variants/930x930/' . $this->volunteer->avatar)}}">
+                <source media="(min-width:576px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $this->volunteer->avatar)}}">
+                <source media="(max-width:575px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $this->volunteer->avatar)}}">
+                <img src="{{asset('upload_img/animals/originals/' . $this->volunteer->avatar)}}" alt="Photo de {{$this->volunteer->name}}"
+                     class="w-full h-auto block aspect-square object-cover rounded-lg">
+            </picture>
         </div>
     </x-admin.section>
 </div>

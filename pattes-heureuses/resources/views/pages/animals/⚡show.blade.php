@@ -18,6 +18,7 @@ new class extends Component {
             'breed' => $this->animal->breed->name,
             'age' => $this->animal->age,
             'coat' => $this->animal->coats->pluck('name')->join(' / '),
+            'vaccin' => $this->animal->vaccins->pluck('name')->join(' / ')
         ];
         $this->animal_behavior_value = [
             'behavior' => $this->animal->behaviors->pluck('name')->join(' / '),
@@ -42,11 +43,11 @@ new class extends Component {
 };
 ?>
 
-<div class="">
+<div class="max-w-7xl mx-auto">
     <x-admin.section :title="'Fiche de' . ' ' . $this->animal->name"
                      :align="true">
 
-        <div class="flex w-full flex-col gap-6 lg:grid lg:grid-cols-2">
+        <div class="flex w-full flex-col-reverse gap-6 lg:grid lg:grid-cols-2">
             <x-cards.animal-data :name="$this->animal->name"
                                  :state="$this->animal->state"
                                  :sexe="$this->animal->sexe"
@@ -55,16 +56,27 @@ new class extends Component {
                                  :id="$this->animal->id"
             >
             </x-cards.animal-data>
-            <img src="{{asset('img/animal/jean.jpeg')}}" alt="Photo de jean"
-                 class="w-full aspect-square rounded-lg shadow-main-blue-lg">
+            <div>
+                <picture>
+                    <source media="(min-width:1330px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $this->animal->avatar)}}">
+                    <source media="(min-width:1024px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $this->animal->avatar)}}">
+                    <source media="(min-width:768px)" srcset="{{asset('upload_img/animals/variants/930x930/' . $this->animal->avatar)}}">
+                    <source media="(min-width:576px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $this->animal->avatar)}}">
+                    <source media="(max-width:575px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $this->animal->avatar)}}">
+                    <img src="{{asset('upload_img/animals/originals/' . $this->animal->avatar)}}" alt="Photo de {{$this->animal->name}}"
+                         class="w-full h-auto block aspect-square object-cover rounded-lg">
+                </picture>
+
+            </div>
+            <section class="flex lg:col-span-2 flex-col bg-white border border-main-blue rounded-lg p-6 gap-4">
+                <h3 class="h3-article">
+                    Descriptions
+                </h3>
+                <p class="font-poppins text-xl">
+                    {{$this->animal->description}}
+                </p>
+            </section>
         </div>
-        <section class="flex flex-col bg-white border border-main-blue rounded-lg p-6 gap-4">
-            <h3 class="h3-article">
-                Descriptions
-            </h3>
-            <p class="font-poppins text-xl">
-                {{$this->animal->description}}
-            </p>
-        </section>
+
     </x-admin.section>
 </div>

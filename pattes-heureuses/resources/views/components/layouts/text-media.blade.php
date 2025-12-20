@@ -88,8 +88,9 @@
         <source media="(min-width:768px)" srcset="{!! $img_src_480 !!}">
         <source media="(min-width:530px)" srcset="{!! $img_src_800 !!}">
         <source media="(max-width:529px)" srcset="{!! $img_src_480 !!}">
+        <img src="{{$img_src_600}}" alt="{{$img_alt}}"
+             class="w-full h-auto block aspect-auto object-cover rounded-lg">
     </picture>
 
-    <img src="{{$img_src_600}}" alt="{{$img_alt}}"
-         class="w-full h-auto block aspect-auto object-cover rounded-lg">
+
 </div>

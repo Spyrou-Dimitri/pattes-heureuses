@@ -23,7 +23,10 @@
 </header>
 
 <main class="lg:col-span-1 p-12 lg:ml-0 bg-paws">
-    {{$slot}}
+    <div class="max-w-[1600px] mx-auto">
+
+        {{$slot}}
+    </div>
 
     <livewire:widgets::modal/>
 
