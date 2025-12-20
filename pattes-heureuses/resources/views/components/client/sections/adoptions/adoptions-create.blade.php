@@ -1,26 +1,9 @@
-@php
-    $profile = [
-            'type' => 'Chien',
-            'breed' => 'Golden Retriever',
-            'year' => '2 ans',
-            'skin' => 'Doré',
-        ];
-
-        $behavior = [
-            'behavior' => 'Malicieux / Sympa / Gentil',
-            'place' => 'Tous',
-            'accept_cats' => 'Oui',
-            'accept_dogs' => 'Non',
-            'accept_kids' => 'Non',
-        ];
-@endphp
-
 
 <x-layouts.section :py="'landing'" :bg="'paws'">
     <x-layouts.grid class="md:items-start lg:relative lg:grid lg:grid-cols-12">
         <div class="flex flex-col gap-4 md:gap-6 lg:col-span-7">
             <h2 class="h2-section">
-                Adoption de <strong>Jean</strong>
+                Adoption de <strong>{{$animal->name}}</strong>
             </h2>
 
             <p class="font-poppins">
@@ -28,9 +11,12 @@
                 l’adoption dans les meilleures conditions.
             </p>
 
-            <form class="flex flex-col gap-8 p-6 border border-main-blue rounded-lg bg-white" action="" method="POST">
-                <fieldset class="flex flex-col gap-4">
+            <form class="flex flex-col gap-8 p-6 border border-main-blue rounded-lg bg-white" action="{{route('adoption.store')}}" method="POST">
+                @csrf
 
+                <input name="animal-id" type="hidden" label="Animal" value="{{$animal->id}}">
+
+                <fieldset class="flex flex-col gap-4">
                     <legend>
                         Informations personnelles
                     </legend>
@@ -70,7 +56,7 @@
                         Informations sur votre logement
                     </legend>
                     <div class="flex flex-col gap-4 border-t-2 border-t-main-blue pt-5 lg:flex-row lg:justify-between">
-                        <x-forms.input :name="'housing'"
+                        <x-forms.input :name="'housing-type'"
                                        :type="'text'"
                                        :label="'Type de logement'"
                                        :placeholder="'Appartement'">
@@ -90,7 +76,7 @@
                     </legend>
                     <div class="flex flex-col gap-4 border-t-2 border-t-main-blue pt-5">
                         <x-forms.textarea
-                            :name="'experience_motivation'"
+                            :name="'motivations'"
                             :label="'Pourquoi souhaitez-vous adopter ?'"
                             :placeholder="'Je souhaite adopté Jean parce que je veux pouvoir lui donner un nouveaux foyer...'">
 
@@ -105,9 +91,9 @@
             </form>
         </div>
         <x-cards.animal-data class="lg:col-span-5 lg:sticky lg:top-20 lg:right-0"
-                             :name="'Jean'"
-                             :sexe="'male'"
-                             :data_animals_profile="$profile"
+                             :name="$animal->name"
+                             :sexe="$animal->sexe"
+                             :data_animals_profile="$profil"
                              :data_animals_behavior="$behavior">
 
         </x-cards.animal-data>

@@ -1,4 +1,3 @@
-
 <x-layouts.section :bg="'paws'" :py="'landing'">
     <x-layouts.grid>
         <h2 class="h2-section text-center col-span-full">
@@ -6,20 +5,27 @@
         </h2>
         <div class="flex w-full flex-col gap-6 lg:grid md:grid-cols-12 md:gap-12 col-span-full">
             <picture class="md:col-span-6">
-                <source media="(min-width:1330px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
-                <source media="(min-width:1024px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
-                <source media="(min-width:768px)" srcset="{{asset('upload_img/animals/variants/930x930/' . $animal->avatar)}}">
-                <source media="(min-width:576px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
-                <source media="(max-width:575px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
+                <source media="(min-width:1330px)"
+                        srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
+                <source media="(min-width:1024px)"
+                        srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
+                <source media="(min-width:768px)"
+                        srcset="{{asset('upload_img/animals/variants/930x930/' . $animal->avatar)}}">
+                <source media="(min-width:576px)"
+                        srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
+                <source media="(max-width:575px)"
+                        srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
                 <img src="{{asset('upload_img/animals/originals/' . $animal->avatar)}}" alt="Photo de {{$animal->name}}"
                      class="w-full h-auto block aspect-square object-cover rounded-lg">
             </picture>
 
             <x-cards.animal-data class="md:col-span-6"
-                :name="$animal->name"
-                :sexe="$animal->sexe"
-                :data_animals_profile="$profil"
-                :data_animals_behavior="$behavior"
+                                 :name="$animal->name"
+                                 :sexe="$animal->sexe"
+                                 :data_animals_profile="$profil"
+                                 :data_animals_behavior="$behavior"
+                                 :id="$animal->id"
+
             />
 
             <article class="flex flex-col bg-white border border-main-blue rounded-lg p-6 gap-4 md:col-span-full">

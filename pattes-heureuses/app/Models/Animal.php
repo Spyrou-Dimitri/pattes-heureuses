@@ -37,6 +37,11 @@ class Animal extends Model
     {
         return $this->belongsTo(Breed::class);
     }
+    function adoptions(): HasMany
+    {
+        return $this->hasMany(Adoption::class);
+    }
+
 
     public function specieBreed(): HasOneThrough
     {

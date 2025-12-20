@@ -81,7 +81,7 @@
         </div>
     @elseif(!request()->is('adoption*'))
         <div class="flex justify-around">
-            <x-basics.cta :href="route('adoption.create')" :class="'primary'">
+            <x-basics.cta :href="route('adoption.create', $id)" :class="'primary'">
                 Rencontrer
             </x-basics.cta>
             <x-basics.cta :href="'#'" :class="'secondary'">
