@@ -2,7 +2,7 @@
     'header_new_animals' => ['Photo', 'Nom', 'Type', 'Race', 'Age', 'Auteur'],
     'header_animals' => ['Photo', 'Nom', 'Type', 'Race', 'Age', 'Status'],
     'header_volunteers' => ['Photo', 'Nom', 'email', 'Telephone', 'Action'],
-    'header_new_adoptions'=> ['Type', 'Race', 'Nom', 'Adopteur', 'Date'],
+    'header_new_adoptions'=> ['Photo','Nom', 'Adopteur', 'Email', 'Telephone' ,'Date'],
     'header' => '',
     'datas_table' => [],
 ])

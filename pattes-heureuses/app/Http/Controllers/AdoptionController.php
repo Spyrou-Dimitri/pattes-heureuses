@@ -26,13 +26,14 @@ class AdoptionController extends Controller
         $validated = $request->validate([
             'last_name' => 'required|min:3|max:100',
             'first_name' => 'required|min:3|max:100',
-            'email' => 'required|email|unique:adoptions,email',
+            'email' => 'required',
             'status' =>  Rule::enum(AnimalStatus::class),
             'telephone' => 'nullable|regex:/^\+?[0-9 ]{10,15}$/',
             'housing_type' => 'nullable|max:100',
             'environment' => 'nullable|max:100',
             'motivations' => 'nullable|max:100',
-            'animal_id'=> 'required|exists:animals,id',
+            'animal_id'=> 'required',
+
         ]);
         Adoption::create([
             'last_name' => $validated['last_name'],
@@ -43,7 +44,7 @@ class AdoptionController extends Controller
             'housing_type' => $validated['housing_type'],
             'environment' => $validated['environment'],
             'motivations' => $validated['motivations'],
-            'animal_id' => $validated['animal-id']
+            'animal_id' => $validated['animal_id']
         ]);
         return redirect()->route('about');
 

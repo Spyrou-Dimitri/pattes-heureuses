@@ -14,7 +14,7 @@
             <form class="flex flex-col gap-8 p-6 border border-main-blue rounded-lg bg-white" action="{{route('adoption.store')}}" method="POST">
                 @csrf
 
-                <input name="animal-id" type="hidden" label="Animal" value="{{$animal->id}}">
+                <input name="animal_id" type="hidden" label="Animal" value="{{$animal->id}}">
 
                 <fieldset class="flex flex-col gap-4">
                     <legend>
