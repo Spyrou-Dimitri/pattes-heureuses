@@ -20,7 +20,8 @@ return [
     'accept' => 'Tolérances',
     'submit_filter' => 'Résultats',
     'title_new_animal' => 'Créer une nouvelle fiche',
-    'new_animal' => 'Nouveau'
+    'new_animal' => 'Nouveau',
+
 
 
 ];

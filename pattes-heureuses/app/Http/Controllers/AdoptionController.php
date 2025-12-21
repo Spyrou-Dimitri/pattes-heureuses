@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AdoptionStatus;
 use App\Enums\AnimalStatus;
 use App\Models\Adoption;
 use App\Models\Animal;
@@ -27,7 +28,7 @@ class AdoptionController extends Controller
             'last_name' => 'required|min:3|max:100',
             'first_name' => 'required|min:3|max:100',
             'email' => 'required',
-            'status' =>  Rule::enum(AnimalStatus::class),
+            'status' =>  Rule::enum(AdoptionStatus::class),
             'telephone' => 'nullable|regex:/^\+?[0-9 ]{10,15}$/',
             'housing_type' => 'nullable|max:100',
             'environment' => 'nullable|max:100',
@@ -39,7 +40,7 @@ class AdoptionController extends Controller
             'last_name' => $validated['last_name'],
             'first_name' => $validated['first_name'],
             'email' => $validated['email'],
-            'status' => AnimalStatus::PENDING,
+            'status' => AdoptionStatus::Pending,
             'telephone' => $validated['telephone'],
             'housing_type' => $validated['housing_type'],
             'environment' => $validated['environment'],

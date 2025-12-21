@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AdoptionStatus;
 use App\Enums\AnimalStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +25,7 @@ class Adoption extends Model
     ];
 
     protected $casts = [
-      'status' => AnimalStatus::class
+      'status' => AdoptionStatus::class
     ];
 
     public function animal(): BelongsTo

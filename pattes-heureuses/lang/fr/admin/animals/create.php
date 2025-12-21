@@ -25,7 +25,6 @@ return [
     'placerholder_desc' => 'Votre description ici...',
     'vaccines' => 'Vaccins',
     'disabled_vaccines' => '--Sélectionner les vaccins--',
-
     'submit' => 'Créer la fiche',
 
 

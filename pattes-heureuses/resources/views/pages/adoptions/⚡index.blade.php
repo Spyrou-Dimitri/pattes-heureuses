@@ -54,6 +54,11 @@ new class extends Component {
     {
         $this->filter_tag = $state;
         unset($this->adoptions);
+
+    }
+    public function access_show($id)
+    {
+        return redirect()->route('adoptions-show', $id);
     }
 
 
