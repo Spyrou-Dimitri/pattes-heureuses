@@ -3,6 +3,7 @@
     'header_animals' => ['Photo', 'Nom', 'Type', 'Race', 'Age', 'Status'],
     'header_volunteers' => ['Photo', 'Nom', 'email', 'Telephone', 'Action'],
     'header_new_adoptions'=> ['Photo','Nom', 'Adopteur', 'Email', 'Telephone' ,'Date'],
+    'header_adoptions'=> ['Photo','Nom', 'Adopteur', 'Email', 'Status'],
     'header' => '',
     'datas_table' => [],
 ])
@@ -12,6 +13,7 @@
     $header_choices = [
             'new_animals' => $header_new_animals,
             'volunteers' => $header_volunteers,
+            'adoptions' => $header_adoptions,
             'new_adoptions' => $header_new_adoptions,
             'animals'=> $header_animals,
         ];

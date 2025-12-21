@@ -2,43 +2,48 @@
 
 Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(function () {
     Route::view('/', 'admin.login')->name('login')->middleware('guest');
-    Route::livewire('dashboard', 'pages::⚡dashboard')
+    Route::livewire('/dashboard', 'pages::⚡dashboard')
         ->middleware(['auth', 'verified'])
         ->name('dashboard');
 
 
     /* Animaux */
-    Route::livewire('animals', 'pages::animals.index')
+    Route::livewire('/animals', 'pages::animals.index')
         ->middleware(['auth', 'verified'])
         ->name('animals');
-    Route::livewire('animals/create', 'pages::animals.create')
+    Route::livewire('/animals/create', 'pages::animals.create')
         ->middleware(['auth'])
         ->name('animals-create');
-    Route::livewire('animals/{id}', 'pages::animals.show')
+    Route::livewire('/animals/{id}', 'pages::animals.show')
         ->middleware(['auth'])
         ->name('animals-show');
-    Route::livewire('animals/edit/{id}', 'pages::animals.edit')
+    Route::livewire('/animals/edit/{id}', 'pages::animals.edit')
         ->middleware(['auth'])
         ->name('animals-edit');
 
 
     /* Bénévoles */
-    Route::livewire('volunteers', 'pages::volunteers.index')
+    Route::livewire('/volunteers', 'pages::volunteers.index')
         ->middleware(['auth', 'verified'])
         ->name('volunteers');
-    Route::livewire('volunteers/create', 'pages::volunteers.create')
+    Route::livewire('/volunteers/create', 'pages::volunteers.create')
         ->middleware(['auth', 'verified'])
         ->name('volunteers-create');
-    Route::livewire('volunteers/{id}', 'pages::volunteers.show')
+    Route::livewire('/volunteers/{id}', 'pages::volunteers.show')
         ->middleware(['auth'])
         ->name('volunteers-show');
-    Route::livewire('volunteers/edit/{id}', 'pages::volunteers.edit')
+    Route::livewire('/volunteers/edit/{id}', 'pages::volunteers.edit')
         ->middleware(['auth'])
         ->name('volunteers-edit');
 
 
+    /*Adoptions*/
+    Route::livewire('/adoptions', 'pages::adoptions.index')
+        ->middleware(['auth', 'verified'])
+        ->name('adoptions');
 
-    Route::livewire('settings', 'pages::settings.index')
+
+    Route::livewire('/settings', 'pages::settings.index')
         ->middleware(['auth', 'verified'])
         ->name('settings');
 });

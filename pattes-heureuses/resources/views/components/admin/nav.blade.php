@@ -22,9 +22,9 @@
         ],
         [
             'title' => __('admin/nav.title'). ' ' .__('admin/nav.adoptions'),
-            'href' => route('contact'),
+            'href' => route('adoptions'),
             'label' => __('admin/nav.adoptions'),
-            'route' => 'dashboar'
+            'route' => 'adoptions'
 
         ],
         [
