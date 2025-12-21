@@ -38,13 +38,13 @@
         @endif
     >
 
-    {{--
+
     @if($type !== 'search')
-        <span class="text-xs text-red-500 absolute left-0 -bottom-4">
+        <span class="font-poppins font-bold text-red-600">
             @error($name)
             {{ $message }}
             @enderror
         </span>
     @endif
-    --}}
+
 </div>

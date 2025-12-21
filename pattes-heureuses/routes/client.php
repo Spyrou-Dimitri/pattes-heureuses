@@ -22,7 +22,7 @@ Route::domain('les-pattes-heureuses.test')->group(function () {
     Route::get('/animals', [AnimalController::class, 'index'])
         ->name('animals.index');
     Route::get('/animals/{id}', [AnimalController::class, 'show'])
-        ->name('/animals.show');
+        ->name('animals.show');
     Route::view('/contact', 'client.contact')->name('contact');
 
 

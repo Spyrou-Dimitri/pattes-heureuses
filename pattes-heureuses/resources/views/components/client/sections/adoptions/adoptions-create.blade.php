@@ -21,13 +21,13 @@
                         Informations personnelles
                     </legend>
                     <div class="flex flex-col gap-4 border-t-2 border-t-main-blue pt-5 lg:flex-row lg:justify-between">
-                        <x-forms.input :name="'last-name'"
+                        <x-forms.input :name="'last_name'"
                                        :type="'text'"
                                        :label="'Nom'"
                                        :placeholder="'Doe'"
                                        :required="true">
                         </x-forms.input>
-                        <x-forms.input :name="'first-name'"
+                        <x-forms.input :name="'first_name'"
                                        :type="'text'"
                                        :label="'Prénom'"
                                        :placeholder="'John'"
@@ -56,7 +56,7 @@
                         Informations sur votre logement
                     </legend>
                     <div class="flex flex-col gap-4 border-t-2 border-t-main-blue pt-5 lg:flex-row lg:justify-between">
-                        <x-forms.input :name="'housing-type'"
+                        <x-forms.input :name="'housing_type'"
                                        :type="'text'"
                                        :label="'Type de logement'"
                                        :placeholder="'Appartement'">

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AnimalStatus;
 use App\Models\Adoption;
 use App\Models\Animal;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AdoptionController extends Controller
 {
@@ -21,13 +23,24 @@ class AdoptionController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request;
+        $validated = $request->validate([
+            'last_name' => 'required|min:3|max:100',
+            'first_name' => 'required|min:3|max:100',
+            'email' => 'required|email|unique:adoptions,email',
+            'status' =>  Rule::enum(AnimalStatus::class),
+            'telephone' => 'nullable|regex:/^\+?[0-9 ]{10,15}$/',
+            'housing_type' => 'nullable|max:100',
+            'environment' => 'nullable|max:100',
+            'motivations' => 'nullable|max:100',
+            'animal_id'=> 'required|exists:animals,id',
+        ]);
         Adoption::create([
-            'last_name' => $validated['last-name'],
-            'first_name' => $validated['first-name'],
+            'last_name' => $validated['last_name'],
+            'first_name' => $validated['first_name'],
             'email' => $validated['email'],
+            'status' => AnimalStatus::PENDING,
             'telephone' => $validated['telephone'],
-            'housing_type' => $validated['housing-type'],
+            'housing_type' => $validated['housing_type'],
             'environment' => $validated['environment'],
             'motivations' => $validated['motivations'],
             'animal_id' => $validated['animal-id']
