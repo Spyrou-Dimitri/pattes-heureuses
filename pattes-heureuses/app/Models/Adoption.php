@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\Enums\AdoptionStatus;
 use App\Enums\AnimalStatus;
+use App\Observers\AdoptionObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[ObservedBy([AdoptionObserver::class])]
 class Adoption extends Model
 {
     use HasFactory;
@@ -25,7 +28,8 @@ class Adoption extends Model
     ];
 
     protected $casts = [
-      'status' => AdoptionStatus::class
+        'status' => AdoptionStatus::class
+
     ];
 
     public function animal(): BelongsTo
