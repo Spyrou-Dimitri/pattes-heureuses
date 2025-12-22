@@ -15,10 +15,28 @@ class AdoptionObserver
 
     public function updated(Adoption $adoption): void
     {
+
+
         if ($adoption->wasChanged('status')
             && $adoption->status === AdoptionStatus::InProgress
             && $adoption->animal->state !== AnimalStatus::INPROGRESS) {
             $adoption->animal->state = AnimalStatus::INPROGRESS;
+            $adoption->animal->save();
+        }
+
+
+        if ($adoption->wasChanged('status')
+        && $adoption->status === AdoptionStatus::Cancelled
+        && $adoption->animal->state === AnimalStatus::INPROGRESS) {
+            $adoption->animal->state = AnimalStatus::ADOPTABLE;
+            $adoption->animal->save();
+        }
+
+
+        if ($adoption->wasChanged('status')
+        && $adoption->status === AdoptionStatus::Completed
+        && $adoption->animal->state === AnimalStatus::INPROGRESS) {
+            $adoption->animal->state = AnimalStatus::ADOPTED;
             $adoption->animal->save();
         }
     }
