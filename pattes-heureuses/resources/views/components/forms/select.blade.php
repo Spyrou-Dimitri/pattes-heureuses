@@ -5,6 +5,10 @@
     'hasLabel' => true,
     'multiple' => false,
     'required' => false,
+    'disabled' => null,
+    'new_instance' => false,
+    'new_instance_value' => false,
+    'new_instance_label' => false,
 ])
 
 <div class="flex flex-col gap-2 w-full">
@@ -17,8 +21,6 @@
             </span>
             @endif
         </label>
-
-
     @endif
     <select
         @if($required)
@@ -32,7 +34,16 @@
         class="bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full"
         {{$attributes->whereStartsWith('wire:model')}}
     >
-        {{$slot}}
+        @if($disabled)
+        <option selected
+                value="">{{$disabled}}
+        </option>
+        @endif
+
+        @if($new_instance)
+            <option value="{{$new_instance_value}}">{{$new_instance_label}}</option>
+        @endif
+
         @foreach($options as $key => $option)
             @php
                 if (is_object($option)) {
@@ -57,5 +68,7 @@
             </option>
         @endforeach
     </select>
+        {{$slot}}
+
 </div>
 

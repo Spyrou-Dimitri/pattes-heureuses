@@ -27,13 +27,10 @@ new class extends Component {
             'accept_cats' => $this->animal->accept_cats_label,
         ];
     }
-
-
     public function change_status()
     {
         $this->dispatch('open_modal', ['form' => 'modals::animals.change-status', 'model_id' => $this->animal->id]);
     }
-
     #[On('refresh_status')]
     public function refresh_status() {
         $this->animal = $this->animal->fresh();
@@ -47,15 +44,7 @@ new class extends Component {
     <x-admin.section :title="'Fiche de' . ' ' . $this->animal->name"
                      :align="true">
 
-        <div class="flex w-full flex-col-reverse gap-6 lg:grid lg:grid-cols-2">
-            <x-cards.animal-data :name="$this->animal->name"
-                                 :state="$this->animal->state"
-                                 :sexe="$this->animal->sexe"
-                                 :data_animals_profile="$this->animal_profil_value"
-                                 :data_animals_behavior="$this->animal_behavior_value"
-                                 :id="$this->animal->id"
-            >
-            </x-cards.animal-data>
+        <div class="flex w-full flex-col gap-6 lg:grid lg:grid-cols-2">
             <div>
                 <picture>
                     <source media="(min-width:1330px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $this->animal->avatar)}}">
@@ -68,6 +57,15 @@ new class extends Component {
                 </picture>
 
             </div>
+            <x-cards.animal-data :name="$this->animal->name"
+                                 :state="$this->animal->state"
+                                 :sexe="$this->animal->sexe"
+                                 :data_animals_profile="$this->animal_profil_value"
+                                 :data_animals_behavior="$this->animal_behavior_value"
+                                 :id="$this->animal->id"
+            >
+            </x-cards.animal-data>
+
             <section class="flex lg:col-span-2 flex-col bg-white border border-main-blue rounded-lg p-6 gap-4">
                 <h3 class="h3-article">
                     Descriptions

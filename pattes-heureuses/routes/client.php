@@ -26,6 +26,7 @@ Route::domain('les-pattes-heureuses.test')->group(function () {
     Route::view('/contact', 'client.contact')->name('contact');
 
 
+
     Route::get('/adoption/{id}', [AdoptionController::class, 'create'])
         ->name('adoption.create');
     route::post('/adoption', [AdoptionController::class, 'store'])

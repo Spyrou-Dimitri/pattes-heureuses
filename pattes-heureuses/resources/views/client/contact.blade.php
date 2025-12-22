@@ -47,17 +47,27 @@
             <div class="md:col-span-7">
                 <form action="" method="POST" class="flex flex-col gap-6 p-6 border border-main-blue rounded-lg bg-white">
                     <div class="flex gap-6 flex-col md:flex-row md:justify-between md:gap-4">
-                        <x-forms.input :name="'last-name'"
+                        <x-forms.input :name="'last_name'"
                                        :type="'text'"
                                        :label="'Nom'"
                                        :placeholder="'Doe'"
                                        :required="true">
+                             <span class="font-poppins font-bold text-red-600">
+                                @error('last_name')
+                                 {{ $message }}
+                                 @enderror
+                            </span>
                         </x-forms.input>
-                        <x-forms.input :name="'first-name'"
+                        <x-forms.input :name="'first_name'"
                                        :type="'text'"
                                        :label="'Prénom'"
                                        :placeholder="'John'"
                                        :required="true">
+                             <span class="font-poppins font-bold text-red-600">
+                                @error('first_name')
+                                 {{ $message }}
+                                 @enderror
+                            </span>
                         </x-forms.input>
                     </div>
                     <x-forms.input :name="'email'"
@@ -65,17 +75,31 @@
                                    :label="'Email'"
                                    :placeholder="'john.doe@gmail.com'"
                                    :required="true">
+                         <span class="font-poppins font-bold text-red-600">
+                                @error('email')
+                             {{ $message }}
+                             @enderror
+                            </span>
                     </x-forms.input>
                     <x-forms.input :name="'telephone'"
                                    :type="'tel'"
                                    :label="'Téléphone'"
                                    :placeholder="'+32 (0) 78 68 67 99'">
+                         <span class="font-poppins font-bold text-red-600">
+                                @error('telephone')
+                             {{ $message }}
+                             @enderror
+                            </span>
                     </x-forms.input>
                     <div class="flex flex-col gap-4">
                         <x-forms.textarea :name="'message'"
                                           :label="'Message'"
                                           :placeholder="'Je souhaite vous parler de...'">
-
+                             <span class="font-poppins font-bold text-red-600">
+                                @error('message')
+                                 {{ $message }}
+                                 @enderror
+                            </span>
                         </x-forms.textarea>
                     </div>
 

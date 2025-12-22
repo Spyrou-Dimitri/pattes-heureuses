@@ -38,6 +38,10 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
 
 
     /*Adoptions*/
+
+    Route::livewire('/adoptions/create', 'pages::adoptions.create')
+        ->middleware(['auth', 'verified'])
+        ->name('adoptions-create');
     Route::livewire('/adoptions', 'pages::adoptions.index')
         ->middleware(['auth', 'verified'])
         ->name('adoptions');

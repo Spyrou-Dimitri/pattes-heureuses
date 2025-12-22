@@ -1,9 +1,19 @@
 @props([
     'animal_id',
+    'livewire' => false
 ])
 
-<form class="flex flex-col gap-8 p-6 border border-main-blue rounded-lg bg-white" action="{{route('adoption.store')}}" method="POST">
-    @csrf
+<form class="flex flex-col gap-8 p-6 border border-main-blue rounded-lg bg-white"
+      @if($livewire)
+          wire:submit="create_adoption()"
+      action="{{route('adoption.store')}}"
+      method="POST"
+    @endif
+
+>
+    @if(!$livewire)
+        @csrf
+    @endif
 
     <input name="animal_id" type="hidden" label="Animal" value="{{$animal_id}}">
 
@@ -16,11 +26,15 @@
                            :type="'text'"
                            :label="'Nom'"
                            :placeholder="'Doe'"
-                           :required="true">
-            </x-forms.input>
+                           :required="true"
+                           :wire:model.blur="$livewire ? 'last_name' : null"
+            />
+
+
             <x-forms.input :name="'first_name'"
                            :type="'text'"
                            :label="'Prénom'"
+                           :wire:model.blur="$livewire ? 'first_name' : null"
                            :placeholder="'John'"
                            :required="true">
 
@@ -30,6 +44,7 @@
             <x-forms.input :name="'email'"
                            :type="'email'"
                            :label="'Email'"
+                           :wire:model.blur="$livewire ? 'email' : null"
                            :placeholder="'john.doe@gmail.com'"
                            :required="true">
 
@@ -37,6 +52,7 @@
             <x-forms.input :name="'telephone'"
                            :type="'tel'"
                            :label="'Téléphone'"
+                           :wire:model.blur="$livewire ? 'telephone' : null"
                            :placeholder="'0485 48 48 30'">
 
             </x-forms.input>
@@ -50,14 +66,15 @@
             <x-forms.input :name="'housing_type'"
                            :type="'text'"
                            :label="'Type de logement'"
+                           :wire:model.blur="$livewire ? 'housing_type' : null"
                            :placeholder="'Appartement'">
-
             </x-forms.input>
             <x-forms.input :name="'environment'"
                            :type="'text'"
                            :label="'Environnement'"
-                           :placeholder="'Jardin / forêt'">
+                           :wire:model.blur="$livewire ? 'environment' : null"
 
+                           :placeholder="'Jardin / forêt'">
             </x-forms.input>
         </div>
     </fieldset>
@@ -69,10 +86,12 @@
             <x-forms.textarea
                 :name="'motivations'"
                 :label="'Pourquoi souhaitez-vous adopter ?'"
+                :wire:model.blur="$livewire ? 'motivations' : null"
                 :placeholder="'Je souhaite adopté Jean parce que je veux pouvoir lui donner un nouveaux foyer...'">
 
             </x-forms.textarea>
         </div>
+
 
     </fieldset>
     <x-forms.submit>

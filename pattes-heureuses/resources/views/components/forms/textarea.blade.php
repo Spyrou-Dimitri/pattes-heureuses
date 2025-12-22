@@ -9,3 +9,4 @@
     id="{!! $name !!}"
     placeholder="{!! $placeholder !!}">
                     </textarea>
+{{$slot}}

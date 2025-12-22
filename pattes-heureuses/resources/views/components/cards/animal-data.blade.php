@@ -52,7 +52,6 @@
         @endforeach
     </dl>
     <dl class="flex flex-col gap-5
-
     @if(!request()->is('adoption'))
     border-b-2 border-b-main-blue pb-5
     @endif
@@ -72,14 +71,14 @@
         @endforeach
     </dl>
 
-    @if(str_contains(request()->getHost(), 'admin'))
+    @if(str_contains(request()->getHost(), 'admin') && str_contains(request()->path(), 'animal'))
         <div class="flex justify-around">
             <x-basics.cta :href="route('animals-edit', $id)" :class="'primary'">
                 Modifier
             </x-basics.cta>
 
         </div>
-    @elseif(!request()->is('adoption*'))
+    @elseif(!request()->is('adoption*') && !str_contains(request()->getHost(), 'admin'))
         <div class="flex justify-around">
             <x-basics.cta :href="route('adoption.create', $id)" :class="'primary'">
                 Rencontrer

@@ -21,6 +21,7 @@ use Livewire\WithFileUploads;
 new class extends Component {
 
     use WithFileUploads;
+
     public array $selectedVaccins = [];
     public array $selectedCoat = [];
     public array $selectedBehavior = [];
@@ -64,7 +65,6 @@ new class extends Component {
     }
 
 
-
     //Remet la race à zéro si je change d'espèce
     public function updatedSelectedSpecie()
     {
@@ -95,37 +95,6 @@ new class extends Component {
         ];
     }
 
-    //Messages d'erreur
-    protected function messages()
-    {
-        return [
-            'avatar.image' => 'Ceci n\'est pas une image',
-            'avatar.max' => 'Taille d\'image trop grande',
-            'avatar.mimes' => 'Ceci n\'est pas un type mime',
-            'name.min' => ':attribute trop court (minimum 3 caractères).',
-            'name.required' => 'Le :attribute est requis',
-            'status.required' => 'Le :attribute est requis',
-            'status.enum' => 'Le :attribute doit être une valeur valide',
-            'selectedSpecie.exists' => 'L\':attribute n\'est pas référencée dans notre base de données',
-            'selectedSpecie.required' => 'L\':attribute est requise',
-            'selectedBreed.exists' => 'La :attribute n\'est pas référencée dans notre base de données',
-            'selectedBreed.required' => 'La :attribute est requise',
-            'age.required' => 'L\':attribute est requis',
-            'age.integer' => 'L\':attribute doit être un nombre',
-            'age.min' => 'L\':attribute doit être supérieur à 0',
-            'sexe.required' => 'Le :attribute est requis',
-            'sexe.enum' => 'Le :attribute doit être une valeur valide',
-            'selectedCoat.exists' => 'Le :attribute est requis',
-            'selectedCoat.required' => 'Le :attribute doit être une valeur valide',
-            'selectedBehavior.exists' => 'Le :attribute est requis',
-            'selectedBehavior.required' => 'Le :attribute doit être une valeur valide',
-            'acceptChildren.boolean' => 'Veuillez indiquer si l’animal accepte les enfants.',
-            'acceptDogs.boolean' => 'Veuillez indiquer si l’animal accepte les chiens.',
-            'acceptCats.boolean' => 'Veuillez indiquer si l’animal accepte les chats.',
-            'selectedVaccins.required' => 'Les :attribute sont requis',
-            'selectedVaccins.exists' => 'Ce :attribute n\'est pas référencé dans notre base de données',
-        ];
-    }
 
     //Remplacer le wire:model par un nom plus humain dans le message d'erreur
     protected function validationAttributes()
@@ -164,6 +133,13 @@ new class extends Component {
         }
     }
 
+
+
+    #[On('list_changed')]
+    public function reset_list()
+    {
+        unset($this->breeds);
+    }
 
     public function updated($property)
     {
@@ -221,7 +197,6 @@ new class extends Component {
 
 <div class="flex flex-col gap-12">
     <x-admin.section :title="__('admin/animals/create.title')">
-
         <form action="#" wire:submit="create()" method="post"
               class="flex flex-col gap-12 border-2 border-main-blue rounded-lg p-6 bg-white">
             <fieldset class="flex flex-col gap-6">
@@ -264,8 +239,6 @@ new class extends Component {
                                 Importer une image
                             </span>
                             @endif
-
-
                         </label>
                         <span
                             class="font-poppins text-red-600 font-semibold">@error('avatar') {{ $message }} @enderror
@@ -273,82 +246,71 @@ new class extends Component {
                     </div>
                     <div class="flex flex-col gap-6 lg:col-span-8">
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                            <div class="flex flex-col gap-2 w-full">
-                                <x-forms.input :required="true" class="w-full" wire:model.live="name" :type="'text'"
-                                               :name="'animal-name'"
-                                               :label="__('admin/animals/create.name')"
-                                               :placeholder="'Peanut'"/>
-                                <span
-                                    class="font-poppins text-red-600 font-semibold">@error('name') {{ $message }} @enderror
-                    </span>
-                            </div>
-                            <div class="flex flex-col gap-2 w-full">
-                                <x-forms.select :required="true" wire:model.live="status"
-                                                :options="AnimalStatus::cases()" class="w-full" :name="'animal-state'"
-                                                :label="__('admin/animals/create.state')"
-                                >
-                                    <option selected
-                                            value="">{{__('admin/animals/create.disabled_sexe')}}</option>
-                                </x-forms.select>
+                            <x-forms.input :required="true" class="w-full" wire:model.live="name" :type="'text'"
+                                           :name="'animal-name'"
+                                           :label="__('admin/animals/create.name')"
+                                           :placeholder="'Peanut'">
+                                    <span
+                                        class="font-poppins text-red-600 font-semibold">@error('name') {{ $message }} @enderror
+                                    </span>
+                            </x-forms.input>
+                            <x-forms.input :required="true" class="w-full" wire:model.live="age" :type="'number'"
+                                           :name="'animal-age'"
+                                           :label="__('admin/animals/create.age')"
+                                           :placeholder="2">
+                                    <span class="font-poppins text-red-600 font-semibold">
+                                        @error('age') {{ $message }} @enderror
+                                    </span>
+                            </x-forms.input>
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <x-forms.select :required="true" :name="'animal-type'" wire:model.live="selectedSpecie"
+                                            :label="__('client/animals/show/show.type')"
+                                            :options="$this->species"
+                                            :disabled="__('admin/animals/create.disabled_type')">
+                                <span class="font-poppins text-red-600 font-semibold">
+                                    @error('selectedSpecie') {{ $message }} @enderror
+                                </span>
+                            </x-forms.select>
+                            <x-forms.select required :name="'animal-breed'" wire:model.live="selectedBreed"
+                                            :label="__('admin/animals/create.breed')"
+                                            :options="$this->breeds"
+                                            :disabled="__('admin/animals/create.disabled_breed')"
+                                            :new_instance="true"
+                                            :new_instance_value="'new_breed'"
+                                            :new_instance_label="'Ajouter une nouvelle espèce'">
+                                <span class="font-poppins text-red-600 font-semibold">
+                                    @error('selectedBreed') {{ $message }} @enderror
+                                </span>
+                            </x-forms.select>
+
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <x-forms.select :required="true" wire:model.live="status"
+                                            :options="AnimalStatus::cases()" class="w-full" :name="'animal-state'"
+                                            :label="__('admin/animals/create.state')"
+                                            :disabled="__('admin/animals/create.disabled_sexe')"
+                            >
                                 <span
                                     class="font-poppins text-red-600 font-semibold">@error('status') {{ $message }} @enderror
-                    </span>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                            <div class="flex flex-col gap-2 w-full">
-                                <x-forms.select :required="true" :name="'animal-type'" wire:model.live="selectedSpecie"
-                                                :label="__('client/animals/show/show.type')"
-                                                :options="$this->species">
-                                    <option selected disabled
-                                            value="">{{__('admin/animals/create.disabled_type')}}</option>
-                                </x-forms.select>
-                                <span class="font-poppins text-red-600 font-semibold">
-                            @error('selectedSpecie') {{ $message }} @enderror
-                        </span>
-                            </div>
-                            <div class="flex flex-col gap-2 w-full">
-                                <x-forms.select required :name="'animal-breed'" wire:model.live="selectedBreed"
-                                                :label="__('admin/animals/create.breed')"
-                                                :options="$this->breeds">
-                                    <option selected disabled
-                                            value="">{{__('admin/animals/create.disabled_breed')}}</option>
-                                    <option value="new_breed">Ajouter une nouvelle race</option>
+                                </span>
+                            </x-forms.select>
 
-                                </x-forms.select>
-                                <span class="font-poppins text-red-600 font-semibold">
-                            @error('selectedBreed') {{ $message }} @enderror
-                        </span>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                            <div class="flex flex-col gap-2 w-full">
-                                <x-forms.input :required="true" class="w-full" wire:model.live="age" :type="'number'"
-                                               :name="'animal-age'"
-                                               :label="__('admin/animals/create.age')"
-                                               :placeholder="2"/>
-                                <span class="font-poppins text-red-600 font-semibold">
-                            @error('age') {{ $message }} @enderror
-                        </span>
-                            </div>
                             <div class="flex flex-col gap-2 w-full">
                                 <x-forms.select :required="true" :name="'animal-sexe'" wire:model.live="sexe"
                                                 :label="__('admin/animals/create.sexe')"
-                                                :options="SexeAnimal::cases()">
-                                    <option selected
-                                            value="">{{__('admin/animals/create.disabled_sexe')}}</option>
-
+                                                :options="SexeAnimal::cases()"
+                                                :disabled="__('admin/animals/create.disabled_sexe')">
+                                    <span class="font-poppins text-red-600 font-semibold">
+                                        @error('sexe') {{ $message }} @enderror
+                                    </span>
                                 </x-forms.select>
-                                <span class="font-poppins text-red-600 font-semibold">
-                            @error('sexe') {{ $message }} @enderror
-                        </span>
                             </div>
                         </div>
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                             <div class="flex flex-col gap-2 w-full">
                                 <livewire:livewire.select wire:model="selectedCoat"
                                                           wire:key="coat-selected"
-
                                                           :name="__('admin/animals/create.coat')"
                                                           :disabled="__('admin/animals/create.disabled_coat')"
                                                           :models="Coat::all()"/>
@@ -372,12 +334,12 @@ new class extends Component {
                                 <livewire:livewire.select
                                     wire:key="vaccins-select-{{ $selectedSpecie }}"
                                     wire:model="selectedVaccins"
-                                                          :name="__('admin/animals/create.vaccines')"
-                                                          :disabled="__('admin/animals/create.disabled_vaccines')"
-                                                          :models="$this->getVaccins"/>
+                                    :name="__('admin/animals/create.vaccines')"
+                                    :disabled="__('admin/animals/create.disabled_vaccines')"
+                                    :models="$this->getVaccins"/>
                                 <span class="font-poppins text-red-600 font-semibold">
-                            @error('selectedVaccins') {{ $message }} @enderror
-                        </span>
+                                    @error('selectedVaccins') {{ $message }} @enderror
+                                </span>
                             </div>
                         </div>
                         <div class="flex flex-col gap-6 sm:flex-row sm:flex-wrap sm:justify-between">

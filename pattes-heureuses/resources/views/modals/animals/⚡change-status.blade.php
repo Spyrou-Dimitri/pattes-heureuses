@@ -61,14 +61,12 @@ new class extends Component {
             <legend class="contents text-center">
                 <span>Changer le status</span>
             </legend>
-            <div class="flex flex-col gap-2 w-full">
                 <x-forms.select wire:model.blur="animal_status" :label="'Status'" :name="'status'"
                                 :options="AnimalStatus::cases()">
-                </x-forms.select>
-                <span class="font-poppins text-red-600 font-semibold">
+                    <span class="font-poppins text-red-600 font-semibold">
                             @error('sexe') {{ $message }} @enderror
                         </span>
-            </div>
+                </x-forms.select>
             <x-forms.submit>
                 Modifier
             </x-forms.submit>

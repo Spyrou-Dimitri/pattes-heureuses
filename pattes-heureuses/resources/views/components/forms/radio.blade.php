@@ -15,7 +15,6 @@
             </span>
         @endif
     </span>
-
     <div class="flex gap-6">
         <div class="p-2 border-2 border-orange-cta rounded-lg">
             <label class="flex items-center gap-2">
@@ -45,6 +44,8 @@
             </label>
         </div>
     </div>
+    {{$slot
+}}
 
 
 </div>

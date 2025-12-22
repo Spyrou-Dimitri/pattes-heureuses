@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->string('last_name');
             $table->string('first_name');
             $table->enum('status', AdoptionStatus::cases());
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('telephone')->nullable();
             $table->string('environment')->nullable();
             $table->string('housing_type')->nullable();

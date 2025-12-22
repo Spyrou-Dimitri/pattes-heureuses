@@ -45,8 +45,10 @@ new class extends Component {
             <legend class="contents text-center">
                 <span>Nouveau caractère</span>
             </legend>
-            <x-forms.select wire:model.live="specie_id" :label="'Espèce'" :name="'specie_id'" :options="$this->species">
-                <option value="">--Selectionner une espèce</option>
+            <x-forms.select wire:model.live="specie_id" :label="'Espèce'" :name="'specie_id'" :options="$this->species" :disabled="'--Selectionner une espèce--'">
+                <span class="font-poppins text-red-600 font-semibold">
+                    @error('selectedBreed') {{ $message }} @enderror
+                </span>
             </x-forms.select>
             <x-forms.input wire:model.live="title_breed" :name="'new-breed'" :type="'text'" :label="'Race'"/>
             <x-forms.submit>

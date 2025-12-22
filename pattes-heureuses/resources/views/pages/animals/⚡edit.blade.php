@@ -3,6 +3,7 @@
 use App\Enums\AnimalStatus;
 use App\Enums\SexeAnimal;
 use App\Enums\SexeVolunteer;
+use App\Jobs\ProcessUploadedImageJob;
 use App\Models\Animal;
 use App\Models\Behavior;
 use App\Models\Breed;
@@ -19,6 +20,7 @@ new class extends Component {
     use WithFileUploads;
 
     public Animal $animal;
+    public array $selectedVaccins = [];
     public bool $acceptChildren;
     public bool $acceptDogs;
     public bool $acceptCats;
@@ -27,38 +29,41 @@ new class extends Component {
     public Collection $species;
     public Collection $coats;
     public Collection $behaviors;
-    public string $avatar;
+    public $new_avatar = null;
+    public $avatar;
     public string $name;
     public string $selectedBreed;
     public int $age;
+    public AnimalStatus $status;
     public SexeAnimal $sexe;
-    public string $selectedCoat;
-    public string $selectedBehavior;
+    public array $selectedCoat = [];
+    public array $selectedBehavior = [];
 
 
     public function mount($id)
     {
 
-        //Générations des selects
+        //Générations des select
         $this->species = Specie::all();
         $this->behaviors = Behavior::all();
         $this->coats = Coat::all();
 
         //Génération des infos de l'animal courrant
         $this->animal = Animal::findOrFail($id);
+        $this->selectedVaccins = $this->animal->vaccins->pluck('id')->toArray();
+        $this->selectedCoat = $this->animal->coats->pluck('id')->toArray();
+        $this->selectedBehavior = $this->animal->behaviors->pluck('id')->toArray();
         $this->acceptChildren = $this->animal->accept_kids;
         $this->acceptDogs = $this->animal->accept_dogs;
         $this->acceptCats = $this->animal->accept_cats;
         $this->description = $this->animal->description;
+        $this->status = $this->animal->state;
         $this->selectedSpecie = $this->animal->breed->specie->id;
         $this->avatar = $this->animal->avatar;
         $this->name = $this->animal->name;
         $this->selectedBreed = $this->animal->breed->id;
         $this->age = $this->animal->age;
         $this->sexe = $this->animal->sexe;
-        $this->selectedCoat = $this->animal->coats->pluck('name');
-        $this->selectedBehavior = $this->animal->behaviors->pluck('name');
-
 
 
     }
@@ -67,6 +72,15 @@ new class extends Component {
     public function breeds()
     {
         return Breed::where('specie_id', $this->selectedSpecie)->get();
+    }
+
+    #[Computed]
+    public function getVaccins()
+    {
+        if (!$this->selectedSpecie) {
+            return collect();
+        }
+        return Specie::find($this->selectedSpecie)->vaccins;
     }
 
     //Remet la race à zéro si on change d'espèce
@@ -82,9 +96,12 @@ new class extends Component {
         return [
             'name' => 'required|min:3',
             'selectedSpecie' => 'required|exists:species,id',
+            'description' => 'nullable',
             'selectedBreed' => ['required',
                 Rule::exists('breeds', 'id')->where(fn($breedToSpecie) => $breedToSpecie->where('specie_id', $this->selectedSpecie))],
             'age' => ['required', 'integer', 'min:0'],
+            'new_avatar' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp',
+            'status' => ['required', Rule::enum(AnimalStatus::class)],
             'sexe' => ['required', Rule::enum(SexeAnimal::class)],
             'selectedCoat' => ['required', 'exists:coats,id'],
             'selectedBehavior' => ['required', 'exists:behaviors,id'],
@@ -140,25 +157,36 @@ new class extends Component {
 
     public function update_animal()
     {
-        $this->validate();
+        $validated = $this->validate();
+        $avatarPath = $this->animal->avatar;
+        if (!empty($validated['new_avatar'])) {
+            $avatarPath = uniqid() . '.' . config('animalavatars.image_type');
+            $fullPath = Storage::putFileAs(
+                config('animalavatars.original_path'),
+                $validated['new_avatar'],
+                $avatarPath
+            );
+            if ($fullPath) {
+                ProcessUploadedImageJob::dispatchSync($fullPath, $avatarPath);
+            }
+        }
 
         $this->animal->update([
-            'name' => $this->name,
-            'description' => $this->description,
-            'sexe' => $this->sexe,
-            'age' => $this->age,
-            'state' => AnimalStatus::PENDING,
-            'author' => auth()->user()->last_name . ' ' . auth()->user()->first_name,
-            'avatar' => $this->avatar,
-            'accept_kids' => $this->acceptChildren,
-            'accept_dogs' => $this->acceptDogs,
-            'accept_cats' => $this->acceptCats,
-            'breed_id' => $this->selectedBreed,
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'sexe' => $validated['sexe'],
+            'age' => $validated['age'],
+            'state' => $validated['status'],
+            'avatar' => $avatarPath,
+            'accept_kids' => $validated['acceptChildren'],
+            'accept_dogs' => $validated['acceptDogs'],
+            'accept_cats' => $validated['acceptCats'],
+            'breed_id' => $validated['selectedBreed'],
         ]);
 
-        $this->animal->coats()->attach($this->selectedCoat);
-        $this->animal->behaviors()->attach($this->selectedBehavior);
-
+        $this->animal->coats()->sync($this->selectedCoat);
+        $this->animal->behaviors()->sync($this->selectedBehavior);
+        $this->animal->vaccins()->sync($this->selectedVaccins);
         $this->redirect(route('animals-show', $this->animal->id));
         session()->flash('success', 'Animal modifié avec succès !');
 
@@ -174,102 +202,155 @@ new class extends Component {
                 <legend>
                     Informations sur l'animal
                 </legend>
-                <div class="flex flex-col gap-6 sm:flex-row sm:justify-between border-t-2 border-t-main-blue pt-5">
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.input class="w-full" wire:model.blur="avatar" :type="'file'" :name="'animal-avatar'"
-                                       :label="'Photo'"/>
+                <div class="border-t-2 border-t-main-blue pt-5 flex flex-col justify-between lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-16">
+                    <div class="lg:col-span-4 flex flex-col gap-2 w-full relative">
+                        <input wire:model="new_avatar" type="file" id="avatar" class="absolute inset-0 hidden"
+                               name="avatar">
+                        <label for="avatar" class="cursor-pointer flex flex-col gap-2 items-center">
+                            @if($this->new_avatar)
+                                <img src="{!! $this->new_avatar->temporaryUrl() !!}" alt="" class="img-type-file">
+
+                            @else
+                                <img src="{{asset('upload_img/animals/originals/' . $this->avatar)}}" alt=""
+                                     class="img-type-file">
+                            @endif
+
+                            @if($this->new_avatar)
+                                <button href="#"
+                                        wire:click.prevent="delete_img()"
+                                        x-data="{hover : false}"
+                                        @mouseenter="hover = true"
+                                        @mouseleave="hover = false"
+                                        class="bg-red-600 cursor-pointer absolute -top-[14px] -right-[14px] border-2 border-red-600 hover:bg-white duration-300 hover:duration-300 p-1 rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                         x-bind:fill="hover ? '#E7000B' : 'white'"
+                                         viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd"
+                                              d="M5.293 5.293a1 1 0 0 1 1.414 0L12 10.586l5.293-5.293a1 1 0 1 1 1.414 1.414L13.414 12l5.293 5.293a1 1 0 0 1-1.414 1.414L12 13.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L10.586 12 5.293 6.707a1 1 0 0 1 0-1.414Z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                            @endif
+
+                        </label>
                         <span
                             class="font-poppins text-red-600 font-semibold">@error('avatar') {{ $message }} @enderror
-                    </span>
+                        </span>
                     </div>
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.input  :required="true" class="w-full" wire:model.blur="name" :type="'text'" :name="'animal-name'"
-                                       :label="'Nom'"
-                                       :placeholder="'Peanut'"/>
-                        <span
-                            class="font-poppins text-red-600 font-semibold">@error('name') {{ $message }} @enderror
-                    </span>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select :required="true" :name="'animal-type'" wire:model.blur="selectedSpecie" :label="'Type'"
-                                        :options="$this->species">
-                            <option selected disabled value="">--Selectionner une espèce--</option>
-                        </x-forms.select>
+                    <div class="flex flex-col gap-6 lg:col-span-8">
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <x-forms.input :required="true" class="w-full" wire:model.blur="name" :type="'text'"
+                                           :name="'animal-name'"
+                                           :label="'Nom'"
+                                           :placeholder="'Peanut'">
+                            <span
+                                class="font-poppins text-red-600 font-semibold">@error('name') {{ $message }} @enderror
+                            </span>
+                            </x-forms.input>
+                            <x-forms.input :required="true" class="w-full" wire:model.blur="age" :type="'number'"
+                                           :name="'animal-age'"
+                                           :label="'Age'"
+                                           :placeholder="2">
+                            <span class="font-poppins text-red-600 font-semibold">
+                                @error('age') {{ $message }} @enderror
+                            </span>
+                            </x-forms.input>
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <x-forms.select :required="true" :name="'animal-type'" wire:model.blur="selectedSpecie"
+                                            :label="'Type'"
+                                            :options="$this->species"
+                                            :disabled="'--Sélectionner une espèce--'">
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('selectedSpecie') {{ $message }} @enderror
                         </span>
-                    </div>
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select required :name="'animal-breed'" wire:model.blur="selectedBreed" :label="'Race'"
-                                        :options="$this->breeds">
-                            <option selected disabled value="">--Selectionner une espèce--</option>
-
-                        </x-forms.select>
-                        <span class="font-poppins text-red-600 font-semibold">
+                            </x-forms.select>
+                            <x-forms.select required :name="'animal-breed'" wire:model.blur="selectedBreed"
+                                            :label="'Race'"
+                                            :options="$this->breeds"
+                                            :disabled="'--Sélectionner une espèce--'">
+                            <span class="font-poppins text-red-600 font-semibold">
                             @error('selectedBreed') {{ $message }} @enderror
                         </span>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.input :required="true" class="w-full" wire:model.blur="age" :type="'number'" :name="'animal-age'"
-                                       :label="'Age'"
-                                       :placeholder="2"/>
-                        <span class="font-poppins text-red-600 font-semibold">
-                            @error('age') {{ $message }} @enderror
-                        </span>
-                    </div>
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select :required="true" :name="'animal-sexe'" wire:model.blur="sexe" :label="'Sexe'"
-                                        :options="SexeAnimal::cases()">
-                            <option selected disabled value="">--Selectionner un sexe--</option>
-                        </x-forms.select>
-                        <span class="font-poppins text-red-600 font-semibold">
+                            </x-forms.select>
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <x-forms.select :required="true"
+                                            :name="'animal-status'"
+                                            wire:model.blur="status"
+                                            :label="'Status'"
+                                            :options="AnimalStatus::cases()"
+                                            :disabled="'--Selectionner un status--'">
+
+                                <span class="font-poppins text-red-600 font-semibold">
+                                    @error('status') {{ $message }} @enderror
+                                </span>
+                            </x-forms.select>
+                            <x-forms.select :required="true" :name="'animal-sexe'" wire:model.blur="sexe"
+                                            :label="'Sexe'"
+                                            :options="SexeAnimal::cases()"
+                                            :disabled="'--Selectionner un sexe--'">
+                            <span class="font-poppins text-red-600 font-semibold">
                             @error('sexe') {{ $message }} @enderror
                         </span>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select :required="true" wire:model.blur="selectedCoat" :name="'animal-coat'" :label="'Pelage'"
-                                        :options="$this->coats">
-                            <option selected disabled value="">--Selectionner un pelage--</option>
-                        </x-forms.select>
-                        <span class="font-poppins text-red-600 font-semibold">
-                            @error('selectedCoat') {{ $message }} @enderror
-                        </span>
-                    </div>
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select :required="true" :name="'animal-state'" wire:model="selectedBehavior" :label="'Caractère'"
-                                        :options="$this->behaviors">
-                            <option selected disabled value="">--Selectionner un status--</option>
-                        </x-forms.select>
-                        <span class="font-poppins text-red-600 font-semibold">
-                            @error('selectedBehavior') {{ $message }} @enderror
-                        </span>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.radio :required="true" wire:model.blur="acceptChildren" :name="'accept-children'"
-                                       :label="'Tolérance enfants'"/>
+                            </x-forms.select>
+
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <div class="flex flex-col gap-2 w-full">
+                                <livewire:livewire.select wire:model="selectedCoat"
+                                                          wire:key="coat-selected"
+                                                          :name="__('admin/animals/create.coat')"
+                                                          :disabled="__('admin/animals/create.disabled_coat')"
+                                                          :models="Coat::all()"/>
+                                <span class="font-poppins text-red-600 font-semibold">
+                                    @error('selectedCoat') {{ $message }} @enderror
+                                </span>
+                            </div>
+                            <div class="flex flex-col gap-2 w-full">
+                                <livewire:livewire.select wire:model="selectedBehavior"
+                                                          wire:key="behavior-selected"
+                                                          :name="__('admin/animals/create.behavior')"
+                                                          :disabled="__('admin/animals/create.disabled_behavior')"
+                                                          :models="Behavior::all()"/>
+                                <span class="font-poppins text-red-600 font-semibold">
+                                    @error('selectedCoat') {{ $message }} @enderror
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <div class="flex flex-col gap-2 w-full">
+                                <livewire:livewire.select
+                                    wire:key="vaccins-select-{{ $selectedSpecie }}"
+                                    wire:model="selectedVaccins"
+                                    :name="__('admin/animals/create.vaccines')"
+                                    :disabled="__('admin/animals/create.disabled_vaccines')"
+                                    :models="$this->getVaccins"/>
+                                <span class="font-poppins text-red-600 font-semibold">
+                                    @error('selectedVaccins') {{ $message }} @enderror
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <x-forms.radio :required="true" wire:model.blur="acceptChildren" :name="'accept-children'"
+                                           :label="'Tolérance enfants'">
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('acceptChildren') {{ $message }} @enderror
                         </span>
-                    </div>
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.radio :required="true" wire:model.blur="acceptDogs" :name="'accept-dogs'" :label="'Tolérance chiens'"/>
-                        <span class="font-poppins text-red-600 font-semibold">
-                            @error('acceptDogs') {{ $message }} @enderror
-                        </span>
-                    </div>
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.radio :required="true" wire:model.blur="acceptCats" :name="'accept-cats'" :label="'Tolérance chats'"/>
+                            </x-forms.radio>
+                            <x-forms.radio :required="true" wire:model.blur="acceptDogs" :name="'accept-dogs'"
+                                           :label="'Tolérance chiens'">
+                            <span class="font-poppins text-red-600 font-semibold">
+                                @error('acceptDogs') {{ $message }} @enderror
+                            </span>
+                            </x-forms.radio>
+                            <x-forms.radio :required="true" wire:model.blur="acceptCats" :name="'accept-cats'"
+                                           :label="'Tolérance chats'">
                         <span class="font-poppins text-red-600 font-semibold">
                             @error('acceptCats') {{ $message }} @enderror
                         </span>
+                            </x-forms.radio>
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -286,10 +367,9 @@ new class extends Component {
                         </div>
                     </div>
                 </div>
-
             </fieldset>
             <x-forms.submit>
-                Créer la fiche
+                Modifier la fiche
             </x-forms.submit>
         </form>
     </x-admin.section>

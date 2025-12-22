@@ -9,7 +9,11 @@
     'multiple' => false,
 ])
 
-<div {{ $attributes->merge(['class' => 'flex flex-col gap-2']) }}>
+<div
+    class="flex flex-col gap-2
+    @if($type !== 'search')
+    w-full
+@endif">
     <label
         for="{{ $name }}"
         class="{{ $type === 'search' ? 'hidden' : 'block text-xl font-medium' }}">
@@ -22,9 +26,10 @@
     </label>
 
     <input
+
         {{$attributes->whereStartsWith('wire:model')}}
         @if($multiple) multiple @endif
-    type="{{ $type }}"
+        type="{{ $type }}"
         id="{{ $name }}"
         name="{{ $name }}"
         placeholder="{{ $placeholder ?? '' }}"
@@ -32,19 +37,22 @@
             required
         @endif
         value="{{ old($name) ?? $value }}"
-        {{ $attributes->merge(['class' => 'bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full']) }}
+
+        {{ $attributes->merge(['class' => "bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl w-full"]) }}
         @if($type === 'search')
             wire:model.live.debounce="term"
         @endif
     >
 
 
-    @if($type !== 'search')
-        <span class="font-poppins font-bold text-red-600">
+    {{$slot}}
+
+</div>
+
+{{--
+<span class="font-poppins font-bold text-red-600">
             @error($name)
             {{ $message }}
             @enderror
         </span>
-    @endif
-
-</div>
+--}}

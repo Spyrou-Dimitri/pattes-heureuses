@@ -41,31 +41,6 @@ new class extends Component {
         ];
     }
 
-    //Messages d'erreur
-    protected function messages()
-    {
-        return [
-            'avatar.image' => 'Ceci n\'est pas une image',
-            'avatar.max' => 'Taille d\'image trop grande',
-            'avatar.mimes' => 'Ceci n\'est pas un type mime',
-            'lastName.min' => ':attribute trop court (minimum 3 caractères).',
-            'lastName.required' => 'Le :attribute est requis',
-            'firstName.min' => ':attribute trop court (minimum 3 caractères).',
-            'firstName.required' => 'Le :attribute est requis',
-            'email.required' => 'Le :attribute est requis',
-            'email.email' => 'Le format de l\'email est invalide',
-            'email.unique' => 'Cet :attribute est déjà utilisé',
-            'selectedSexe.required' => 'Veuillez définir un sexe',
-            'selectedSexe.enum' => 'Cette valeur n\'est pas valide',
-            'selectedRole.required' => 'Veuillez définir un role',
-            'selectedRole.enum' => 'Cette valeur n\'est pas valide',
-            'password.required' => 'Le :attribute est requis',
-            'password.min' => ':attribute trop court (minimum 6 caractères).',
-            'password.confirmed' => 'Les mots de passe ne correspondent pas',
-            'tel.regex' => 'Le :attribute doit faire entre 10 et 15 caractères'
-        ];
-    }
-
     //Remplacer le wire:model par un nom plus humain dans le message d'erreur
     protected function validationAttributes()
     {
@@ -178,86 +153,80 @@ new class extends Component {
                     </div>
                     <div class="flex flex-col gap-6 lg:col-span-8">
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                            <div class="flex flex-col gap-2 w-full">
-                                <x-forms.input :required="true" wire:model.blur="firstName" class="w-full"
-                                               :type="'text'"
-                                               :name="'volunteer-first-name'"
-                                               :label="'Nom'"
-                                               :placeholder="'Doe'"/>
+                            <x-forms.input :required="true" wire:model.blur="firstName" class="w-full"
+                                           :type="'text'"
+                                           :name="'volunteer-first-name'"
+                                           :label="'Nom'"
+                                           :placeholder="'Doe'">
                                 <span
-                                    class="font-poppins text-red-600 font-semibold">@error('firstName') {{ $message }} @enderror</span>
-                            </div>
+                                    class="font-poppins text-red-600 font-semibold">@error('firstName') {{ $message }} @enderror
+                                </span>
+                            </x-forms.input>
 
-
-                            <div class="flex flex-col gap-2 w-full">
-
-                                <x-forms.input :required="true" wire:model.blur="lastName" class="w-full" :type="'text'"
-                                               :name="'volunteer-last-name'"
-                                               :label="'Prénom'"
-                                               :placeholder="'John'"/>
+                            <x-forms.input :required="true" wire:model.blur="lastName" class="w-full" :type="'text'"
+                                           :name="'volunteer-last-name'"
+                                           :label="'Prénom'"
+                                           :placeholder="'John'">
                                 <span
-                                    class="font-poppins text-red-600 font-semibold">@error('lastName') {{ $message }} @enderror</span>
-                            </div>
+                                    class="font-poppins text-red-600 font-semibold">@error('lastName') {{ $message }} @enderror
+                                </span>
+                            </x-forms.input>
 
                         </div>
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                            <div class="flex flex-col gap-2 w-full">
-                                <x-forms.input :required="true" wire:model.blur="email" class="w-full" :type="'email'"
-                                               :name="'volunteer-email'"
-                                               :label="'Email'"
-                                               :placeholder="'john.doe@gmail.com'"/>
+                            <x-forms.select :required="true" wire:model.blur="selectedSexe" :name="'volunteer-sexe'"
+                                            :label="'Sexe'"
+                                            :options="SexeVolunteer::cases()"
+                                            :disabled="'--Sélectionner un sexe--'">
+                                    <span
+                                        class="font-poppins text-red-600 font-semibold">@error('selectedSexe') {{ $message }} @enderror
+                                </span>
+                            </x-forms.select>
+                            <x-forms.select wire:model.blur="selectedRole" :name="'volunteer-role'" :label="'Role'"
+                                            :options="RoleVolunteer::cases()"
+                                            :disabled="'--Selectionner un rôle--'">
+                                    <span
+                                        class="font-poppins text-red-600 font-semibold">@error('selectedRole') {{ $message }} @enderror
+                                    </span>
+                            </x-forms.select>
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <x-forms.input :required="true" wire:model.blur="email" class="w-full" :type="'email'"
+                                           :name="'volunteer-email'"
+                                           :label="'Email'"
+                                           :placeholder="'john.doe@gmail.com'">
                                 <span
                                     class="font-poppins text-red-600 font-semibold">@error('email') {{ $message }} @enderror
                                 </span>
-                            </div>
-                            <div class="flex flex-col gap-2 w-full">
-                                <x-forms.select :required="true" wire:model.blur="selectedSexe" :name="'volunteer-sexe'" :label="'Sexe'"
-                                                :options="SexeVolunteer::cases()">
-                                    <option selected value="">--Sélectionner un sexe--</option>
-                                </x-forms.select>
+                            </x-forms.input>
+                            <x-forms.input wire:model.blur="tel" class="w-full" :type="'tel'"
+                                           :name="'volunteer-telephone'"
+                                           :label="'Téléphone'"
+                                           :placeholder="'+32 6 12 34 56 78'">
                                 <span
-                                    class="font-poppins text-red-600 font-semibold">@error('selectedSexe') {{ $message }} @enderror
+                                    class="font-poppins text-red-600 font-semibold">@error('tel') {{ $message }} @enderror
                                 </span>
-                            </div>
+                            </x-forms.input>
                         </div>
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                            <div class="flex flex-col gap-2 w-full">
-                                <x-forms.input :required="true" wire:model.blur="password" class="w-full" :type="'password'"
-                                               :name="'volunteer-password'"
-                                               :label="'Mot de passe'" :placeholder="'**********'"/>
+                            <x-forms.input :required="true" wire:model.blur="password" class="w-full"
+                                           :type="'password'"
+                                           :name="'volunteer-password'"
+                                           :label="'Mot de passe'" :placeholder="'**********'">
                                 <span
                                     class="font-poppins text-red-600 font-semibold">@error('password') {{ $message }} @enderror
                                 </span>
-                            </div>
-                            <div class="flex flex-col gap-2 w-full">
-                                <x-forms.input :required="true" wire:model.blur="password_confirmation" class="w-full" :type="'password'"
-                                               :name="'volunteer-confirm-password'"
-                                               :label="'Confirmer le mot de passe'" :placeholder="'**********'"/>
+                            </x-forms.input>
+                            <x-forms.input :required="true" wire:model.blur="password_confirmation" class="w-full"
+                                           :type="'password'"
+                                           :name="'volunteer-confirm-password'"
+                                           :label="'Confirmer le mot de passe'" :placeholder="'**********'">
                                 <span
                                     class="font-poppins text-red-600 font-semibold">@error('password_confirmation') {{ $message }} @enderror
                                 </span>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                            <div class="flex flex-col gap-2 w-full">
-
-                                <x-forms.input wire:model.blur="tel" class="w-full" :type="'tel'"
-                                               :name="'volunteer-telephone'"
-                                               :label="'Téléphone'"
-                                               :placeholder="'+32 6 12 34 56 78'"/>
-                                <span
-                                    class="font-poppins text-red-600 font-semibold">@error('tel') {{ $message }} @enderror</span>
-                            </div>
-                            <div class="flex flex-col gap-2 w-full">
-
-                                <x-forms.select wire:model.blur="selectedRole" :name="'volunteer-role'" :label="'Role'"
-                                                :options="RoleVolunteer::cases()">
-                                    <option disabled value="">--Selectionner un rôle--</option>
-                                </x-forms.select>
-                            </div>
+                            </x-forms.input>
                         </div>
                     </div>
-
                 </div>
 
             </fieldset>

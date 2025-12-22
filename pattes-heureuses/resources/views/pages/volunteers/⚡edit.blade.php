@@ -2,6 +2,7 @@
 
 use App\Enums\RoleVolunteer;
 use App\Enums\SexeVolunteer;
+use App\Jobs\ProcessUploadedImageJob;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use App\Models\User;
@@ -12,7 +13,9 @@ new class extends Component {
     use WithFileUploads;
 
     public User $user;
-    public string $avatar = '';
+
+    public $new_avatar = null;
+    public $avatar;
     public string $selectedSexe = '';
     public string $selectedRole = '';
     public string $lastName = '';
@@ -25,6 +28,7 @@ new class extends Component {
     {
 
         $this->user = User::findOrFail($id);
+        $this->avatar = $this->user->avatar;
         $this->lastName = $this->user->last_name;
         $this->firstName = $this->user->first_name;
         $this->selectedSexe = $this->user->sexe->value;
@@ -38,10 +42,12 @@ new class extends Component {
         return [
             'lastName' => 'required|min:3',
             'firstName' => 'required|min:3',
+            'new_avatar' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp',
             'email' => ['required', Rule::unique('users')->ignore($this->user->id)],
             'selectedSexe' => ['required', Rule::enum(SexeVolunteer::class)],
             'selectedRole' => ['required', Rule::enum(RoleVolunteer::class)],
-            'tel' => 'regex:/^\+?[0-9]{10,15}$/'
+            'tel' => 'regex:/^\+?[0-9 ]{10,15}$/'
+
         ];
     }
 
@@ -83,15 +89,28 @@ new class extends Component {
 
     public function update_user()
     {
-        $this->validate();
+        $validated = $this->validate();
+        $avatarPath = $this->user->avatar;
+        if (!empty($validated['new_avatar'])) {
+            $avatarPath = uniqid() . '.' . config('animalavatars.image_type');
+            $fullPath = Storage::putFileAs(
+                config('animalavatars.original_path'),
+                $validated['new_avatar'],
+                $avatarPath
+            );
+            if ($fullPath) {
+                ProcessUploadedImageJob::dispatchSync($fullPath, $avatarPath);
+            }
+        }
 
         $this->user->update([
-            'last_name' => $this->lastName,
-            'first_name' => $this->firstName,
-            'email' => $this->email,
-            'sexe' => $this->selectedSexe,
-            'role' => $this->selectedRole,
-            'telephone' => $this->tel,
+            'last_name' => $validated['lastName'],
+            'first_name' => $validated['firstName'],
+            'avatar' => $avatarPath,
+            'email' => $validated['email'],
+            'sexe' => $validated['selectedSexe'],
+            'role' => $validated['selectedRole'],
+            'telephone' => $validated['tel'],
         ]);
 
 
@@ -111,68 +130,91 @@ new class extends Component {
                 <legend>
                     Vos informations
                 </legend>
-                <div class="flex flex-col gap-6 sm:flex-row sm:justify-between border-t-2 border-t-main-blue pt-5">
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.input wire:model.blur="avatar" class="w-full"
-                                       :type="'file'" :name="'volunteer-avatar'"
-                                       :label="'Photo'"/>
-                    </div>
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.select wire:model.blur="selectedSexe"
-                                        :name="'volunteer-sexe'" :label="'Sexe'"
-                                        :options="SexeVolunteer::cases()">
-                            <option disabled value="">--Sélectionner un sexe--</option>
-                        </x-forms.select>
-                    </div>
+                <div
+                    class="border-t-2 border-t-main-blue pt-5 flex flex-col justify-between lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-16">
+                    <div class="lg:col-span-4 flex flex-col gap-2 w-full relative">
+                        <input wire:model="new_avatar" type="file" id="avatar" class="absolute inset-0 hidden"
+                               name="avatar">
+                        <label for="avatar" class="cursor-pointer flex flex-col gap-2 items-center">
+                            @if($this->new_avatar)
+                                <img src="{!! $this->new_avatar->temporaryUrl() !!}" alt="Photo de" class="img-type-file">
+                            @else
+                                <img src="{{asset('upload_img/animals/originals/' . $this->avatar)}}" alt=""
+                                     class="img-type-file">
+                            @endif
+                            @if($this->new_avatar)
+                                <button href="#"
+                                        wire:click.prevent="delete_img()"
+                                        x-data="{hover : false}"
+                                        @mouseenter="hover = true"
+                                        @mouseleave="hover = false"
+                                        class="bg-red-600 cursor-pointer absolute -top-[14px] -right-[14px] border-2 border-red-600 hover:bg-white duration-300 hover:duration-300 p-1 rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                         x-bind:fill="hover ? '#E7000B' : 'white'"
+                                         viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd"
+                                              d="M5.293 5.293a1 1 0 0 1 1.414 0L12 10.586l5.293-5.293a1 1 0 1 1 1.414 1.414L13.414 12l5.293 5.293a1 1 0 0 1-1.414 1.414L12 13.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L10.586 12 5.293 6.707a1 1 0 0 1 0-1.414Z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                            @endif
 
+                        </label>
+                        <span
+                            class="font-poppins text-red-600 font-semibold">@error('avatar') {{ $message }} @enderror
+                        </span>
+                    </div>
+                    <div class="flex flex-col gap-6 lg:col-span-8">
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <x-forms.input :required="true" wire:model.blur="firstName" class="w-full" :type="'text'"
+                                           :name="'volunteer-first-name'"
+                                           :label="'Nom'"
+                                           :placeholder="'Doe'">
+                        <span
+                            class="font-poppins text-red-600 font-semibold">@error('firstName') {{ $message }} @enderror
+                        </span>
+                            </x-forms.input>
+                            <x-forms.input :required="true" wire:model.blur="lastName" class="w-full" :type="'text'"
+                                           :name="'volunteer-last-name'"
+                                           :label="'Prénom'"
+                                           :placeholder="'John'">
+                        <span
+                            class="font-poppins text-red-600 font-semibold">@error('lastName') {{ $message }} @enderror
+                        </span>
+                            </x-forms.input>
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <x-forms.select wire:model.blur="selectedSexe"
+                                            :name="'volunteer-sexe'" :label="'Sexe'"
+                                            :options="SexeVolunteer::cases()" :disabled="'--Sélectionner un sexe--'">
+                            <span
+                                class="font-poppins text-red-600 font-semibold">@error('selectedSexe') {{ $message }} @enderror
+                            </span>
+                            </x-forms.select>
+                        </div>
+                        <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                            <x-forms.input :required="true" wire:model.blur="email" class="w-full" :type="'email'"
+                                           :name="'volunteer-email'"
+                                           :label="'Email'"
+                                           :placeholder="'john.doe@gmail.com'">
+                        <span
+                            class="font-poppins text-red-600 font-semibold">@error('email') {{ $message }} @enderror
+                        </span>
+                            </x-forms.input>
+                            <x-forms.input wire:model.blur="tel" class="w-full" :type="'tel'"
+                                           :name="'volunteer-telephone'"
+                                           :label="'Téléphone'"
+                                           :placeholder="'+32 6 12 34 56 78'">
+                        <span
+                            class="font-poppins text-red-600 font-semibold">@error('tel') {{ $message }} @enderror
+                        </span>
+                            </x-forms.input>
+
+
+                        </div>
+                    </div>
                 </div>
-                <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                    <div class="flex flex-col gap-2 w-full">
-                        <x-forms.input :required="true" wire:model.blur="firstName" class="w-full" :type="'text'"
-                                       :name="'volunteer-first-name'"
 
-                                       :label="'Nom'"
-                                       :placeholder="'Doe'"/>
-                        <span
-                            class="font-poppins text-red-600 font-semibold">@error('firstName') {{ $message }} @enderror</span>
-                    </div>
-
-
-                    <div class="flex flex-col gap-2 w-full">
-
-                        <x-forms.input :required="true" wire:model.blur="lastName" class="w-full" :type="'text'"
-                                       :name="'volunteer-last-name'"
-
-                                       :label="'Prénom'"
-                                       :placeholder="'John'"/>
-                        <span
-                            class="font-poppins text-red-600 font-semibold">@error('lastName') {{ $message }} @enderror</span>
-                    </div>
-
-                </div>
-                <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-                    <div class="flex flex-col gap-2 w-full">
-
-                        <x-forms.input :required="true" wire:model.blur="email" class="w-full" :type="'email'"
-                                       :name="'volunteer-email'"
-
-                                       :label="'Email'"
-                                       :placeholder="'john.doe@gmail.com'"/>
-                        <span
-                            class="font-poppins text-red-600 font-semibold">@error('email') {{ $message }} @enderror</span>
-                    </div>
-                    <div class="flex flex-col gap-2 w-full">
-
-                        <x-forms.input wire:model.blur="tel" class="w-full" :type="'tel'" :name="'volunteer-telephone'"
-
-                                       :label="'Téléphone'"
-                                       :placeholder="'+32 6 12 34 56 78'"/>
-                        <span
-                            class="font-poppins text-red-600 font-semibold">@error('tel') {{ $message }} @enderror</span>
-                    </div>
-
-
-                </div>
             </fieldset>
             <x-forms.submit>
                 Modifier

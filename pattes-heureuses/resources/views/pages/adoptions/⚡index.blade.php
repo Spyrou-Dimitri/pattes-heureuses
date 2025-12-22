@@ -17,14 +17,7 @@ new class extends Component {
 
     public string $term = '';
 
-
     public string $filter_tag = '';
-
-
-    public function mount()
-    {
-
-    }
 
     #[Computed]
     public function adoptions()
@@ -103,10 +96,10 @@ new class extends Component {
             <x-forms.input :type="'search'" :name="'adoption-search'"
                            :label="__('client/animals/index/landing.search-bar-label')"
                            :placeholder="__('admin/animals/index.search_bar_placeholder')"/>
-            <div class="flex justify-between md:gap-4 md:justify-start" x-data="{open: false}">
+            <div class="flex justify-between md:gap-4 md:justify-start">
                 <x-basics.cta :title="__('admin/dashboard/dashboard.title_new_animals')"
-                              :href="route('animals-create')"
-                              :cta_title="'Créer une nouvelle fiche'">
+                              :href="route('adoptions-create')"
+                              :cta_title="'Créer une nouvelle adoption'">
                     {{__('admin/animals/index.new_animal')}}
                 </x-basics.cta>
             </div>
