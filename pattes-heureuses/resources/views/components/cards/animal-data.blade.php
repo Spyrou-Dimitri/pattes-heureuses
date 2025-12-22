@@ -52,9 +52,7 @@
         @endforeach
     </dl>
     <dl class="flex flex-col gap-5
-    @if(!request()->is('adoption'))
-    border-b-2 border-b-main-blue pb-5
-    @endif
+
     items-center">
 
         @foreach($data_animals_behavior as $label => $value)

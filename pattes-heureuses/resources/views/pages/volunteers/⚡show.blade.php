@@ -26,7 +26,7 @@ new class extends Component {
 <div>
     <x-admin.section :title="'Fiche de' . ' ' . $this->volunteer->last_name . ' '. $this->volunteer->first_name"
                      :align="true">
-        <div class="flex w-full flex-col gap-6 lg:grid lg:grid-cols-2">
+        <div class="flex w-full flex-col gap-6 lg:items-start  lg:grid lg:grid-cols-2">
             <x-cards.volunteer-data
                 :name="$this->volunteer->first_name . ' '. $this->volunteer->last_name"
                 :data_volunteer="$this->datas_volunteer"

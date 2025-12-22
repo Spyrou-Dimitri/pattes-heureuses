@@ -39,11 +39,7 @@
             </div>
         @endforeach
     </dl>
-    <dl class="flex flex-col gap-5
-    @if(!request()->is('adoption'))
-    border-b-2 border-b-main-blue pb-5
-    @endif
-    items-center">
+    <dl class="flex flex-col gap-5 items-center">
         @foreach($second_section as $label => $value)
             <div class="flex flex-col sm:flex-row justify-between w-full">
 
@@ -58,7 +54,7 @@
         @endforeach
     </dl>
     @if(!is_null($motivations))
-        <dl class="flex flex-col gap-5">
+        <dl class="flex flex-col gap-5 border-t-2 border-t-main-blue pt-5">
             <x-basics.dt>
                 {{ __("client/animals/show/show.motivation") }}
             </x-basics.dt>

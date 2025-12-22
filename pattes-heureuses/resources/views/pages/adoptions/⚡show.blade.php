@@ -73,7 +73,7 @@ new class extends Component {
                 {{$this->adoption->status->label()}}
             </button>
         </div>
-        <div class="flex w-full flex-col-reverse gap-6 lg:grid lg:grid-cols-2">
+        <div class="flex w-full flex-col-reverse gap-6 lg:items-start lg:grid lg:grid-cols-2">
             <x-cards.adoption-data :title="'Animal'"
                                    :first_section="$this->animal_profil_value"
                                    :second_section="$this->animal_behavior_value"
