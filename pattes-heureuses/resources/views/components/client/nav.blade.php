@@ -22,14 +22,14 @@
         ],
         [
             'title' => __('client/nav.title'). ' ' .__('client/nav.contact'),
-            'href' => route('contact'),
+            'href' => route('contact.create'),
             'label' => __('client/nav.contact'),
             'route' => 'contact'
 
         ],
         [
             'title' => __('client/nav.change-langue'),
-            'href' => route('contact'),
+            'href' => route('contact.create'),
             'label' => __('client/nav.lang'),
             'route' => 'lang'
             ]

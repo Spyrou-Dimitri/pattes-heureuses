@@ -22,7 +22,7 @@ $navigations = [
     ],
     [
         'title' => __('client/nav.title') . ' ' . __('client/nav.contact'),
-        'href' => route('contact'),
+        'href' => route('contact.create'),
         'label' => __('client/nav.contact'),
         'route' => 'contact'
     ],

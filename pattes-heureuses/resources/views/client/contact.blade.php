@@ -45,7 +45,14 @@
             </div>
 
             <div class="md:col-span-7">
-                <form action="" method="POST" class="flex flex-col gap-6 p-6 border border-main-blue rounded-lg bg-white">
+                @if(session()->has('success'))
+                    <div class="bg-green-100 text-green-800 p-4 rounded-lg text-center">
+                        {{ session('success') }}
+                    </div>
+                @else
+                <form action="{{route('contact.store')}}" method="POST"
+                      class="flex flex-col gap-6 p-6 border border-main-blue rounded-lg bg-white">
+                    @csrf
                     <div class="flex gap-6 flex-col md:flex-row md:justify-between md:gap-4">
                         <x-forms.input :name="'last_name'"
                                        :type="'text'"
@@ -70,25 +77,38 @@
                             </span>
                         </x-forms.input>
                     </div>
-                    <x-forms.input :name="'email'"
-                                   :type="'email'"
-                                   :label="'Email'"
-                                   :placeholder="'john.doe@gmail.com'"
-                                   :required="true">
+                    <div class="flex gap-6 flex-col md:flex-row md:justify-between md:gap-4">
+                        <x-forms.input :name="'email'"
+                                       :type="'email'"
+                                       :label="'Email'"
+                                       :placeholder="'john.doe@gmail.com'"
+                                       :required="true">
                          <span class="font-poppins font-bold text-red-600">
                                 @error('email')
                              {{ $message }}
                              @enderror
                             </span>
-                    </x-forms.input>
-                    <x-forms.input :name="'telephone'"
-                                   :type="'tel'"
-                                   :label="'Téléphone'"
-                                   :placeholder="'+32 (0) 78 68 67 99'">
+                        </x-forms.input>
+                        <x-forms.input :name="'telephone'"
+                                       :type="'tel'"
+                                       :label="'Téléphone'"
+                                       :placeholder="'+32 (0) 78 68 67 99'">
                          <span class="font-poppins font-bold text-red-600">
                                 @error('telephone')
                              {{ $message }}
                              @enderror
+                            </span>
+                        </x-forms.input>
+                    </div>
+                    <x-forms.input :name="'topic'"
+                                   :type="'text'"
+                                   :label="'Objet'"
+                                   :placeholder="'Partenariat - Devenir bénévole -'"
+                                   :required="true">
+                        <span class="font-poppins font-bold text-red-600">
+                                @error('topic')
+                            {{ $message }}
+                            @enderror
                             </span>
                     </x-forms.input>
                     <div class="flex flex-col gap-4">
@@ -102,13 +122,14 @@
                             </span>
                         </x-forms.textarea>
                     </div>
-
                     <x-forms.submit>
                         Envoyer
                     </x-forms.submit>
 
 
                 </form>
+                @endif
+
             </div>
         </x-layouts.grid>
     </x-layouts.section>

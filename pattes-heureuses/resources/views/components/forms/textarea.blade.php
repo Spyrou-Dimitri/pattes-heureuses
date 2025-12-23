@@ -7,6 +7,5 @@
     rows="10"
     name="{!! $name !!}"
     id="{!! $name !!}"
-    placeholder="{!! $placeholder !!}">
-                    </textarea>
+    placeholder="{!! $placeholder !!}"></textarea>
 {{$slot}}
