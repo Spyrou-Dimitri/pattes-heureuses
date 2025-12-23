@@ -17,7 +17,7 @@
             'title' => __('admin/nav.title'). ' ' .__('admin/nav.messagery'),
             'href' => route('animals.index'),
             'label' => __('admin/nav.messagery'),
-            'route' => 'dashboar'
+            'route' => 'messagery'
 
         ],
         [

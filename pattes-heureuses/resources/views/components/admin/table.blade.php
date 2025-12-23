@@ -1,7 +1,7 @@
 @props([
     'header_new_animals' => ['Photo', 'Nom', 'Type', 'Race', 'Age', 'Auteur'],
     'header_animals' => ['Photo', 'Nom', 'Type', 'Race', 'Age', 'Status'],
-    'header_volunteers' => ['Photo', 'Nom', 'email', 'Telephone', 'Action'],
+    'header_volunteers' => ['Photo', 'Nom', 'Prénom', 'email', 'Telephone'],
     'header_new_adoptions'=> ['Photo','Nom', 'Adopteur', 'Email', 'Telephone' ,'Date'],
     'header_adoptions'=> ['Photo','Nom', 'Adopteur', 'Email', 'Status'],
     'header' => '',

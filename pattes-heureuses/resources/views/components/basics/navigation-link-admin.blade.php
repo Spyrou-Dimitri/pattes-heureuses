@@ -1,21 +1,21 @@
-@php use App\Enums\AnimalStatus;use App\Models\Animal; @endphp
+@php use App\Enums\AdoptionStatus;use App\Enums\AnimalStatus;use App\Models\Adoption;use App\Models\Animal; @endphp
 @props(['href' => '',
  'title' => '',
   'cta_title' => '',
    'class' => '',
    'route' => ''])
 
-
+@php
+    $notifications_dashboard = Animal::where('state', AnimalStatus::PENDING)->count() + Adoption::where('status', AdoptionStatus::Pending)->count();
+    $notifications_animals = Animal::where('state', AnimalStatus::PENDING)->count();
+    $notifications_adoptions = Adoption::where('status', AdoptionStatus::Pending)->count();
+@endphp
 <li class="lg:w-full">
     <a href="{{ $href }}"
        title="{{$title}}"
        class="nav-link-admin flex flex-row gap-2  items-center p-4 rounded-lg {{ request()->routeIs($route) ? 'active-admin' : '' }}">
         @switch($slot)
             @case('Dashboard')
-                @php
-                    $notifications = Animal::where('state', AnimalStatus::PENDING)->count();
-                @endphp
-
                 <svg width="20" height="20" viewBox="0 0 16 16"
                      fill="{{ request()->routeIs($route) ? 'white' : 'none' }}" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -113,10 +113,23 @@
         <span>
             {{$slot}}
         </span>
-        @if($route === 'dashboard')
-            <span class="text-lg  bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
-                {{$notifications}}
-            </span>
-        @endif
+        @switch($route)
+            @case('dashboard')
+                    <span class="text-lg  bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
+                        {{$notifications_dashboard}}
+                    </span>
+                    @break
+                @case('animals')
+                    <span class="text-lg  bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
+                        {{$notifications_animals}}
+                    </span>
+                    @break
+                @case('adoptions')
+                    <span class="text-lg  bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
+                        {{$notifications_adoptions}}
+                    </span>
+                    @break
+        @endswitch
+
     </a>
 </li>

@@ -2,6 +2,7 @@
 
 use App\Enums\AnimalStatus;
 use App\Models\Animal;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -41,8 +42,10 @@ new class extends Component {
     {
         $this->validateOnly($property);
     }
+
     public function update_status()
     {
+        $this->authorize('change-status', User::class);
         $this->animal->state = $this->animal_status;
         $this->animal->save();
         $this->dispatch('refresh_status');
@@ -61,12 +64,12 @@ new class extends Component {
             <legend class="contents text-center">
                 <span>Changer le status</span>
             </legend>
-                <x-forms.select wire:model.blur="animal_status" :label="'Status'" :name="'status'"
-                                :options="AnimalStatus::cases()">
+            <x-forms.select wire:model.blur="animal_status" :label="'Status'" :name="'status'"
+                            :options="AnimalStatus::cases()">
                     <span class="font-poppins text-red-600 font-semibold">
                             @error('sexe') {{ $message }} @enderror
                         </span>
-                </x-forms.select>
+            </x-forms.select>
             <x-forms.submit>
                 Modifier
             </x-forms.submit>

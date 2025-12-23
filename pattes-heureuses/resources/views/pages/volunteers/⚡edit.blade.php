@@ -28,6 +28,7 @@ new class extends Component {
     {
 
         $this->user = User::findOrFail($id);
+        $this->authorize('update', $this->user);
         $this->avatar = $this->user->avatar;
         $this->lastName = $this->user->last_name;
         $this->firstName = $this->user->first_name;

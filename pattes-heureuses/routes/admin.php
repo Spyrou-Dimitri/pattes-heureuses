@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(function () {
     Route::view('/', 'admin.login')->name('login')->middleware('guest');
     Route::livewire('/dashboard', 'pages::⚡dashboard')
@@ -27,6 +29,7 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
         ->middleware(['auth', 'verified'])
         ->name('volunteers');
     Route::livewire('/volunteers/create', 'pages::volunteers.create')
+        ->can('create', User::class)
         ->middleware(['auth', 'verified'])
         ->name('volunteers-create');
     Route::livewire('/volunteers/{id}', 'pages::volunteers.show')

@@ -25,7 +25,6 @@ new class extends Component {
     public string $password_confirmation = '';
     public string $tel = '';
 
-
     //Créer les règles de validation
     protected function rules()
     {

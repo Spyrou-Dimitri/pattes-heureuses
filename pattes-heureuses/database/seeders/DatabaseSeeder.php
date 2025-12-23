@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleVolunteer;
 use App\Enums\SexeAnimal;
 use App\Models\Animal;
 use App\Models\Behavior;
@@ -13,6 +14,7 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Vaccin;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'Test',
             'last_name' => 'User',
             'email' => 'test@example.com',
-
+            'role' => RoleVolunteer::Volunteer,
         ]);
 
         /* Seed des breeds par rapport aux species */
@@ -124,6 +126,7 @@ class DatabaseSeeder extends Seeder
             $animals = Animal::factory()->create([
                 'sexe' => SexeAnimal::cases()[array_rand(SexeAnimal::cases())]->value,
                 'breed_id' => $seedingBreeds[array_rand($seedingBreeds)],
+
             ]);
 
             $animals->coats()->attach(
@@ -133,8 +136,6 @@ class DatabaseSeeder extends Seeder
             $animals->behaviors()->attach(
                 $allBehaviors->random(rand(1,3))->pluck('id')->toArray()
             );
-
-
         }
     }
 }

@@ -46,7 +46,15 @@ new class extends Component {
         $this->species = Specie::all();
         $this->behaviors = Behavior::all();
         $this->coats = Coat::all();
+    }
 
+    #[Computed]
+    public function allowedStatusOfUser() {
+        if (auth()->user()->isVolunteer()) {
+            return [AnimalStatus::PENDING];
+        }
+
+        return AnimalStatus::cases();
     }
 
     #[Computed]
@@ -155,6 +163,9 @@ new class extends Component {
     public function create()
     {
         $validated = $this->validate();
+        if (auth()->user()->isVolunteer()) {
+            $validated['status'] = AnimalStatus::PENDING;
+        }
         if ($validated['avatar']) {
             $new_original_file_name = uniqid() . '.' . config('animalavatars.image_type');
             $full_path_to_original = Storage::putFileAs(
@@ -287,16 +298,15 @@ new class extends Component {
                         </div>
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                             <x-forms.select :required="true" wire:model.live="status"
-                                            :options="AnimalStatus::cases()" class="w-full" :name="'animal-state'"
+                                            :options="$this->allowedStatusOfUser" class="w-full" :name="'animal-state'"
                                             :label="__('admin/animals/create.state')"
-                                            :disabled="__('admin/animals/create.disabled_sexe')"
+                                            :disabled="__('admin/animals/create.disabled_state')"
                             >
                                 <span
                                     class="font-poppins text-red-600 font-semibold">@error('status') {{ $message }} @enderror
                                 </span>
                             </x-forms.select>
 
-                            <div class="flex flex-col gap-2 w-full">
                                 <x-forms.select :required="true" :name="'animal-sexe'" wire:model.live="sexe"
                                                 :label="__('admin/animals/create.sexe')"
                                                 :options="SexeAnimal::cases()"
@@ -305,7 +315,6 @@ new class extends Component {
                                         @error('sexe') {{ $message }} @enderror
                                     </span>
                                 </x-forms.select>
-                            </div>
                         </div>
                         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
                             <div class="flex flex-col gap-2 w-full">

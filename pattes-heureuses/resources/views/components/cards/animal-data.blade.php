@@ -1,4 +1,4 @@
-@php use App\Enums\SexeAnimal; @endphp
+@php use App\Enums\SexeAnimal;use App\Models\User; @endphp
 @props([
     'name',
     'sexe',
@@ -29,14 +29,15 @@
                 </svg>
             @endif
         </h3>
-        @if(str_contains(request()->getHost(), 'admin'))
-        <button wire:click="change_status()" class="cursor-pointer text-2xl rounded-lg gap-2 border-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 bg-gray-50/2 {{$state->color()}}">
-            <svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true">
-                <circle cx="5" cy="5" r="5" fill="currentColor"/>
-            </svg>
-            {{$state->label()}}
-        </button>
-        @endif
+        @can('change-status', User::class)
+            <button wire:click="change_status()"
+                    class="cursor-pointer text-2xl rounded-lg gap-2 border-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 bg-gray-50/2 {{$state->color()}}">
+                <svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true">
+                    <circle cx="5" cy="5" r="5" fill="currentColor"/>
+                </svg>
+                {{$state->label()}}
+            </button>
+        @endcan
 
     </div>
     <dl class="flex flex-col gap-5 border-b-2 border-b-main-blue pb-5 items-center">

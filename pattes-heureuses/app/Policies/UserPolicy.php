@@ -28,7 +28,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -36,7 +36,7 @@ class UserPolicy
      */
     public function update(User $authUser, User $user): bool
     {
-        return $authUser->id === $user->id;
+        return $authUser->id === $user->id || $authUser->isAdmin();
     }
 
     /**
@@ -61,5 +61,9 @@ class UserPolicy
     public function forceDelete(User $user, User $model): bool
     {
         return false;
+    }
+    public function changeStatus(User $user)
+    {
+        return $user->isAdmin();
     }
 }
