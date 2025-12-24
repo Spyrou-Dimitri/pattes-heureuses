@@ -17,7 +17,7 @@
                     {{__('client/home/faq/faq.content-next')}}
                 </p>
             </div>
-            <x-basics.cta :href="route('contact')" :title="__('client/home/faq/faq.cta-title'). ' ' .'contact'">
+            <x-basics.cta :href="route('contact.create')" :title="__('client/home/faq/faq.cta-title'). ' ' .'contact'">
                 {{__('client/home/faq/faq.cta')}}
             </x-basics.cta>
             <div class="hidden md:block md:w-4/5 md:mx-auto">

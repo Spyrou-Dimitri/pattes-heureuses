@@ -15,7 +15,7 @@
         ],
         [
             'title' => __('admin/nav.title'). ' ' .__('admin/nav.messagery'),
-            'href' => route('animals.index'),
+            'href' => route('messagery-index'),
             'label' => __('admin/nav.messagery'),
             'route' => 'messagery'
 

@@ -16,8 +16,6 @@ new class extends Component {
         return ($this->modelClass)::all();
     }
 
-
-
     #[On('list_changed')]
     public function reset_list()
     {
@@ -115,4 +113,5 @@ new class extends Component {
                     Ajouter +
                 </a>
             </li>
+        </ul>
 </div>

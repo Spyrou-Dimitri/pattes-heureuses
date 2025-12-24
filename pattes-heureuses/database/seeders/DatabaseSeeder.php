@@ -8,11 +8,13 @@ use App\Models\Animal;
 use App\Models\Behavior;
 use App\Models\Breed;
 use App\Models\Coat;
+use App\Models\Message;
 use App\Models\Specie;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Vaccin;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,6 +25,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        Message::factory(10)->create();
+        Message::create([
+            'last_name' => 'Dupont',
+            'first_name' => 'Jean',
+            'email' => 'jean.dupont@example.com',
+            'telephone' => '+32470123456',
+            'topic' => 'Test message',
+            'description' => 'Ceci est un message de test créé pour 2023.',
+            'is_read' => false,
+            'created_at' => Carbon::create(2023, 5, 15, 14, 30, 0),
+            'updated_at' => Carbon::create(2023, 5, 15, 14, 30, 0),
+        ]);
 
         /* User seeding */
         User::factory(10)->create();

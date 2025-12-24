@@ -17,10 +17,10 @@ class MessageFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'email' => $this->faker->unique()->safeEmail(),
             'telephone' => $this->faker->word(),
-            'subject' => $this->faker->word(),
+            'topic' => $this->faker->word(),
             'description' => $this->faker->text(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'created_at' => Carbon::instance($this->faker->dateTimeBetween('-30 days', 'now')),
+            'updated_at' => Carbon::instance($this->faker->dateTimeBetween('-30 days', 'now'))
         ];
     }
 }

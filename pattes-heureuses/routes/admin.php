@@ -9,7 +9,7 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
         ->name('dashboard');
 
 
-    /* Animaux */
+    //Animaux
     Route::livewire('/animals', 'pages::animals.index')
         ->middleware(['auth', 'verified'])
         ->name('animals');
@@ -24,7 +24,7 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
         ->name('animals-edit');
 
 
-    /* Bénévoles */
+    //Bénévoles
     Route::livewire('/volunteers', 'pages::volunteers.index')
         ->middleware(['auth', 'verified'])
         ->name('volunteers');
@@ -40,7 +40,7 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
         ->name('volunteers-edit');
 
 
-    /*Adoptions*/
+    //Adoptions
 
     Route::livewire('/adoptions/create', 'pages::adoptions.create')
         ->middleware(['auth', 'verified'])
@@ -53,9 +53,14 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
         ->name('adoptions-show');
 
 
-
+    //Settings
     Route::livewire('/settings', 'pages::settings.index')
         ->middleware(['auth', 'verified'])
         ->name('settings');
+
+    //Messagery
+    Route::livewire('/messagery', 'pages::messagery.index')
+        ->middleware(['auth', 'verified'])
+        ->name('messagery-index');
 });
 

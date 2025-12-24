@@ -4,6 +4,7 @@
     'header_volunteers' => ['Photo', 'Nom', 'Prénom', 'email', 'Telephone'],
     'header_new_adoptions'=> ['Photo','Nom', 'Adopteur', 'Email', 'Telephone' ,'Date'],
     'header_adoptions'=> ['Photo','Nom', 'Adopteur', 'Email', 'Status'],
+    'header_messagery' => [' ','Auteur', 'Objet', 'Date'],
     'header' => '',
     'datas_table' => [],
 ])
@@ -16,6 +17,7 @@
             'adoptions' => $header_adoptions,
             'new_adoptions' => $header_new_adoptions,
             'animals'=> $header_animals,
+            'messagery' => $header_messagery,
         ];
 
     $header_choice = $header_choices[$header] ?? $header_choices['new_animals'];

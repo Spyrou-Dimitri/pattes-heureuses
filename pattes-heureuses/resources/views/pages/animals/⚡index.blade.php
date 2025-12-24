@@ -44,6 +44,7 @@ new class extends Component {
     public function updatedSelectedSpecies()
     {
         unset($this->filteredBreeds);
+
     }
 
     public function applyFilters()
@@ -166,7 +167,7 @@ new class extends Component {
     </x-admin.section>
     <x-admin.section :title="__('admin/animals/index.table_title')">
         <div class="flex flex-col gap-4 justify-between md:items-center md:flex-row flex-wrap">
-            <ul class="flex gap-4 md:gap-8 text-poppins flex-wrap">
+            <ul class="flex gap-4 md:gap-5 text-poppins flex-wrap">
                 <li>
                     <a href="#all" wire:click="set_tag('')"
                        class="filter_link {{$filter_tag === '' ? 'active': ''}}">{{__('admin/animals/index.filter_tag_all')}}</a>
@@ -178,10 +179,11 @@ new class extends Component {
                     </li>
                 @endforeach
             </ul>
-            <x-forms.input :type="'search'" :name="'animal-search'"
-                           :label="__('client/animals/index/landing.search-bar-label')"
-                           :placeholder="__('admin/animals/index.search_bar_placeholder')"/>
+
             <div class="flex justify-between md:gap-4 md:justify-start" x-data="{open: false}">
+                <x-forms.input :type="'search'" :name="'animal-search'"
+                               :label="__('client/animals/index/landing.search-bar-label')"
+                               :placeholder="__('admin/animals/index.search_bar_placeholder')"/>
                 <button class="cta-secondary cursor-pointer" @click.stop="open = !open">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24">
                         <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
