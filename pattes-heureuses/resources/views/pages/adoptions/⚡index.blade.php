@@ -139,6 +139,9 @@ new class extends Component {
                 </x-admin.tr>
             @endforeach
         </x-admin.table>
+        <div class="mt-4">
+            {{ $this->adoptions->links() }}
+        </div>
 
     </x-admin.section>
 </div>

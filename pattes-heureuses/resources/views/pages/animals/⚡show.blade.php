@@ -35,8 +35,6 @@ new class extends Component {
     public function refresh_status() {
         $this->animal = $this->animal->fresh();
     }
-
-
 };
 ?>
 

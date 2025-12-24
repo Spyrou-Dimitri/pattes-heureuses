@@ -23,22 +23,27 @@ new class extends Component {
     public function messages()
     {
 
+        $messages = Message::query();
+
         if ($this->term !== '') {
-            return Message::orderBy('created_at', 'desc')
+            $messages->orderBy('created_at', 'desc')
                 ->where('last_name', 'like', '%' . $this->term . '%')
                 ->orWhere('first_name', 'like', '%' . $this->term . '%')
-                ->orWhere('topic', 'like', '%' . $this->term . '%')
-                ->get();
+                ->orWhere('topic', 'like', '%' . $this->term . '%');
         }
 
+
+
         if ($this->filter_by === 'date') {
-            return Message::orderBy('created_at', 'desc')->get();
-        } elseif ($this->filter_by === 'alphabetical') {
-            return Message::orderBy('last_name', 'asc')->orderBy('first_name', 'asc')->get();
+            $messages->orderBy('created_at', 'desc');
+        } elseif ($this->filter_by === 'author') {
+            $messages->orderBy('last_name', 'asc')->orderBy('first_name', 'asc');
         } elseif ($this->filter_by === 'favourite') {
-            return Message::orderBy('is_favourite', 'desc')->orderBy('created_at', 'desc')->get();
+            $messages->orderBy('is_favourite', 'desc')->orderBy('created_at', 'desc');
         }
-        return Message::orderBy('created_at', 'desc')->get();
+
+
+        return $messages->orderBy('created_at', 'desc')->paginate(8);
     }
 
 
@@ -80,7 +85,7 @@ new class extends Component {
                         id="filter-by">
                     <option selected value="">Trier par</option>
                     <option value="date">Date</option>
-                    <option value="alphabetical">Alphabétique</option>
+                    <option value="author">Auteur</option>
                     <option value="favourite">Favoris</option>
 
                 </select>
@@ -157,6 +162,9 @@ new class extends Component {
             @endforeach
 
         </x-admin.table>
+        <div class="mt-4">
+            {{ $this->messages->links() }}
+        </div>
     </x-admin.section>
 </div>
 

@@ -16,7 +16,7 @@ new class extends Component {
             ->where('first_name', 'like', '%' . $this->term . '%')
             ->orWhere('last_name', 'like', '%' . $this->term . '%')
             ->orderBy('first_name', 'asc')
-            ->get();
+            ->paginate(8);
     }
     public function access_user($id)
     {
@@ -67,7 +67,9 @@ new class extends Component {
             @endforeach
 
         </x-admin.table>
-
+        <div class="mt-4">
+            {{ $this->staff->links() }}
+        </div>
 
     </x-admin.section>
 </div>

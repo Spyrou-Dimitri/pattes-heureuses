@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        Message::factory(10)->create();
+        Message::factory(50)->create();
         Message::create([
             'last_name' => 'Dupont',
             'first_name' => 'Jean',

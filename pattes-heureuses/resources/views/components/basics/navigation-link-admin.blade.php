@@ -115,20 +115,28 @@
         </span>
         @switch($route)
             @case('dashboard')
+                @if($notifications_dashboard > 0)
                     <span class="text-lg  bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
                         {{$notifications_dashboard}}
                     </span>
-                    @break
-                @case('animals')
+                @endif
+
+                @break
+            @case('animals')
+                @if($notifications_animals > 0)
                     <span class="text-lg  bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
                         {{$notifications_animals}}
                     </span>
-                    @break
-                @case('adoptions')
+                @endif
+                @break
+            @case('adoptions')
+                @if($notifications_adoptions > 0)
                     <span class="text-lg  bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
                         {{$notifications_adoptions}}
                     </span>
-                    @break
+                @endif
+
+                @break
         @endswitch
 
     </a>
