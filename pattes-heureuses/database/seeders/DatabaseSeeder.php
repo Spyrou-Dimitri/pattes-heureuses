@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Enums\AdoptionStatus;
+use App\Enums\AnimalStatus;
 use App\Enums\RoleVolunteer;
 use App\Enums\SexeAnimal;
+use App\Models\Adoption;
 use App\Models\Animal;
 use App\Models\Behavior;
 use App\Models\Breed;
@@ -147,6 +150,11 @@ class DatabaseSeeder extends Seeder
             $animals = Animal::factory()->create([
                 'sexe' => SexeAnimal::cases()[array_rand(SexeAnimal::cases())]->value,
                 'breed_id' => $seedingBreeds[array_rand($seedingBreeds)],
+                'created_at' => Carbon::now()->subMonths(rand(0, 12)),
+                'updated_at' => function (array $attrs) {
+                    return Carbon::parse($attrs['created_at']);
+                },
+
 
             ]);
 
@@ -157,6 +165,28 @@ class DatabaseSeeder extends Seeder
             $animals->behaviors()->attach(
                 $allBehaviors->random(rand(1,3))->pluck('id')->toArray()
             );
+
         }
+        $animals = Animal::all();
+
+        $animalsToAdopt = $animals->random((int) ($animals->count() * 0.6));
+
+        foreach ($animalsToAdopt as $animal) {
+
+            $adoptionDate = Carbon::parse($animal->created_at)
+                ->addDays(rand(1, 30));
+
+            Adoption::create([
+                'animal_id' => $animal->id,
+                'first_name' => fake()->firstName(),
+                'last_name' => fake()->lastName(),
+                'email' => fake()->safeEmail(),
+                'telephone' => rand(0, 1) ? fake()->phoneNumber() : null,
+                'status' => AdoptionStatus::cases()[array_rand(AdoptionStatus::cases())]->value,
+                'created_at' => $adoptionDate,
+                'updated_at' => $adoptionDate,
+            ]);
+        }
+
     }
 }

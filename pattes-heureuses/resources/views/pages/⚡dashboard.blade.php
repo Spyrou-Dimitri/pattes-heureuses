@@ -1,17 +1,48 @@
 <?php
 
+use App\Enums\AdoptionStatus;
 use App\Enums\AnimalStatus;
 use App\Models\Adoption;
 use App\Models\Animal;
+use Carbon\Carbon;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
+
 new class extends Component {
+
+    public string $selectedMonth = '';
+    public array $months;
+
+    public function mount()
+    {
+        for ($i = 0; $i < 12; $i++) {
+            $this->months[] = [
+                'label' => now()->subMonth($i)->translatedFormat('M Y'),
+                'value' => now()->subMonth($i)->format('Y-m'),
+            ];
+        }
+
+    }
 
     #[Computed]
     public function animals_pending()
     {
         return Animal::where('state', AnimalStatus::PENDING->value)->get();
+
+    }
+
+    #[Computed]
+    public function animals_count()
+    {
+        if ($this->selectedMonth === '') {
+            return Animal::orderBy('name', 'asc')->get();
+        }
+
+        $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
+        $end = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
+        return Animal::whereBetween('created_at', [$start, $end])->get();
+
     }
 
     #[Computed]
@@ -21,52 +52,99 @@ new class extends Component {
     }
 
 
+
+    #[Computed]
+    public function adoptions_count()
+    {
+        if ($this->selectedMonth === '') {
+            return Adoption::where('status', AdoptionStatus::Completed)->get();
+        }
+
+        $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
+        $end = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
+        return Adoption::where('status', AdoptionStatus::Completed)
+            ->whereBetween('created_at', [$start, $end])->get();
+    }
+
+
+    public function exportPdf()
+    {
+        if ($this->selectedMonth === '') {
+            $animals = Animal::all();
+            $adoptions = Adoption::where('status', AdoptionStatus::Completed->value)->get();
+            $current_animals = Animal::whereIn('state', [AnimalStatus::PENDING, AnimalStatus::ADOPTABLE, AnimalStatus::UNDERCARE])->get();
+        }
+        else {
+            $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
+            $end   = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
+
+            $animals = Animal::whereBetween('created_at', [$start, $end])->get();
+            $adoptions = Adoption::where('status', AdoptionStatus::Completed->value)
+                ->whereBetween('created_at', [$start, $end])
+                ->get();
+            $current_animals = Animal::whereIn('state', [AnimalStatus::PENDING, AnimalStatus::ADOPTABLE, AnimalStatus::UNDERCARE])
+                ->whereBetween('created_at', [$start, $end])->get();
+
+        }
+
+        $pdf = Pdf::loadView('pdf.monthly-stats', [
+            'animals' => $animals,
+            'adoptions' => $adoptions,
+            'current_animals' => $current_animals,
+            'month' => $this->selectedMonth,
+        ]);
+
+        return response()->streamDownload(
+            fn () => print($pdf->output()),
+            'statistiques-' . ($this->selectedMonth ?: 'tous-les-mois') . '.pdf'
+        );
+    }
+
     public function access_show($id)
     {
         return redirect()->route('animals-show', $id);
     }
 
+
+
 };
 ?>
 <div class="flex flex-col gap-12">
-
-    <div class="fixed top-2 left-2 z-50 px-2 py-1 text-white text-sm font-bold rounded bg-black/70">
-        <span class="block sm:hidden">XS ( < 640px )</span>
-        <span class="hidden sm:block md:hidden">SM ( ≥ 640px )</span>
-        <span class="hidden md:block lg:hidden">MD ( ≥ 768px )</span>
-        <span class="hidden lg:block xl:hidden">LG ( ≥ 1024px )</span>
-        <span class="hidden xl:block 2xl:hidden">XL ( ≥ 1280px )</span>
-        <span class="hidden 2xl:block">2XL ( ≥ 1536px )</span>
-    </div>
-    <?php
-
-
-    ?>
     <x-admin.section :title="__('admin/dashboard/dashboard.welcome')">
         <ul class="flex flex-col gap-6 md:flex-row md:gap-12">
             <x-cards.stat-card :icons="'paws'"
                                :title="__('admin/dashboard/dashboard.title_new_animals')"
-                               :number="$this->animals_pending->count()">
+                               :number="$this->animals_count->count()">
 
 
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'hearth'"
                                :title="__('admin/dashboard/dashboard.title_new_adoptions')"
-                               :number="$this->adoptions_pending->count()">
+                               :number="$this->adoptions_count->count()">
 
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'paws'"
                                :title="__('admin/dashboard/dashboard.title_new_messages')"
-                               :number="8">
-
+                               :number="Animal::all()->count()">
             </x-cards.stat-card>
 
 
         </ul>
+        <div>
+            <label for="filter_month" class="sr-only">Mois</label>
+            <select wire:model.live="selectedMonth" name="filter_month" id="filter_month">
+                <option selected value="">Tous</option>
+                @foreach($this->months as $month)
+                    <option value="{{$month['value']}}">{{$month['label']}}</option>
+                @endforeach
+
+            </select>
+            <button wire:click="exportPdf" class="btn btn-primary mt-2">
+                Télécharger PDF
+            </button>
+        </div>
 
     </x-admin.section>
-
-
     <x-admin.section :title="__('admin/dashboard/dashboard.title_new_animals')">
         <x-admin.table :header="'new_animals'">
             @foreach($this->animals_pending as $animal_pending)
@@ -108,7 +186,8 @@ new class extends Component {
     <x-admin.section :title="__('admin/dashboard/dashboard.title_new_adoptions')">
         <x-admin.table :header="'new_adoptions'">
             @foreach($this->adoptions_pending as $adoption_pending)
-                <x-admin.tr wire:click="access_show({{ $adoption_pending->id }})" wire:key="{{ $adoption_pending->id }}">
+                <x-admin.tr wire:click="access_show({{ $adoption_pending->id }})"
+                            wire:key="{{ $adoption_pending->id }}">
                     <x-admin.td>
                         <picture>
                             <source media="(min-width:768px)"

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StatsPdfController;
 use App\Models\User;
 
 Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(function () {
@@ -62,5 +63,9 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
     Route::livewire('/messagery', 'pages::messagery.index')
         ->middleware(['auth', 'verified'])
         ->name('messagery-index');
+
+    //PDF
+    Route::get('/pdf/statistiques/mois', [StatsPdfController::class, 'monthly_stats'])
+        ->name('pdf.stats.month');
 });
 
