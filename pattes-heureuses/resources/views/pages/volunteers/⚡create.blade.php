@@ -74,7 +74,7 @@ new class extends Component {
             );
             if ($full_path_to_original) {
                 $validated['avatar'] = $new_original_file_name;
-                ProcessUploadedImageJob::dispatch($full_path_to_original, $new_original_file_name);
+                ProcessUploadedImageJob::dispatchSync($full_path_to_original, $new_original_file_name);
             } else {
                 $validated['avatar'] = '';
             }
@@ -90,6 +90,8 @@ new class extends Component {
             'sexe' => $validated['selectedSexe'],
             'role' => $validated['selectedRole'],
         ]);
+
+        Log::info('Fonctionne mailpit pitier: ' . $newUser->email);
 
 
         return redirect()->route('volunteers-show', ['id' => $newUser->id]);
@@ -123,6 +125,7 @@ new class extends Component {
                                 alt="" class="img-type-file">
 
                             @if($this->avatar)
+                                {{--
                                 <button href="#"
                                         wire:click.prevent="delete_img()"
                                         x-data="{hover : false}"
@@ -137,6 +140,8 @@ new class extends Component {
                                               clip-rule="evenodd"/>
                                     </svg>
                                 </button>
+                                --}}
+
                             @endif
                             @if($this->avatar === null)
                                 <span class="text-xl font-poppins">

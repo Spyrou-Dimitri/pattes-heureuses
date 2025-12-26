@@ -35,13 +35,12 @@ new class extends Component {
     #[Computed]
     public function animals_count()
     {
-        if ($this->selectedMonth === '') {
-            return Animal::orderBy('name', 'asc')->get();
+        if ($this->selectedMonth !== '') {
+            $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
+            $end = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
+            return Animal::whereBetween('created_at', [$start, $end])->get();
         }
-
-        $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
-        $end = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
-        return Animal::whereBetween('created_at', [$start, $end])->get();
+        return Animal::orderBy('name', 'asc')->get();
 
     }
 
@@ -56,25 +55,23 @@ new class extends Component {
     #[Computed]
     public function adoptions_count()
     {
-        if ($this->selectedMonth === '') {
-            return Adoption::where('status', AdoptionStatus::Completed)->get();
+        if ($this->selectedMonth !== '') {
+            $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
+            $end = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
+            return Adoption::where('status', AdoptionStatus::Completed)
+                ->whereBetween('created_at', [$start, $end])->get();
         }
 
-        $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
-        $end = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
-        return Adoption::where('status', AdoptionStatus::Completed)
-            ->whereBetween('created_at', [$start, $end])->get();
+
+
+        return Adoption::where('status', AdoptionStatus::Completed)->get();
+
     }
 
 
     public function exportPdf()
     {
-        if ($this->selectedMonth === '') {
-            $animals = Animal::all();
-            $adoptions = Adoption::where('status', AdoptionStatus::Completed->value)->get();
-            $current_animals = Animal::whereIn('state', [AnimalStatus::PENDING, AnimalStatus::ADOPTABLE, AnimalStatus::UNDERCARE])->get();
-        }
-        else {
+        if ($this->selectedMonth !== '') {
             $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
             $end   = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
 
@@ -84,6 +81,12 @@ new class extends Component {
                 ->get();
             $current_animals = Animal::whereIn('state', [AnimalStatus::PENDING, AnimalStatus::ADOPTABLE, AnimalStatus::UNDERCARE])
                 ->whereBetween('created_at', [$start, $end])->get();
+
+           }
+        else {
+            $animals = Animal::all();
+            $adoptions = Adoption::where('status', AdoptionStatus::Completed->value)->get();
+            $current_animals = Animal::whereIn('state', [AnimalStatus::PENDING, AnimalStatus::ADOPTABLE, AnimalStatus::UNDERCARE])->get();
 
         }
 

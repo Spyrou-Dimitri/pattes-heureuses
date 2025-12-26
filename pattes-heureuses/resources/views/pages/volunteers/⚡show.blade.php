@@ -20,6 +20,10 @@ new class extends Component {
             'role' => $this->volunteer->role->label(),
         ];
     }
+    public function change_password()
+    {
+        $this->dispatch('open_modal', ['form' => 'modals::change-password', 'model_id' => $this->volunteer->id]);
+    }
 };
 ?>
 

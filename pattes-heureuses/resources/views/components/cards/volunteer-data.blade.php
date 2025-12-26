@@ -32,6 +32,7 @@
             <x-basics.cta :href="route('volunteers-edit', $id)" :class="'primary'">
                 Modifier
             </x-basics.cta>
+            <button type="button" class="cta-secondary cursor-pointer" wire:click="change_password()">Changer mot de passe</button>
         </div>
     @endcan
 
