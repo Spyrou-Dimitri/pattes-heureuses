@@ -34,21 +34,18 @@ class AnimalController extends Controller
             $query->whereIn('sexe', $request->sexes);
         }
 
-        if ($request->filled('age_range')){
+        if ($request->filled('age_range')) {
             [$min, $max] = explode('-', $request->age_range);
             $query->whereBetween('age', [$min, $max]);
         }
 
-        if ($request->filled('coats')){
-            $query->whereHas('coats', function($getCoat) use ($request) {
-                $getCoat->whereIn('coats.id', $request->coats);
-            });
+        if ($request->filled('coats')) {
+            $query->whereHas('coats', fn($getCoat) => $getCoat->whereIn('coats.id', $request->coats));
+
         }
 
-        if ($request->filled('behaviors')){
-            $query->whereHas('behaviors', function($getBehaviors) use ($request) {
-                $getBehaviors->whereIn('behaviors.id', $request->behaviors);
-            });
+        if ($request->filled('behaviors')) {
+            $query->whereHas('behaviors', fn($getBehaviors) => $getBehaviors->whereIn('behaviors.id', $request->behaviors));
         }
         if ($request->filled('accept_cats')) {
             $query->where('accept_cats', $request->accept_cats);
@@ -64,9 +61,9 @@ class AnimalController extends Controller
         $animals = $query->where('state', AnimalStatus::ADOPTABLE)->get();
 
 
-
         return view('client.animals.index', compact('animals', 'all_species', 'all_breeds', 'all_coats', 'all_behaviors'));
     }
+
     public function show($id)
     {
         $animal = Animal::findOrFail($id);
