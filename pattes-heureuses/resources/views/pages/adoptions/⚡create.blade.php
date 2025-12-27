@@ -183,7 +183,7 @@ new class extends Component {
 
             </form>
             <div class="flex flex-col gap-2">
-                <x-forms.select wire:model.live="selected_animal_id" :options="$animals" :label="'Animal à adopter'"
+                <x-forms.select wire:model.live="selected_animal_id" :options="$this->animals" :sta :label="'Animal à adopter'"
                                 :name="'select_animal'"
                 :disabled="' Sélectionner un animal'">
                     <span
@@ -215,7 +215,8 @@ new class extends Component {
                                          :name="$this->selected_animal->name"
                                          :sexe="$this->selected_animal->sexe"
                                          :data_animals_profile="$profil"
-                                         :data_animals_behavior="$behavior">
+                                         :data_animals_behavior="$behavior"
+                    :state="$this->selected_animal->state">
 
                     </x-cards.animal-data>
                 @endif

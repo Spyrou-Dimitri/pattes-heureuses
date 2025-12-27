@@ -14,7 +14,6 @@ new class extends Component {
     #[Modelable]
     public array $selected = [];
 
-
     public Collection $models;
     public string $name = '';
     public string $disabled = '';

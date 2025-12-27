@@ -9,7 +9,7 @@
 
 
     </x-client.sections.animals.index.section-landing>
-    <x-client.sections.animals.index.section-results :animals="$animals_adoptable">
+    <x-client.sections.animals.index.section-results :animals="$animals" :species="$all_species" :breeds="$all_breeds" :coats="$all_coats" :behaviors="$all_behaviors">
     </x-client.sections.animals.index.section-results>
 </x-layouts.auth>
 

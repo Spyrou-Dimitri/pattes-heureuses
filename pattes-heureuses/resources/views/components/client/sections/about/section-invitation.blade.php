@@ -2,7 +2,7 @@
     <x-layouts.cta-section
         :title="__('client/about/cta-invitation/cta-invitation.title')"
         :paragraph="__('client/about/cta-invitation/cta-invitation.content')"
-        :href_cta="route('contact')"
+        :href_cta="route('contact.create')"
         :href_cta_title="__('client/about/cta-invitation/cta-invitation.cta-title')"
         :cta="__('client/about/cta-invitation/cta-invitation.cta')"
         :img_src_480="asset('img/480x480/cat-desktop.png')"

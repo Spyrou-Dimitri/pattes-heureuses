@@ -4,7 +4,6 @@
 
 <x-layouts.section :py="'basic'" :bg="'gray'">
     <x-layouts.grid class="md:items-baseline">
-
         <div class="flex flex-col gap-4 items-start  md:items-baseline md:sticky md:top-10 md:col-span-6">
             <h2 class="h2-section">
                 {!! __('client/home/faq/faq.title')  !!}

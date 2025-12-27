@@ -17,17 +17,14 @@
 )
 
 @php
-
     $levels_titles_variants = [
         'h2-landing' => 'h2-landing',
         'h2-section' => 'h2-section',
         'h3'=> 'h3-article'
    ];
-
    $level_title = $levels_titles_variants[$level_title]  ?? $levels_titles_variants['h2-section']
-
-
 @endphp
+
 <div class="flex flex-col gap-4 items-start md:gap-6 md:col-span-6">
     @if($level_title === 'h2-landing')
         <h2 class="h2-landing">

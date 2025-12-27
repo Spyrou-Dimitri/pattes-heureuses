@@ -23,10 +23,7 @@
                               :img_src_600="asset('img/600x600/animal-index-landing.png')"
                               :img_src_800="asset('img/800x800/animal-index-landing.png')"
                               :img_alt="__('client/animals/index/landing.img_alt')"
-                              :cta="'Filtres'"
-                              :filter_href="'#'"
-                              :filters="__('client/animals/index/landing.filter')"
-                              :filter_href_title="__('client/animals/index/landing.filter-title')">
+                              >
 
         </x-layouts.text-media>
     </x-layouts.grid>

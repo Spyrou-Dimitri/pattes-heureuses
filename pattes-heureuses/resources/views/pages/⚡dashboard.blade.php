@@ -148,7 +148,7 @@ new class extends Component {
         </div>
 
     </x-admin.section>
-    <x-admin.section :title="__('admin/dashboard/dashboard.title_new_animals')">
+    <x-admin.section :title="'Nouveaux animaux'">
         <x-admin.table :header="'new_animals'">
             @foreach($this->animals_pending as $animal_pending)
                 <x-admin.tr wire:click="access_show({{ $animal_pending->id }})" wire:key="{{ $animal_pending->id }}">
@@ -186,7 +186,7 @@ new class extends Component {
 
         </x-admin.table>
     </x-admin.section>
-    <x-admin.section :title="__('admin/dashboard/dashboard.title_new_adoptions')">
+    <x-admin.section :title="'Nouvelles adoptions'">
         <x-admin.table :header="'new_adoptions'">
             @foreach($this->adoptions_pending as $adoption_pending)
                 <x-admin.tr wire:click="access_show({{ $adoption_pending->id }})"
