@@ -49,6 +49,7 @@ new class extends Component {
 
     public function applyFilters()
     {
+        $this->dispatch('close-modal');
     }
 
 
@@ -180,7 +181,9 @@ new class extends Component {
                 @endforeach
             </ul>
 
-            <div class="flex flex-col justify-between sm:flex-row gap-4 md:justify-start" x-data="{open: false}">
+            <div class="flex flex-col justify-between sm:flex-row gap-4 md:justify-start"
+                 x-data="{open: false}"
+                 @close-modal.window="open = false">
                 <x-forms.input :type="'search'" :name="'animal-search'"
                                :label="__('client/animals/index/landing.search-bar-label')"
                                :placeholder="__('admin/animals/index.search_bar_placeholder')"/>
