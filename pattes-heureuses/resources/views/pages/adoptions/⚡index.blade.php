@@ -63,16 +63,16 @@ new class extends Component {
     <x-admin.section :title="__('admin/animals/index.stats_title')">
         <ul class="flex flex-col gap-6 justify-between items-center md:grid md:grid-cols-9 md:gap-12">
             <x-cards.stat-card :icons="'paws'"
-                               :title="__('admin/animals/index.stats_card_all')"
+                               :title="'Adoptions'"
                                :number="Adoption::all()->count()"
             />
             <x-cards.stat-card :icons="'dog'"
-                               :title="__('admin/animals/index.stats_card_dog')"
+                               :title="'Adoptions réussies'"
                                :number="Adoption::where('status', AdoptionStatus::Completed)->count()"
             />
 
             <x-cards.stat-card :icons="'cat'"
-                               :title="__('admin/animals/index.stats_card_cat')"
+                               :title="'Adoptions en cours'"
                                :number="Adoption::where('status', AdoptionStatus::InProgress)->count()"
             />
 

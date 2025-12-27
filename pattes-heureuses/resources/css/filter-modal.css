@@ -1,0 +1,44 @@
+.filters-container {
+    display: block;
+    position: relative;
+    width: 100%;
+    background: transparent;
+    margin-top: 1rem;
+}
+.overlay-filters {
+    display: none;
+}
+.filters-button {
+    display: none;
+}
+.filters-close-button {
+    display: none;
+}
+.form-filters {
+    display: none;
+}
+/* Classe ajout avec mon js */
+
+body.js-enabled .filters-container {
+    display: none;
+}
+
+body.js-enabled .overlay-filters.is-open {
+    @apply block fixed inset-0 bg-black/50 z-30
+}
+body.js-enabled .filters-container.is-open {
+    @apply fixed origin-center z-40 -translate-y-1/2 p-4 lg:p-12 -translate-x-1/2 top-1/2 w-full left-1/2 max-w-[90%] max-h-[90vh] bg-white overflow-y-scroll flex flex-col gap-12
+}
+body.js-enabled .filters-button {
+    @apply cursor-pointer font-fredoka text-white justify-center gap-3 items-center bg-orange-cta rounded-lg px-4 text-xl py-3 flex font-semibold duration-400 border-2 border-orange-cta;
+    &:hover {
+        @apply bg-white text-orange-cta  duration-300;
+    }
+
+}
+body.js-enabled .filters-close-button.is-open {
+    @apply block cursor-pointer w-fit p-2 self-end rounded-lg bg-orange-cta
+}
+body.noScrollable {
+    overflow: hidden;
+}

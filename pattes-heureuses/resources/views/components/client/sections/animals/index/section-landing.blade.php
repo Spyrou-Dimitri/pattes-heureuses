@@ -10,7 +10,12 @@
         'search' => false,
         'cta' => false,
         'cta_href' => null,
-        'cta_href_title' => null
+        'cta_href_title' => null,
+        'animals',
+        'all_species',
+        'all_coats',
+        'all_behaviors',
+        'all_breeds',
 ]
 )
 
@@ -26,7 +31,13 @@
                               >
 
         </x-layouts.text-media>
+        <div class="md:gap-6 md:col-span-full">
+            <x-client.sections.animals.index.section-results :animals="$animals" :species="$all_species" :breeds="$all_breeds" :coats="$all_coats" :behaviors="$all_behaviors"/>
+
+        </div>
+
     </x-layouts.grid>
+
 </x-layouts.section>
 
 

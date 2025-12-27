@@ -204,7 +204,8 @@ new class extends Component {
                 </div>
                 <div x-show="open" @click.outside="open = false"
                      class="fixed origin-center z-3 -translate-y-1/2 p-4 lg:p-12 -translate-x-1/2 top-1/2 w-full left-1/2 max-w-[90%] max-h-[90vh] bg-white overflow-y-scroll flex flex-col gap-12">
-                    <div @click="open = false" class="cursor-pointer w-fit p-2 self-end rounded-lg bg-orange-cta">
+                    <button type="button" @click="open = false"
+                            class="cursor-pointer w-fit p-2 self-end rounded-lg bg-orange-cta">
                         <svg viewBox="0 0 24 24" fill="none" width="28" height=28" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_iconCarrier">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -212,7 +213,7 @@ new class extends Component {
                                       fill="#FFFFFF"></path>
                             </g>
                         </svg>
-                    </div>
+                    </button>
                     <form wire:submit.prevent="applyFilters" class="flex flex-col gap-8">
                         <div class="flex flex-col gap-8 lg:grid lg:grid-cols-2 lg:gap-x-16  ">
                             <fieldset class="flex flex-col gap-4">
@@ -280,10 +281,7 @@ new class extends Component {
                                     <x-forms.select :hasLabel="false" wire:model.defer="selectedAgeRange"
                                                     :options="$ageTranches" :name="'age-range'"
                                                     :label="'Age'"
-                                    >
-                                        <option disabled value="">
-                                            {{__('admin/animals/index.disabled_age')}}
-                                        </option>
+                                                    :disabled="__('admin/animals/index.disabled_age')">
                                     </x-forms.select>
 
                                 </fieldset>
@@ -352,10 +350,14 @@ new class extends Component {
                 <x-admin.tr wire:click="access_show({{ $animal->id }})" wire:key="{{ $animal->id }}">
                     <x-admin.td>
                         <picture>
-                            <source media="(min-width:768px)" srcset="{{asset('upload_img/animals/variants/128x128/' . $animal->avatar)}}">
-                            <source media="(min-width:576px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
-                            <source media="(max-width:575px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
-                            <img class="img-table" src="{{asset('upload_img/animals/originals/' . $animal->avatar)}}" alt="Photo de " . {{$animal->name}}>
+                            <source media="(min-width:768px)"
+                                    srcset="{{asset('upload_img/animals/variants/128x128/' . $animal->avatar)}}">
+                            <source media="(min-width:576px)"
+                                    srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
+                            <source media="(max-width:575px)"
+                                    srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
+                            <img class="img-table" src="{{asset('upload_img/animals/originals/' . $animal->avatar)}}"
+                                 alt="Photo de " . {{$animal->name}}>
                         </picture>
                     </x-admin.td>
                     <x-admin.td>

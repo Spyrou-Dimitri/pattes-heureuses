@@ -34,7 +34,7 @@ class AnimalController extends Controller
             $query->whereIn('sexe', $request->sexes);
         }
 
-        if ($request->filled('age_range')) {
+        if ($request->filled('age_range') && !empty($request->filled('age_range'))) {
             [$min, $max] = explode('-', $request->age_range);
             $query->whereBetween('age', [$min, $max]);
         }
