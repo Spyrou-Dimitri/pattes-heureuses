@@ -33,11 +33,13 @@ class User extends Authenticatable
         'telephone',
         'role',
         'sexe',
+        'disponibilities'
     ];
 
     protected $casts = [
         'sexe' => SexeVolunteer::class,
         'role' => RoleVolunteer::class,
+        'disponibilities' => 'array',
     ];
 
     /**
@@ -87,4 +89,27 @@ class User extends Authenticatable
     {
         return $this->role === RoleVolunteer::Volunteer;
     }
+
+
+    //Lorsque je crée un user, il a automatiquement cette horaire
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (empty($user->disponibilities)) {
+                $user->disponibilities = [
+                    'monday' => ['morning' => false, 'afternoon' => false],
+                    'tuesday' => ['morning' => false, 'afternoon' => false],
+                    'wednesday' => ['morning' => false, 'afternoon' => false],
+                    'thursday' => ['morning' => false, 'afternoon' => false],
+                    'friday' => ['morning' => false, 'afternoon' => false],
+                    'saturday' => ['morning' => false, 'afternoon' => false],
+                    'sunday' => ['morning' => false, 'afternoon' => false],
+                ];
+            }
+        });
+    }
+
+
 }

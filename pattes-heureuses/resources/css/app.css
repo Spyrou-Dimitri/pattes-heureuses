@@ -303,5 +303,8 @@ legend {
 input[type="checkbox"]:focus + label {
     @apply outline-2 outline-blue-600
 }
+label:has(input[type="checkbox"]:focus) {
+    @apply outline-2 outline-blue-600;
+}
 
 

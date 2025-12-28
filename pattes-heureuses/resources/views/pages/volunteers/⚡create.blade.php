@@ -85,7 +85,7 @@ new class extends Component {
             'last_name' => $validated['lastName'],
             'first_name' => $validated['firstName'],
             'email' => $validated['email'],
-            'password' => $validated['password'],
+            'password' => bcrypt($validated['password'] ),
             'telephone' => $validated['tel'],
             'sexe' => $validated['selectedSexe'],
             'role' => $validated['selectedRole'],
@@ -124,25 +124,6 @@ new class extends Component {
                                 @endif
                                 alt="" class="img-type-file">
 
-                            @if($this->avatar)
-                                {{--
-                                <button href="#"
-                                        wire:click.prevent="delete_img()"
-                                        x-data="{hover : false}"
-                                        @mouseenter="hover = true"
-                                        @mouseleave="hover = false"
-                                        class="bg-red-600 cursor-pointer absolute -top-[14px] -right-[14px] border-2 border-red-600 hover:bg-white duration-300 hover:duration-300 p-1 rounded-lg">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                                         x-bind:fill="hover ? '#E7000B' : 'white'"
-                                         viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd"
-                                              d="M5.293 5.293a1 1 0 0 1 1.414 0L12 10.586l5.293-5.293a1 1 0 1 1 1.414 1.414L13.414 12l5.293 5.293a1 1 0 0 1-1.414 1.414L12 13.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L10.586 12 5.293 6.707a1 1 0 0 1 0-1.414Z"
-                                              clip-rule="evenodd"/>
-                                    </svg>
-                                </button>
-                                --}}
-
-                            @endif
                             @if($this->avatar === null)
                                 <span class="text-xl font-poppins">
                                 Importer une image

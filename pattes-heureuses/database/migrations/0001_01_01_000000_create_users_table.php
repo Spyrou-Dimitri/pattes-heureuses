@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('telephone')->nullable();
+            $table->json('disponibilities')->nullable();
             $table->enum('role', RoleVolunteer::cases());
             $table->enum('sexe', SexeVolunteer::cases());
             $table->rememberToken();
