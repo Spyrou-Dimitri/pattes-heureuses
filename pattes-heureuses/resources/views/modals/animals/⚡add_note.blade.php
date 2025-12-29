@@ -34,17 +34,17 @@ new class extends Component {
     {
         $validated = $this->validate();
 
-            Note::create([
-                'title' => $this->title,
-                'description' => $this->content,
-                'notable_id' => $this->notable_id,
-                'notable_type' => Animal::class,
-                'user_id' => auth()->id(),
-            ]);
-
+        Note::create([
+            'title' => $this->title,
+            'description' => $this->content,
+            'notable_id' => $this->notable_id,
+            'notable_type' => Animal::class,
+            'user_id' => auth()->id(),
+        ]);
+        $this->dispatch('refresh');
         $this->dispatch('close_modal');
-
     }
+
 };
 ?>
 

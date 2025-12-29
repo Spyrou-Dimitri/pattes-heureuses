@@ -48,9 +48,8 @@ new class extends Component {
         $this->authorize('change-status', User::class);
         $this->animal->state = $this->animal_status;
         $this->animal->save();
-        $this->dispatch('refresh_status');
+        $this->dispatch('refresh');
         $this->dispatch('close_modal');
-
     }
 
 };

@@ -45,11 +45,13 @@ new class extends Component {
         $this->dispatch('open_modal', ['form' => 'modals::animals.show_note', 'model_id' => $noteId]);
     }
 
-    #[On('refresh_status')]
+    #[On('refresh')]
     public function refresh_status()
     {
         $this->animal = $this->animal->fresh();
+        $this->animal_notes = $this->animal->notes;
     }
+
 };
 ?>
 
