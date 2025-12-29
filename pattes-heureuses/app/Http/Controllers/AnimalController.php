@@ -66,6 +66,8 @@ class AnimalController extends Controller
 
     public function show($id)
     {
+
+
         $animal = Animal::findOrFail($id);
 
         return view('client.animals.show', compact('animal'));

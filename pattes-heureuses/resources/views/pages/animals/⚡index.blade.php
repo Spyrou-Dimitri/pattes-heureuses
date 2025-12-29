@@ -198,11 +198,14 @@ new class extends Component {
                 </button>
                 <div
                     x-show="open"
+                    x-cloak
                     x-transition.opacity
                     @click="open = false"
                     class="fixed inset-0 bg-black/50 z-2">
                 </div>
-                <div x-show="open" @click.outside="open = false"
+                <div x-show="open"
+                     x-cloak
+                     @click.outside="open = false"
                      class="fixed origin-center z-3 -translate-y-1/2 p-4 lg:p-12 -translate-x-1/2 top-1/2 w-full left-1/2 max-w-[90%] max-h-[90vh] bg-white overflow-y-scroll flex flex-col gap-12">
                     <button type="button" @click="open = false"
                             class="cursor-pointer w-fit p-2 self-end rounded-lg bg-orange-cta">

@@ -58,6 +58,7 @@
             <x-basics.dt>
                 {{ __("client/animals/show/show.motivation") }}
             </x-basics.dt>
+
             <dd class="font-poppins text-xl">
                 {{$motivations}}
             </dd>

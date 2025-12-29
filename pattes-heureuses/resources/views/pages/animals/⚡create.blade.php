@@ -21,7 +21,6 @@ use Livewire\WithFileUploads;
 new class extends Component {
 
     use WithFileUploads;
-
     public array $selectedVaccins = [];
     public array $selectedCoat = [];
     public array $selectedBehavior = [];
@@ -102,8 +101,6 @@ new class extends Component {
 
         ];
     }
-
-
     //Remplacer le wire:model par un nom plus humain dans le message d'erreur
     protected function validationAttributes()
     {
@@ -175,7 +172,7 @@ new class extends Component {
             );
             if ($full_path_to_original) {
                 $validated['avatar'] = $new_original_file_name;
-                ProcessUploadedImageJob::dispatchSync($full_path_to_original, $new_original_file_name);
+                ProcessUploadedImageJob::dispatch($full_path_to_original, $new_original_file_name);
             } else {
                 $validated['avatar'] = '';
             }

@@ -11,7 +11,7 @@ new class extends Component {
     public array $adopter_place_value = [];
     public array $animal_profil_value;
     public array $animal_behavior_value;
-    public string $motivations = '';
+    public ?string $motivations = null;
 
     public function mount($id)
     {
@@ -41,7 +41,6 @@ new class extends Component {
             'accept_cats' => $this->adoption->animal->accept_cats_label,
         ];
         $this->motivations = $this->adoption->motivations;
-
     }
 
 

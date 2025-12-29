@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('description');
             $table->morphs('notable');
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

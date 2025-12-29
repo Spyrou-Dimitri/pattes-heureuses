@@ -69,7 +69,9 @@ new class extends Component {
                     d="m18.813 11.406-7.906 9.906c-.75.906-1.906.906-2.625 0L.376 11.406c-.75-.938-.375-1.656.781-1.656h16.875c1.188 0 1.531.719.781 1.656z"/>
             </svg>
         </button>
-        <ul class="flex flex-col gap-8 p-4 border-2 border-orange-cta border-t-0 rounded-b-lg bg-white" x-show="open"
+        <ul class="flex flex-col gap-8 p-4 border-2 border-orange-cta border-t-0 rounded-b-lg bg-white"
+            x-show="open"
+            x-cloak
             x-collapse>
             @foreach($this->items as $item)
                 <li wire:key="{{$item->id}}" class="flex font-poppins text-xl justify-between gap-6">

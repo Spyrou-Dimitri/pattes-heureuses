@@ -8,6 +8,7 @@ new class extends Component {
     public $animal;
     public $animal_profil_value;
     public $animal_behavior_value;
+    public $animal_notes;
 
     public function mount($id)
     {
@@ -26,13 +27,27 @@ new class extends Component {
             'accept_kids' => $this->animal->accept_kids_label,
             'accept_cats' => $this->animal->accept_cats_label,
         ];
+        $this->animal_notes = $this->animal->notes;
     }
+
     public function change_status()
     {
         $this->dispatch('open_modal', ['form' => 'modals::animals.change-status', 'model_id' => $this->animal->id]);
     }
+
+    public function add_note()
+    {
+        $this->dispatch('open_modal', ['form' => 'modals::animals.add_note', 'model_id' => $this->animal->id]);
+
+    }
+    public function show_note($noteId)
+    {
+        $this->dispatch('open_modal', ['form' => 'modals::animals.show_note', 'model_id' => $noteId]);
+    }
+
     #[On('refresh_status')]
-    public function refresh_status() {
+    public function refresh_status()
+    {
         $this->animal = $this->animal->fresh();
     }
 };
@@ -45,12 +60,18 @@ new class extends Component {
         <div class="flex w-full flex-col gap-6 lg:grid lg:grid-cols-2">
             <div>
                 <picture>
-                    <source media="(min-width:1330px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $this->animal->avatar)}}">
-                    <source media="(min-width:1024px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $this->animal->avatar)}}">
-                    <source media="(min-width:768px)" srcset="{{asset('upload_img/animals/variants/930x930/' . $this->animal->avatar)}}">
-                    <source media="(min-width:576px)" srcset="{{asset('upload_img/animals/variants/720x720/' . $this->animal->avatar)}}">
-                    <source media="(max-width:575px)" srcset="{{asset('upload_img/animals/variants/480x480/' . $this->animal->avatar)}}">
-                    <img src="{{asset('upload_img/animals/originals/' . $this->animal->avatar)}}" alt="Photo de {{$this->animal->name}}"
+                    <source media="(min-width:1330px)"
+                            srcset="{{asset('upload_img/animals/variants/720x720/' . $this->animal->avatar)}}">
+                    <source media="(min-width:1024px)"
+                            srcset="{{asset('upload_img/animals/variants/480x480/' . $this->animal->avatar)}}">
+                    <source media="(min-width:768px)"
+                            srcset="{{asset('upload_img/animals/variants/930x930/' . $this->animal->avatar)}}">
+                    <source media="(min-width:576px)"
+                            srcset="{{asset('upload_img/animals/variants/720x720/' . $this->animal->avatar)}}">
+                    <source media="(max-width:575px)"
+                            srcset="{{asset('upload_img/animals/variants/480x480/' . $this->animal->avatar)}}">
+                    <img src="{{asset('upload_img/animals/originals/' . $this->animal->avatar)}}"
+                         alt="Photo de {{$this->animal->name}}"
                          class="w-full h-auto block aspect-square object-cover rounded-lg">
                 </picture>
 
@@ -63,8 +84,25 @@ new class extends Component {
                                  :id="$this->animal->id"
             >
             </x-cards.animal-data>
+            <section class="flex flex-col bg-white border border-main-blue rounded-lg p-6 gap-4 lg">
+                <div class="flex flex-wrap gap-2 items-center justify-between">
+                    <h3 class="h3-article">
+                        Notes :
+                    </h3>
+                    <button wire:click="add_note()" class="cta-primary w-fit">Ajouter une note</button>
+                </div>
 
-            <section class="flex lg:col-span-2 flex-col bg-white border border-main-blue rounded-lg p-6 gap-4">
+                <ul>
+                    @foreach($this->animal_notes as $note)
+                        <li wire:click="show_note({{$note->id}})" class="font-poppins text-xl underline hover:text-orange-cta duration-300 cursor-pointer hover:duration-300">
+                            {{$note->title}}
+                        </li>
+                    @endforeach
+
+                </ul>
+
+            </section>
+            <section class="flex flex-col bg-white border border-main-blue rounded-lg p-6 gap-4 lg">
                 <h3 class="h3-article">
                     Descriptions
                 </h3>
@@ -72,6 +110,7 @@ new class extends Component {
                     {{$this->animal->description}}
                 </p>
             </section>
+
         </div>
 
     </x-admin.section>
