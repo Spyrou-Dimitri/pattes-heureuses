@@ -2,11 +2,15 @@
 
 use App\Models\Adoption;
 use App\Models\Animal;
+use App\Models\Note;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
-    public $adoption;
+    public Adoption $adoption;
+
+    public $adoption_notes;
+
     public array $adopter_profil_value = [];
     public array $adopter_place_value = [];
     public array $animal_profil_value;
@@ -15,11 +19,12 @@ new class extends Component {
 
     public function mount($id)
     {
+
         $this->adoption = Adoption::findOrFail($id);
         $this->adopter_profil_value = [
             'last_name' => $this->adoption->last_name,
             'first_name' => $this->adoption->first_name,
-            'email'  => $this->adoption->email,
+            'email' => $this->adoption->email,
             'telephone' => $this->adoption->telephone,
         ];
         $this->adopter_place_value = [
@@ -41,6 +46,8 @@ new class extends Component {
             'accept_cats' => $this->adoption->animal->accept_cats_label,
         ];
         $this->motivations = $this->adoption->motivations;
+        $this->adoption_notes = $this->adoption->notes;
+
     }
 
 
@@ -49,10 +56,22 @@ new class extends Component {
         $this->dispatch('open_modal', ['form' => 'modals::adoptions.change-status', 'model_id' => $this->adoption->id]);
     }
 
-    #[On('refresh_status')]
+    public function add_note()
+    {
+        $this->dispatch('open_modal', ['form' => 'modals::notes.add_note', 'model_id' => $this->adoption->id, 'model_type' => Adoption::class]);
+
+    }
+    public function show_note($noteId)
+    {
+        $this->dispatch('open_modal', ['form' => 'modals::notes.show_note', 'model_id' => $noteId]);
+    }
+
+    #[On('refresh')]
     public function refresh_status()
     {
         $this->adoption = $this->adoption->fresh();
+        $this->adoption->status = $this->adoption->status;
+        $this->adoption_notes = $this->adoption->notes;
     }
 
 
@@ -65,7 +84,8 @@ new class extends Component {
             <h2 class="h2-section text-left">
                 Adoption de {{$this->adoption->animal->name}}
             </h2>
-            <button wire:click="change_status()" class="cursor-pointer text-2xl rounded-lg gap-2 border-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 bg-gray-50/2 {{$this->adoption->status->color()}}">
+            <button wire:click="change_status()"
+                    class="cursor-pointer text-2xl rounded-lg gap-2 border-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 bg-gray-50/2 {{$this->adoption->status->color()}}">
                 <svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true">
                     <circle cx="5" cy="5" r="5" fill="currentColor"/>
                 </svg>
@@ -84,8 +104,27 @@ new class extends Component {
                                    :id="$this->adoption->id"
                                    :motivations="$this->motivations"
             />
-
         </div>
+        <section class="flex flex-col bg-white border border-main-blue rounded-lg p-6 gap-4 mt-6">
+            <div class="flex flex-wrap gap-2 items-center justify-between">
+                <h3 class="h3-article">Notes du suivi</h3>
+                <button wire:click="add_note()" class="cta-primary w-fit">Ajouter une note</button>
+            </div>
+
+            <ul class="flex flex-col gap-2">
+                @forelse($this->adoption_notes as $note)
+                    <li wire:click="show_note({{$note->id}})"
+                        class="font-poppins flex items-center gap-3 hover:text-orange-cta px-3 py-2 rounded-lg cursor-pointer transition-all duration-300 hover:bg-orange-50 group">
+                        <span
+                            class="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-orange-cta transition-colors"></span>
+                        {{$note->title}}
+                    </li>
+                @empty
+                    <p class="font-poppins">Aucune note de suivi</p>
+                @endforelse
+            </ul>
+        </section>
     </section>
+
 
 </div>

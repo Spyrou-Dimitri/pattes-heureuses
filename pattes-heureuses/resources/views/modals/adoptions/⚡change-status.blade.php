@@ -48,7 +48,7 @@ new class extends Component {
     {
         $this->adoption->status = $this->adoption_status;
         $this->adoption->save();
-        $this->dispatch('refresh_status');
+        $this->dispatch('refresh');
         $this->dispatch('close_modal');
 
     }

@@ -37,13 +37,13 @@ new class extends Component {
 
     public function add_note()
     {
-        $this->dispatch('open_modal', ['form' => 'modals::animals.add_note', 'model_id' => $this->animal->id]);
+        $this->dispatch('open_modal', ['form' => 'modals::notes.add_note', 'model_id' => $this->animal->id, 'model_type' => Animal::class]);
 
     }
 
     public function show_note($noteId)
     {
-        $this->dispatch('open_modal', ['form' => 'modals::animals.show_note', 'model_id' => $noteId]);
+        $this->dispatch('open_modal', ['form' => 'modals::notes.show_note', 'model_id' => $noteId]);
     }
 
     #[On('refresh')]

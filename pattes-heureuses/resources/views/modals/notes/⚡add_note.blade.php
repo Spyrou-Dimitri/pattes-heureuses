@@ -10,10 +10,12 @@ new class extends Component {
     public string $content = '';
 
     public $notable_id;
+    public $notable_type;
 
-    public function mount(string $model_id)
+    public function mount(string $model_id, string $model_type)
     {
         $this->notable_id = $model_id;
+        $this->notable_type = $model_type;
     }
 
     public function rules()
@@ -38,7 +40,7 @@ new class extends Component {
             'title' => $this->title,
             'description' => $this->content,
             'notable_id' => $this->notable_id,
-            'notable_type' => Animal::class,
+            'notable_type' => $this->notable_type,
             'user_id' => auth()->id(),
         ]);
         $this->dispatch('refresh');
