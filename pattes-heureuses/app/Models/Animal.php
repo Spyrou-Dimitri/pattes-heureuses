@@ -42,6 +42,11 @@ class Animal extends Model
         return $this->hasMany(Adoption::class);
     }
 
+    function notes()
+    {
+        return $this->morphMany(Note::class, 'notable');
+    }
+
 
     public function specieBreed(): HasOneThrough
     {

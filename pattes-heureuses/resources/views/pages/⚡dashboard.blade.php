@@ -47,7 +47,7 @@ new class extends Component {
     #[Computed]
     public function adoptions_pending()
     {
-        return Adoption::where('status', AnimalStatus::PENDING->value)->get();
+        return Adoption::where('status', AdoptionStatus::Pending->value)->get();
     }
 
 
@@ -103,9 +103,13 @@ new class extends Component {
         );
     }
 
-    public function access_show($id)
+    public function access_animal_show($id)
     {
         return redirect()->route('animals-show', $id);
+    }
+    public function access_adoption_show($id)
+    {
+        return redirect()->route('adoptions-show', $id);
     }
 
 
@@ -151,7 +155,7 @@ new class extends Component {
     <x-admin.section :title="'Nouveaux animaux'">
         <x-admin.table :header="'new_animals'">
             @foreach($this->animals_pending as $animal_pending)
-                <x-admin.tr wire:click="access_show({{ $animal_pending->id }})" wire:key="{{ $animal_pending->id }}">
+                <x-admin.tr wire:click="access_animal_show({{ $animal_pending->id }})" wire:key="{{ $animal_pending->id }}">
                     <x-admin.td>
                         <picture>
                             <source media="(min-width:768px)"
@@ -189,7 +193,7 @@ new class extends Component {
     <x-admin.section :title="'Nouvelles adoptions'">
         <x-admin.table :header="'new_adoptions'">
             @foreach($this->adoptions_pending as $adoption_pending)
-                <x-admin.tr wire:click="access_show({{ $adoption_pending->id }})"
+                <x-admin.tr wire:click="access_adoption_show({{ $adoption_pending->id }})"
                             wire:key="{{ $adoption_pending->id }}">
                     <x-admin.td>
                         <picture>

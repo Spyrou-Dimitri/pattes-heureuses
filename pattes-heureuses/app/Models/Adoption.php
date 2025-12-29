@@ -36,4 +36,8 @@ class Adoption extends Model
     {
         return $this->belongsTo(Animal::class);
     }
+    public function notes()
+    {
+        return $this->morphMany(Note::class, 'notable');
+    }
 }
