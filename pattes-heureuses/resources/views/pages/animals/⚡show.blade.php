@@ -40,6 +40,7 @@ new class extends Component {
         $this->dispatch('open_modal', ['form' => 'modals::animals.add_note', 'model_id' => $this->animal->id]);
 
     }
+
     public function show_note($noteId)
     {
         $this->dispatch('open_modal', ['form' => 'modals::animals.show_note', 'model_id' => $noteId]);
@@ -51,7 +52,6 @@ new class extends Component {
         $this->animal = $this->animal->fresh();
         $this->animal_notes = $this->animal->notes;
     }
-
 };
 ?>
 
@@ -59,8 +59,8 @@ new class extends Component {
     <x-admin.section :title="'Fiche de' . ' ' . $this->animal->name"
                      :align="true">
 
-        <div class="flex w-full flex-col gap-6 lg:grid lg:grid-cols-2">
-            <div>
+        <div class="flex w-full flex-col gap-6 lg:grid lg:grid-cols-12 lg:items-start">
+            <div class="lg:col-span-6">
                 <picture>
                     <source media="(min-width:1330px)"
                             srcset="{{asset('upload_img/animals/variants/720x720/' . $this->animal->avatar)}}">
@@ -76,17 +76,19 @@ new class extends Component {
                          alt="Photo de {{$this->animal->name}}"
                          class="w-full h-auto block aspect-square object-cover rounded-lg">
                 </picture>
-
             </div>
-            <x-cards.animal-data :name="$this->animal->name"
-                                 :state="$this->animal->state"
-                                 :sexe="$this->animal->sexe"
-                                 :data_animals_profile="$this->animal_profil_value"
-                                 :data_animals_behavior="$this->animal_behavior_value"
-                                 :id="$this->animal->id"
-            >
-            </x-cards.animal-data>
-            <section class="flex flex-col bg-white border border-main-blue rounded-lg p-6 gap-4 lg">
+            <div class="lg:col-span-6">
+                <x-cards.animal-data
+                    :name="$this->animal->name"
+                    :state="$this->animal->state"
+                    :sexe="$this->animal->sexe"
+                    :data_animals_profile="$this->animal_profil_value"
+                    :data_animals_behavior="$this->animal_behavior_value"
+                    :id="$this->animal->id"
+                >
+                </x-cards.animal-data>
+            </div>
+            <section class="flex flex-col bg-white border border-main-blue rounded-lg p-6 gap-4 lg:col-span-4">
                 <div class="flex flex-wrap gap-2 items-center justify-between">
                     <h3 class="h3-article">
                         Notes :
@@ -94,17 +96,24 @@ new class extends Component {
                     <button wire:click="add_note()" class="cta-primary w-fit">Ajouter une note</button>
                 </div>
 
-                <ul>
-                    @foreach($this->animal_notes as $note)
-                        <li wire:click="show_note({{$note->id}})" class="font-poppins text-xl underline hover:text-orange-cta duration-300 cursor-pointer hover:duration-300">
+                <ul class="flex flex-col gap-2">
+                    @forelse($this->animal_notes as $note)
+                        <li wire:click="show_note({{$note->id}})"
+                            class="font-poppins flex items-center gap-3 hover:text-orange-cta px-3 py-2 rounded-lg cursor-pointer transition-all duration-300 hover:bg-orange-50 group">
+                            <span
+                                class="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-orange-cta transition-colors"></span>
                             {{$note->title}}
                         </li>
-                    @endforeach
 
+                    @empty
+                        <p class="font-poppins">
+                            Pas encore de note
+                        </p>
+                    @endforelse
                 </ul>
 
             </section>
-            <section class="flex flex-col bg-white border border-main-blue rounded-lg p-6 gap-4 lg">
+            <section class="flex flex-col bg-white border border-main-blue rounded-lg p-6 gap-4 lg:col-span-8">
                 <h3 class="h3-article">
                     Descriptions
                 </h3>
