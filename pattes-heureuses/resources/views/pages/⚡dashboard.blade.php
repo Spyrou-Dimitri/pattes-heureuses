@@ -71,32 +71,41 @@ new class extends Component {
 
     }
 
+    private function getDateRange(): ?array
+    {
+        if ($this->selectedMonth === '') {
+            return null;
+        }
+
+        $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
+        $end = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
+
+        return [$start, $end];
+    }
+
 
     public function exportPdf()
     {
-        if ($this->selectedMonth !== '') {
-            $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
-            $end   = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
+        $dateRange = $this->getDateRange();
 
-            $animals = Animal::whereBetween('created_at', [$start, $end])->get();
-            $adoptions = Adoption::where('status', AdoptionStatus::Completed->value)
-                ->whereBetween('created_at', [$start, $end])
-                ->get();
-            $current_animals = Animal::whereIn('state', [AnimalStatus::PENDING, AnimalStatus::ADOPTABLE, AnimalStatus::UNDERCARE])
-                ->whereBetween('created_at', [$start, $end])->get();
+        $animalsQuery = Animal::query();
+        $adoptionsQuery = Adoption::where('status', AdoptionStatus::Completed->value);
+        $currentAnimalsQuery = Animal::whereIn('state', [
+            AnimalStatus::PENDING,
+            AnimalStatus::ADOPTABLE,
+            AnimalStatus::UNDERCARE
+        ]);
 
-           }
-        else {
-            $animals = Animal::all();
-            $adoptions = Adoption::where('status', AdoptionStatus::Completed->value)->get();
-            $current_animals = Animal::whereIn('state', [AnimalStatus::PENDING, AnimalStatus::ADOPTABLE, AnimalStatus::UNDERCARE])->get();
-
+        if ($dateRange) {
+            $animalsQuery->whereBetween('created_at', $dateRange);
+            $adoptionsQuery->whereBetween('created_at', $dateRange);
+            $currentAnimalsQuery->whereBetween('created_at', $dateRange);
         }
 
         $pdf = Pdf::loadView('pdf.monthly-stats', [
-            'animals' => $animals,
-            'adoptions' => $adoptions,
-            'current_animals' => $current_animals,
+            'animals' => $animalsQuery->count(),
+            'adoptions' => $adoptionsQuery->count(),
+            'current_animals' => $currentAnimalsQuery->count(),
             'month' => $this->selectedMonth,
         ]);
 

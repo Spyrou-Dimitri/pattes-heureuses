@@ -78,16 +78,12 @@ new class extends Component {
 
         //Filtres races
         if (!empty($this->selectedBreeds)) {
-            foreach ($this->selectedBreeds as $selectedBreed) {
-                $animals->where('breed_id', $selectedBreed);
-            }
+            $animals->whereIn('breed_id', $this->selectedBreeds);
         }
 
         //Filtres sexe
         if (!empty($this->selectedSexes)) {
-            foreach ($this->selectedSexes as $selectedSexe) {
-                $animals->where('sexe', $selectedSexe);
-            }
+            $animals->whereIn('sexe', $this->selectedSexes);
         }
 
         //Filtres ages
@@ -138,7 +134,6 @@ new class extends Component {
     {
         return Breed::whereIn('specie_id', $this->selectedSpecies)->get();
     }
-
 
 };
 ?>

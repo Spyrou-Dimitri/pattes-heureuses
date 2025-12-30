@@ -97,9 +97,9 @@
     </thead>
     <tbody>
     <tr>
-        <td>{{ $animals->count() }}</td>
-        <td>{{ $adoptions->count() }}</td>
-        <td>{{ $current_animals->count() }}</td>
+        <td>{{ $animals }}</td>
+        <td>{{ $adoptions }}</td>
+        <td>{{ $current_animals }}</td>
     </tr>
     </tbody>
 </table>
