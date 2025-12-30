@@ -13,6 +13,6 @@ class SendVolunteerAccountMailListener
 
     public function handle($event): void
     {
-        Mail::to($event->user)->queue(new VolunteerAccountCreatedMail($event->user));
+        //Mail::to($event->user)->queue(new VolunteerAccountCreatedMail($event->user));
     }
 }

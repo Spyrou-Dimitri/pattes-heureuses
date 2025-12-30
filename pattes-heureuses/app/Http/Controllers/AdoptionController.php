@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 
 class AdoptionController extends Controller
 {
+
     public function index()
     {
 

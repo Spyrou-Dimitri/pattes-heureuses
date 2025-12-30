@@ -3,6 +3,7 @@
 use App\Enums\RoleVolunteer;
 use App\Enums\SexeVolunteer;
 use App\Jobs\ProcessUploadedImageJob;
+use App\Mail\VolunteerAccountCreatedMail;
 use App\Models\User;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
@@ -98,9 +99,6 @@ new #[Title('Create Post')] class extends Component {
             'role' => $validated['selectedRole'],
             'disponibilities' => $validated['disponibilities'],
         ]);
-
-        Log::info('Fonctionne mailpit pitier: ' . $newUser->email);
-
 
         return redirect()->route('volunteers-show', ['id' => $newUser->id]);
 

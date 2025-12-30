@@ -3,13 +3,16 @@
 namespace App\Observers;
 
 use App\Events\VolunteerCreatedEvent;
+use App\Mail\VolunteerAccountCreatedMail;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 class UserObserver
 {
     public function created(User $user): void
     {
-        event(new VolunteerCreatedEvent($user));
+        Mail::to($user->email)->queue(new VolunteerAccountCreatedMail($user));
+
     }
 
     public function updated(User $user): void
