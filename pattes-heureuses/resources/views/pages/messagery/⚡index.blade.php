@@ -107,7 +107,9 @@ new class extends Component {
                         </svg>
                         <span>Favoris</span>
                     </button>
-                    <button type="button" wire:click="delete()" class="delete">Effacer</button>
+                    <button type="button"
+                            wire:confirm="Êtes-vous sûr de vouloir supprimer ce message ?"
+                            wire:click="delete()" class="delete">Effacer</button>
                 @endif
             </div>
 
@@ -119,6 +121,7 @@ new class extends Component {
                         <div class="flex items-center justify-between">
                             <label for="select-id" class="sr-only">Sélectionner cette ligne</label>
                             <input value="{{$message->id}} " name="select-id" id="select-id" type="checkbox"
+                                   @click.stop
                                    wire:model.live="selectedMessages">
                             @if($message->is_favourite)
                                 <input wire:click="toggleFavouriteSingle({{$message->id}})" type="checkbox"

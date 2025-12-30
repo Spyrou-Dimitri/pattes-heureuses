@@ -4,13 +4,14 @@ use App\Enums\RoleVolunteer;
 use App\Enums\SexeVolunteer;
 use App\Jobs\ProcessUploadedImageJob;
 use App\Models\User;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 
 
-new class extends Component {
+new #[Title('Create Post')] class extends Component {
 
 
     use WithFileUploads;
