@@ -113,6 +113,7 @@ return [
         'housing_type' => 'type de logement',
         'environment' => 'environnement',
         'motivations' => 'motivations',
+        'disponibilities' => 'disponibilités'
     ],
 
 ];

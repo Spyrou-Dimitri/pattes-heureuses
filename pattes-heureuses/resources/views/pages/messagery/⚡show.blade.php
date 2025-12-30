@@ -81,7 +81,6 @@ new class extends Component {
                         </div>
                     </div>
                 </section>
-
                 <div class="flex gap-2 flex-wrap">
                     <button
                         wire:click="toggleFavourite()"

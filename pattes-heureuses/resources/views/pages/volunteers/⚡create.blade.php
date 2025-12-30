@@ -24,6 +24,9 @@ new class extends Component {
     public string $password = '';
     public string $password_confirmation = '';
     public string $tel = '';
+    public array $disponibilities = [];
+    public array $days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+    public array $time_slots = ['morning' => 'Matin', 'afternoon' => 'Après-midi'];
 
     //Créer les règles de validation
     protected function rules()
@@ -36,7 +39,9 @@ new class extends Component {
             'selectedSexe' => ['required', Rule::enum(SexeVolunteer::class)],
             'selectedRole' => ['required', Rule::enum(RoleVolunteer::class)],
             'password' => 'required|min:6|confirmed',
-            'tel' => 'regex:/^\+?[0-9 ]{10,15}$/'
+            'tel' => 'regex:/^\+?[0-9 ]{10,15}$/',
+            'disponibilities' => 'nullable|array',
+            'disponibilities.*.*' => 'boolean',
         ];
     }
 
@@ -50,7 +55,8 @@ new class extends Component {
             'selectedSexe' => 'sexe',
             'selectedRole' => 'role',
             'password' => 'Mot de passe',
-            'tel' => 'numéro de téléphone'
+            'tel' => 'numéro de téléphone',
+            'disponibilities' => 'disnobilitiés',
 
         ];
     }
@@ -85,10 +91,11 @@ new class extends Component {
             'last_name' => $validated['lastName'],
             'first_name' => $validated['firstName'],
             'email' => $validated['email'],
-            'password' => bcrypt($validated['password'] ),
+            'password' => bcrypt($validated['password']),
             'telephone' => $validated['tel'],
             'sexe' => $validated['selectedSexe'],
             'role' => $validated['selectedRole'],
+            'disponibilities' => $validated['disponibilities'],
         ]);
 
         Log::info('Fonctionne mailpit pitier: ' . $newUser->email);
@@ -215,6 +222,46 @@ new class extends Component {
                 </div>
 
             </fieldset>
+            <fieldset class="flex flex-col gap-6">
+                <legend>
+                    Disponibilités du bénévole
+                </legend>
+                <table class="w-full">
+                    <thead class="bg-gray-100">
+                    <tr class="font-poppins font-bold">
+                        <th class="p-4 text-left border border-gray-300"></th>
+                        @foreach($this->days as $day)
+                            <th class="p-4 border border-gray-300">{{$day}}</th>
+                        @endforeach
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    @foreach($this->time_slots as $time_slot => $label)
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">{{ $label }}</td>
+                            @foreach($this->days as $day)
+                                <td class="border border-gray-300 text-center transition-colors {{ $disponibilities[$day][$time_slot] ?? false ? 'bg-green-100' : 'bg-red-50' }}">
+                                    <label class="flex items-center justify-center gap-2 w-full py-4 cursor-pointer"
+                                           for="disponibilities_{{ $day }}_{{ $time_slot }}">
+                                        <input type="checkbox"
+                                               id="disponibilities_{{ $day }}_{{ $time_slot }}"
+                                               wire:model.live="disponibilities.{{ $day }}.{{ $time_slot }}"
+                                               class="sr-only">
+                                        <span
+                                            class="font-semibold {{ $disponibilities[$day][$time_slot] ?? false ? 'text-green-700' : 'text-red-700' }}">
+                                            {{ $disponibilities[$day][$time_slot] ?? false ? 'Oui' : 'Non' }}
+                                        </span>
+                                    </label>
+                                </td>
+                            @endforeach
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+
+            </fieldset>
+
             <x-forms.submit>
                 Créer la fiche
             </x-forms.submit>
