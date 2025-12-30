@@ -17,6 +17,8 @@ new class extends Component {
 
 
 <div wire:click="dispatch('close_modal')"
+     @keydown.escape.window="$wire.dispatch('close_modal')"
+     x-trap.inert.noscroll="true"
      class="fixed flex justify-center items-center w-full min-h-screen top-0 right-0 bg-black/20">
     <div class="bg-white p-8 rounded-lg shadow-xl max-w-2xl w-full" wire:click.stop>
 
