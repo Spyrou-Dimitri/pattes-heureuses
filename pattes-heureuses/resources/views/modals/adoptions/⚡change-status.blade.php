@@ -50,7 +50,6 @@ new class extends Component {
         $this->adoption->save();
         $this->dispatch('refresh');
         $this->dispatch('close_modal');
-
     }
 
 };

@@ -27,7 +27,6 @@
     <thead class="hidden md:table-header-group md:bg-gray-100 ">
     <tr class="font-poppins font-bold ">
         @foreach($header_choice as $column)
-
             <th class="md:py-4 md:px-4 md:text-left">
                 {{$column}}
             </th>

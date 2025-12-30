@@ -23,7 +23,7 @@ class VolunteerAccountCreatedMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Volunteer Account Created',
+            subject: 'Compté Bénévole - Pattes Heureuses',
         );
     }
 

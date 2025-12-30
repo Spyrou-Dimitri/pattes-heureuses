@@ -109,7 +109,7 @@ new class extends Component {
 ?>
 <div>
     <x-admin.section :title="'Créer un nouveau profil'">
-        <form action="#" wire:submit="save_volunteer()" method="post"
+        <form wire:submit="save_volunteer"
               class="flex flex-col gap-12 border-2 border-main-blue rounded-lg p-6 bg-white">
             <fieldset class="flex flex-col gap-6">
                 <legend>
