@@ -7,10 +7,11 @@ use App\Models\Animal;
 use Carbon\Carbon;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 
 new class extends Component {
-
+    use WithPagination;
     public string $selectedMonth = '';
     public array $months;
 
@@ -28,7 +29,8 @@ new class extends Component {
     #[Computed]
     public function animals_pending()
     {
-        return Animal::where('state', AnimalStatus::PENDING->value)->orderByDesc('created_at')->paginate(8);
+        return Animal::with(['breed.specie'])->
+        where('state', AnimalStatus::PENDING->value)->orderByDesc('created_at')->paginate(8, ['*'], 'animalPage');
 
     }
 
@@ -38,16 +40,17 @@ new class extends Component {
         if ($this->selectedMonth !== '') {
             $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
             $end = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
-            return Animal::whereBetween('created_at', [$start, $end])->get();
+            return Animal::whereBetween('created_at', [$start, $end])->count();
         }
-        return Animal::orderBy('name', 'asc')->get();
+        return Animal::orderBy('name', 'asc')->count();
 
     }
 
     #[Computed]
     public function adoptions_pending()
     {
-        return Adoption::where('status', AdoptionStatus::Pending->value)->orderBy('created_at', 'desc')->paginate(8);
+        return Adoption::with('animal')->
+        where('status', AdoptionStatus::Pending->value)->orderBy('created_at', 'desc')->paginate(8, ['*'], 'adoptionPage');
     }
 
 
@@ -59,12 +62,12 @@ new class extends Component {
             $start = Carbon::createFromFormat('Y-m', $this->selectedMonth)->startOfMonth();
             $end = Carbon::createFromFormat('Y-m', $this->selectedMonth)->endOfMonth();
             return Adoption::where('status', AdoptionStatus::Completed)
-                ->whereBetween('created_at', [$start, $end])->get();
+                ->whereBetween('created_at', [$start, $end])->count();
         }
 
 
 
-        return Adoption::where('status', AdoptionStatus::Completed)->get();
+        return Adoption::where('status', AdoptionStatus::Completed)->count();
 
     }
 
@@ -121,13 +124,13 @@ new class extends Component {
         <ul class="flex flex-col gap-6 md:flex-row md:gap-12">
             <x-cards.stat-card :icons="'paws'"
                                :title="__('admin/dashboard/dashboard.title_new_animals')"
-                               :number="$this->animals_count->count()">
+                               :number="$this->animals_count">
 
 
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'hearth'"
                                :title="__('admin/dashboard/dashboard.title_new_adoptions')"
-                               :number="$this->adoptions_count->count()">
+                               :number="$this->adoptions_count">
 
             </x-cards.stat-card>
             <x-cards.stat-card :icons="'paws'"

@@ -47,7 +47,7 @@ new class extends Component {
                 </g>
             </svg>
         </button>
-        
+
         <table class="w-full">
             <thead class="bg-gray-100">
             <tr class="font-poppins font-bold">
