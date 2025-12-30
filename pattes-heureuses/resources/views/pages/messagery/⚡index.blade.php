@@ -70,6 +70,10 @@ new class extends Component {
         $message->is_favourite = !$message->is_favourite;
         $message->save();
     }
+    public function access_message($id)
+    {
+        return redirect()->route('messagery-show', $id);
+    }
 
 };
 ?>
@@ -110,7 +114,7 @@ new class extends Component {
         </div>
         <x-admin.table :header="'messagery'">
             @foreach($this->messages as $message)
-                <x-admin.tr wire:key="{{$message->id}}">
+                <x-admin.tr wire:click="access_message({{ $message->id }})" wire:key="{{$message->id}}">
                     <x-admin.td>
                         <div class="flex items-center justify-between">
                             <label for="select-id" class="sr-only">Sélectionner cette ligne</label>

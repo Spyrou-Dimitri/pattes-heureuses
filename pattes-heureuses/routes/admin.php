@@ -63,6 +63,9 @@ Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(func
     Route::livewire('/messagery', 'pages::messagery.index')
         ->middleware(['auth', 'verified'])
         ->name('messagery-index');
+    Route::livewire('/messagery/{id}', 'pages::messagery.show')
+        ->middleware(['auth', 'verified'])
+        ->name('messagery-show');
 
     //PDF
     Route::get('/pdf/statistiques/mois', [StatsPdfController::class, 'monthly_stats'])
