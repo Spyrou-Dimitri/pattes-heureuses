@@ -73,12 +73,17 @@
                                        :type="'email'"
                                        :label="'Email'"
                                        :placeholder="'john.doe@gmail.com'">
+                            <span class="font-poppins text-red-600 font-semibold">
+                                @error('email') {{ $message }} @enderror
+                            </span>
                         </x-forms.input>
                         <div class="flex flex-col gap-2">
                             <x-forms.input :name="'password'"
                                            :type="'password'"
                                            :label="'Mot de passe'">
-
+                                <span class="font-poppins text-red-600 font-semibold">
+                                    @error('password') {{ $message }} @enderror
+                                </span>
                             </x-forms.input>
                             <a href="#"
                                class="text-right underline hover:text-orange-cta hover:duration-300 duration-300">Mot de

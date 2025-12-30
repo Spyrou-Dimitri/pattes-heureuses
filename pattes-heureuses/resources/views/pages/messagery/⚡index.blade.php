@@ -85,7 +85,7 @@ new class extends Component {
             <div class="flex gap-4 flex-row">
                 <label class="sr-only" for="filter-by">Filtrer par</label>
                 <select wire:model.live="filter_by" name="filter-by"
-                        class="bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl"
+                        class="cursor-pointer bg-white border-2 border-orange-cta rounded-md py-3 px-4 text-xl"
                         id="filter-by">
                     <option selected value="">Trier par</option>
                     <option value="date">Date</option>
@@ -98,7 +98,7 @@ new class extends Component {
                         x-data="{hover: false}"
                         @mouseenter="hover = true"
                         @mouseleave="hover = false"
-                        type="button" class="cta-secondary  flex flex-row gap-2" wire:click="marksAsFavourite()">
+                        type="button" class="cta-secondary cursor-pointer flex flex-row gap-2" wire:click="marksAsFavourite()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -0.5 33 33">
                             <path
                                 x-bind:fill="hover ? 'white' : '#edc110'"
