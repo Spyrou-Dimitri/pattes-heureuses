@@ -28,7 +28,7 @@ new class extends Component {
     #[Computed]
     public function animals_pending()
     {
-        return Animal::where('state', AnimalStatus::PENDING->value)->get();
+        return Animal::where('state', AnimalStatus::PENDING->value)->orderByDesc('created_at')->paginate(8);
 
     }
 
@@ -47,7 +47,7 @@ new class extends Component {
     #[Computed]
     public function adoptions_pending()
     {
-        return Adoption::where('status', AdoptionStatus::Pending->value)->get();
+        return Adoption::where('status', AdoptionStatus::Pending->value)->orderBy('created_at', 'desc')->paginate(8);
     }
 
 
@@ -189,6 +189,9 @@ new class extends Component {
             @endforeach
 
         </x-admin.table>
+        <div class="mt-4">
+            {{ $this->animals_pending->links() }}
+        </div>
     </x-admin.section>
     <x-admin.section :title="'Nouvelles adoptions'">
         <x-admin.table :header="'new_adoptions'">
@@ -226,11 +229,12 @@ new class extends Component {
                     <x-admin.td>
                         {{$adoption_pending->created_at}}
                     </x-admin.td>
-
                 </x-admin.tr>
             @endforeach
-
         </x-admin.table>
+        <div class="mt-4">
+            {{ $this->adoptions_pending->links() }}
+        </div>
     </x-admin.section>
 
 
