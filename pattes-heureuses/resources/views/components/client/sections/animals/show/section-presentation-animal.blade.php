@@ -4,20 +4,29 @@
             {{__('client/animals/show/show.title')}} <strong>{{$animal->name}}</strong>
         </h2>
         <div class="flex w-full flex-col gap-6 lg:grid md:grid-cols-12 md:gap-12 col-span-full">
-            <picture class="md:col-span-6">
-                <source media="(min-width:1330px)"
-                        srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
-                <source media="(min-width:1024px)"
-                        srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
-                <source media="(min-width:768px)"
-                        srcset="{{asset('upload_img/animals/variants/930x930/' . $animal->avatar)}}">
-                <source media="(min-width:576px)"
-                        srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
-                <source media="(max-width:575px)"
-                        srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
-                <img src="{{asset('upload_img/animals/originals/' . $animal->avatar)}}" alt="Photo de {{$animal->name}}"
-                     class="w-full h-auto block aspect-square object-cover rounded-lg">
-            </picture>
+            <div class="md:col-span-6">
+                @if(str_starts_with($animal->avatar, 'public/img/animal/'))
+                    <img src="{{asset(str_replace('public/', '', $animal->avatar))}}"
+                         alt="Photo de {{$animal->name}}"
+                         class="w-full h-auto block aspect-square object-cover rounded-lg">
+                @else
+                    <picture class="md:col-span-6">
+                        <source media="(min-width:1330px)"
+                                srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
+                        <source media="(min-width:1024px)"
+                                srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
+                        <source media="(min-width:768px)"
+                                srcset="{{asset('upload_img/animals/variants/930x930/' . $animal->avatar)}}">
+                        <source media="(min-width:576px)"
+                                srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
+                        <source media="(max-width:575px)"
+                                srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
+                        <img src="{{asset('upload_img/animals/originals/' . $animal->avatar)}}" alt="Photo de {{$animal->name}}"
+                             class="w-full h-auto block aspect-square object-cover rounded-lg">
+                    </picture>
+                @endif
+            </div>
+
 
             <x-cards.animal-data class="md:col-span-6"
                                  :name="$animal->name"

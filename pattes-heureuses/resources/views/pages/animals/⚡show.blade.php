@@ -60,7 +60,14 @@ new class extends Component {
                      :align="true">
 
         <div class="flex w-full flex-col gap-6 lg:grid lg:grid-cols-12 lg:items-start">
-            <div class="lg:col-span-6">
+            <div class="lg:col-span-6"
+            >
+                @if(str_starts_with($this->animal->avatar, 'public/img/animal/'))
+                    <img src="{{asset(str_replace('public/', '', $this->animal->avatar))}}"
+                         alt="Photo de {{$this->animal->name}}"
+                         class="w-full h-auto block aspect-square object-cover rounded-lg">
+                @else
+
                 <picture>
                     <source media="(min-width:1330px)"
                             srcset="{{asset('upload_img/animals/variants/720x720/' . $this->animal->avatar)}}">
@@ -76,6 +83,8 @@ new class extends Component {
                          alt="Photo de {{$this->animal->name}}"
                          class="w-full h-auto block aspect-square object-cover rounded-lg">
                 </picture>
+                @endif
+
             </div>
             <div class="lg:col-span-6">
                 <x-cards.animal-data

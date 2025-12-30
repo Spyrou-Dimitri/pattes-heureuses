@@ -14,8 +14,22 @@ class AnimalFactory extends Factory
 {
     protected $model = Animal::class;
 
+
+
+
     public function definition(): array
     {
+        $images = [
+            'public/img/animal/Bastien.jpg',
+            'public/img/animal/Benoit.jpg',
+            'public/img/animal/Carlos.jpg',
+            'public/img/animal/jean.jpeg',
+            'public/img/animal/Larry.jpg',
+            'public/img/animal/Pablo.jpg',
+            'public/img/animal/Samantha.jpg',
+            'public/img/animal/Kenny.jpg',
+        ];
+
         return [
             'name' => $this->faker->firstName(),
             'description' => $this->faker->sentence(50),
@@ -23,7 +37,7 @@ class AnimalFactory extends Factory
             'age' => rand(1, 20),
             'breed_id' => Breed::factory(),
             'state' => AnimalStatus::cases()[array_rand(AnimalStatus::cases())]->value,
-            'avatar' => UploadedFile::fake()->image('photo.jpg'),
+            'avatar' => $images[array_rand($images)],
             'accept_kids' => $this->faker->boolean(),
             'accept_dogs' => $this->faker->boolean(),
             'accept_cats' => $this->faker->boolean(),

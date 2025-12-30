@@ -19,7 +19,5 @@
 
     @endphp
     <x-client.sections.animals.show.section-presentation-animal :animal="$animal" :behavior="$behavior" :profil="$profil"/>
-    {{--
-    <x-client.sections.animals.show.section-other-results/>
-    --}}
+
 </x-layouts.auth>

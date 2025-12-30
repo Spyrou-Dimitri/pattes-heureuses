@@ -347,16 +347,24 @@ new class extends Component {
             @foreach($this->animals as $animal)
                 <x-admin.tr wire:click="access_show({{ $animal->id }})" wire:key="{{ $animal->id }}">
                     <x-admin.td>
-                        <picture>
-                            <source media="(min-width:768px)"
-                                    srcset="{{asset('upload_img/animals/variants/128x128/' . $animal->avatar)}}">
-                            <source media="(min-width:576px)"
-                                    srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
-                            <source media="(max-width:575px)"
-                                    srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
-                            <img class="img-table" src="{{asset('upload_img/animals/originals/' . $animal->avatar)}}"
-                                 alt="Photo de " . {{$animal->name}}>
-                        </picture>
+                        @if(str_starts_with($animal->avatar, 'public/img/animal/'))
+                            <img src="{{asset(str_replace('public/', '', $animal->avatar))}}"
+                                 alt="Photo de {{$animal->name}}"
+                                 class="img-table">
+                        @else
+
+                            <picture>
+                                <source media="(min-width:768px)"
+                                        srcset="{{asset('upload_img/animals/variants/128x128/' . $animal->avatar)}}">
+                                <source media="(min-width:576px)"
+                                        srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
+                                <source media="(max-width:575px)"
+                                        srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
+                                <img class="img-table"
+                                     src="{{asset('upload_img/animals/originals/' . $animal->avatar)}}"
+                                     alt="Photo de " . {{$animal->name}}>
+                            </picture>
+                        @endif
                     </x-admin.td>
                     <x-admin.td>
                         {{$animal->name}}

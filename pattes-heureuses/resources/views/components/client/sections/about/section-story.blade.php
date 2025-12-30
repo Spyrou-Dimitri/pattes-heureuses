@@ -1,5 +1,25 @@
 @php
     $storySteps = __('client/about/story/story.steps');
+    $storyImages = [
+    'start' => [
+        'src' => asset('img/800x800/story1.jpg'),
+        'src_480x480' => asset('img/480x480/story1.jpg'),
+        'src_600x600' => asset('img/600x600/story1.jpg'),
+        'alt' => 'La façade du refuge Les Pattes Heureuses'
+    ],
+    'daily' => [
+        'src' => asset('img/800x800/story2.jpg'),
+        'src_480x480' => asset('img/480x480/story2.jpg'),
+        'src_600x600' => asset('img/600x600/story2.jpg'),
+        'alt' => 'Des bénévoles s\'occupant des animaux au refuge'
+    ],
+    'futur' => [
+        'src' => asset('img/800x800/story3.jpg'),
+        'src_480x480' => asset('img/480x480/story3.jpg'),
+        'src_600x600' => asset('img/600x600/story3.jpg'),
+        'alt' => 'Un animal adopté partant vers sa nouvelle famille'
+    ],
+];
 @endphp
 
 <x-layouts.section :py="'basic'" :bg="'paws'">
@@ -18,8 +38,10 @@
                             :cta_title="isset($step['cta_title']) ? $step['cta_title'] : null"
                             :address="isset($step['address']) ? $step['address'] : null"
                             :cta="isset($step['cta_text']) ? $step['cta_text'] : null"
-                            :img_src="isset($step['src']) ? $step['src'] : asset('img/adoptions/step1.jpg')"
-                            :img_alt="isset($step['alt']) ? $step['alt'] : ''"
+                            :img_src="$storyImages[$key]['src']"
+                            :img_src_480x480="$storyImages[$key]['src_480x480']"
+                            :img_src_600x600="$storyImages[$key]['src_600x600']"
+                            :img_alt="$storyImages[$key]['alt']"
                     />
                 </li>
 
