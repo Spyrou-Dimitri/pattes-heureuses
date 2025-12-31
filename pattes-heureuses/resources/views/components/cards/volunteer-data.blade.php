@@ -28,7 +28,7 @@
         @endforeach
     </dl>
     @can('update', $volunteer)
-        <div class="flex justify-around  border-t-2 border-t-main-blue pt-5">
+        <div class="flex justify-around flex-wrap gap-2 border-t-2 border-t-main-blue pt-5">
             <x-basics.cta :href="route('volunteers-edit', $id)" :class="'primary'">
                 Modifier
             </x-basics.cta>

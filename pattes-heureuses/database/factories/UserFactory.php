@@ -25,8 +25,13 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $images = [
+            'public/img/personnel/moi.jpg',
+
+        ];
+
         return [
-            'avatar' => UploadedFile::fake()->image('photo.jpg'),
+            'avatar' => $images[array_rand($images)],
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName(),
             'email' => fake()->unique()->safeEmail(),
