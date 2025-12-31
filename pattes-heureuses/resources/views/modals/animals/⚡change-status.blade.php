@@ -60,8 +60,8 @@ new class extends Component {
      @keydown.escape.window="$wire.dispatch('close_modal')"
      x-trap.inert.noscroll="true"
      class="fixed flex justify-center items-center w-full min-h-screen top-0 right-0 bg-black/20">
-    <form class="flex flex-col gap-4 bg-white p-16 rounded-lg" wire:click.stop wire:submit="update_status()">
-        <button type="button" @click="open = false"
+    <form class="flex flex-col gap-4 bg-white p-16 rounded-lg" wire:click.stop wire:submit="update_status">
+        <button type="button" wire:click="dispatch('close_modal')"
                 class="cursor-pointer w-fit p-2 self-end rounded-lg bg-orange-cta">
             <svg viewBox="0 0 24 24" fill="none" width="28" height=28" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_iconCarrier">
