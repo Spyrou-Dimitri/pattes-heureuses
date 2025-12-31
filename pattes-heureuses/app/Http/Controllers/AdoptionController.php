@@ -48,7 +48,9 @@ class AdoptionController extends Controller
             'motivations' => $validated['motivations'],
             'animal_id' => $validated['animal_id']
         ]);
-        return redirect()->route('about');
+        $request->session()->flash('success', 'Demande d\'adoption envoyée avec succès !');
+
+        return redirect()->back();
 
     }
 
