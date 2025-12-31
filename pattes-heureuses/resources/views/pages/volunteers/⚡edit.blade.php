@@ -138,10 +138,16 @@ new class extends Component {
                                name="avatar">
                         <label for="avatar" class="cursor-pointer flex flex-col gap-2 items-center">
                             @if($this->new_avatar)
-                                <img src="{!! $this->new_avatar->temporaryUrl() !!}" alt="Photo de" class="img-type-file">
-                            @else
-                                <img src="{{asset('upload_img/animals/originals/' . $this->avatar)}}" alt=""
+                                <img src="{!! $this->new_avatar->temporaryUrl() !!}" alt="Photo de"
                                      class="img-type-file">
+                            @else
+                                @if(str_starts_with($this->avatar, 'public/img/personnel/'))
+                                <img src="{{asset(str_replace('public/', '', $this->avatar))}}" alt=""
+                                     class="img-type-file">
+                                @else
+                                    <img src="{{asset('upload_img/animals/originals/' . $this->avatar)}}" alt=""
+                                         class="img-type-file">
+                                @endif
                             @endif
                             @if($this->new_avatar)
                                 <button href="#"
