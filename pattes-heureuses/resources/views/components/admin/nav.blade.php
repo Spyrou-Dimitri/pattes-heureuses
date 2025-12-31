@@ -127,7 +127,12 @@
                             Compte
                         </span>
                     </a>
-                    <img class="img-profil" src="{{asset('img/animal/jean.jpeg')}}" alt="">
+                    @if(str_starts_with(auth()->user()->avatar, 'public/img/personnel/'))
+                        <img src="{{asset(str_replace('public/', '', auth()->user()->avatar))}}" alt="" class="img-profil">
+                    @else
+                        <img src="{{asset('upload_img/animals/originals/' . auth()->user()->avatar)}}" alt=""
+                             class="img-profil">
+                    @endif
                     <div class="flex flex-col font-fredoka text-xl">
                         <span>
                             {{auth()->user()->last_name}}
