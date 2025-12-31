@@ -30,9 +30,7 @@ new class extends Component {
                 'value' => $date->format('Y-m'),
             ];
         }
-
     }
-
 
     #[Computed]
     public function animals_pending()

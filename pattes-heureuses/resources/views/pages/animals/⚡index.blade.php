@@ -144,7 +144,7 @@ new class extends Component {
         <ul class="flex flex-col gap-6 justify-between items-center md:grid md:grid-cols-9 md:gap-12">
             <x-cards.stat-card :icons="'paws'"
                                :title="__('admin/animals/index.stats_card_all')"
-                               :number="Animal::all()->count()">
+                               :number="Animal::count()">
 
 
             </x-cards.stat-card>
