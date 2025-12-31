@@ -49,6 +49,7 @@ new class extends Component {
         unset($this->adoptions);
 
     }
+
     public function access_show($id)
     {
         return redirect()->route('adoptions-show', $id);
@@ -93,7 +94,7 @@ new class extends Component {
                     </li>
                 @endforeach
             </ul>
-            <x-forms.input :type="'search'" :name="'adoption-search'"
+            <x-forms.input :term="'term'" :type="'search'" :name="'adoption-search'"
                            :label="__('client/animals/index/landing.search-bar-label')"
                            :placeholder="__('admin/animals/index.search_bar_placeholder')"/>
             <div class="flex justify-between md:gap-4 md:justify-start">
@@ -108,17 +109,23 @@ new class extends Component {
             @foreach($this->adoptions as $adoption)
                 <x-admin.tr wire:click="access_show({{ $adoption->id }})" wire:key="{{ $adoption->id }}">
                     <x-admin.td>
-                        <picture>
-                            <source media="(min-width:768px)"
-                                    srcset="{{asset('upload_img/animals/variants/128x128/' . $adoption->animal->avatar)}}">
-                            <source media="(min-width:576px)"
-                                    srcset="{{asset('upload_img/animals/variants/720x720/' . $adoption->animal->avatar)}}">
-                            <source media="(max-width:575px)"
-                                    srcset="{{asset('upload_img/animals/variants/480x480/' . $adoption->animal->avatar)}}">
-                            <img class="img-table"
-                                 src="{{asset('upload_img/animals/originals/' . $adoption->animal->avatar)}}"
-                                 alt="Photo de " . {{$adoption->animal->name}}>
-                        </picture>
+                        @if(str_starts_with($adoption->animal->avatar, 'public/img/animal/'))
+                            <img src="{{asset(str_replace('public/', '', $adoption->animal->avatar))}}"
+                                 alt="Photo de {{$adoption->animal->name}}"
+                                 class="img-table">
+                        @else
+                            <picture>
+                                <source media="(min-width:768px)"
+                                        srcset="{{asset('upload_img/animals/variants/128x128/' . $adoption->animal->avatar)}}">
+                                <source media="(min-width:576px)"
+                                        srcset="{{asset('upload_img/animals/variants/720x720/' . $adoption->animal->avatar)}}">
+                                <source media="(max-width:575px)"
+                                        srcset="{{asset('upload_img/animals/variants/480x480/' . $adoption->animal->avatar)}}">
+                                <img class="img-table"
+                                     src="{{asset('upload_img/animals/originals/' . $adoption->animal->avatar)}}"
+                                     alt="Photo de " . {{$adoption->animal->name}}>
+                            </picture>
+                        @endif
                     </x-admin.td>
                     <x-admin.td>
                         {{$adoption->animal->name}}

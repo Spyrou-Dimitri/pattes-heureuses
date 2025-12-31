@@ -28,7 +28,7 @@ new class extends Component {
 <div>
     <x-admin.section :title="'Liste du personnels'">
         <div class="flex flex-col gap-4 justify-between md:items-center md:flex-row flex-wrap">
-            <x-forms.input :type="'search'" :name="'animal-search'" :label="'Rechercher un animal'"
+            <x-forms.input :term="'term'" :type="'search'" :name="'animal-search'" :label="'Rechercher un animal'"
                            :placeholder="'Barre de recherche'"/>
             @can('create', User::class)
             <div class="flex justify-between md:gap-4 md:justify-start">

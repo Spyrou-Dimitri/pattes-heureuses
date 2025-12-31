@@ -80,7 +80,7 @@ new class extends Component {
 <div class="flex flex-col gap-12">
     <x-admin.section :title="'Messagerie'">
         <div class="flex flex-col gap-4 justify-between md:items-center md:flex-row flex-wrap">
-            <x-forms.input :placeholder="'Nom / Prénom / Objet'" :name="'search-bar'" :label="'Barre de recherche'"
+            <x-forms.input :term="'term'" :placeholder="'Nom / Prénom / Objet'" :name="'search-bar'" :label="'Barre de recherche'"
                            :type="'search'" wire:model="term"/>
             <div class="flex gap-4 flex-row">
                 <label class="sr-only" for="filter-by">Filtrer par</label>

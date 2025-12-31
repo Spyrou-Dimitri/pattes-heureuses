@@ -179,7 +179,7 @@ new class extends Component {
             <div class="flex flex-col justify-between sm:flex-row gap-4 md:justify-start"
                  x-data="{open: false}"
                  @close-modal.window="open = false">
-                <x-forms.input :type="'search'" :name="'animal-search'"
+                <x-forms.input :term="'term'" :type="'search'" :name="'animal-search'"
                                :label="__('client/animals/index/landing.search-bar-label')"
                                :placeholder="__('admin/animals/index.search_bar_placeholder')"/>
                 <button class="cta-secondary cursor-pointer" @click.stop="open = !open">
