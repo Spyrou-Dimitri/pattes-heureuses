@@ -3,7 +3,7 @@
 use App\Http\Controllers\StatsPdfController;
 use App\Models\User;
 
-Route::domain('admin.les-pattes-heureuses.test')->middleware('auth')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     Route::view('/', 'admin.login')->name('login')->middleware('guest');
     Route::livewire('/dashboard', 'pages::⚡dashboard')
         ->middleware(['auth', 'verified'])

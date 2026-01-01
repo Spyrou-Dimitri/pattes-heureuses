@@ -6,14 +6,13 @@
     'data_animals_profile' => [],
     'data_animals_behavior' => [],
     'id' => '',
-
     ]
 )
 
 
 <article {{ $attributes->merge([
     'class' => 'flex flex-col gap-5 border border-main-blue rounded-lg p-6 bg-white'
-]) }}>
+])}}>
     <div class="flex flex-row flex-wrap gap-2 items-center justify-between border-b-2 border-b-main-blue pb-5">
         <h3 class="h3-article flex flex-row items-center gap-2">
             {{$name}}
@@ -30,13 +29,15 @@
             @endif
         </h3>
         @can('change-status', User::class)
-            <button wire:click="change_status()"
-                    class="cursor-pointer text-2xl rounded-lg gap-2 border-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 bg-gray-50/2 {{$state->color()}}">
-                <svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true">
-                    <circle cx="5" cy="5" r="5" fill="currentColor"/>
-                </svg>
-                {{$state->label()}}
-            </button>
+            @if($state)
+                <button wire:click="change_status"
+                        class="cursor-pointer text-2xl rounded-lg gap-2 border-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 bg-gray-50/2 {{$state->color()}}">
+                    <svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true">
+                        <circle cx="5" cy="5" r="5" fill="currentColor"/>
+                    </svg>
+                    {{$state->label()}}
+                </button>
+            @endif
         @endcan
 
     </div>
@@ -70,7 +71,7 @@
         @endforeach
     </dl>
 
-    @if(str_contains(request()->getHost(), 'admin') && str_contains(request()->path(), 'animal'))
+    @if(str_contains(request()->path(), 'admin') && str_contains(request()->path(), 'animal'))
         <div class="flex justify-around">
             <x-basics.cta :href="route('animals-edit', $id)" :class="'primary'">
                 Modifier

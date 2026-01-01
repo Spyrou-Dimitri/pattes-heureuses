@@ -15,7 +15,7 @@ use Laravel\Fortify\Features;
 
 
 
-Route::domain('les-pattes-heureuses.test')->group(function () {
+Route::group([],function () {
     Route::get('/', function () {
         return view('client.home');
     })->name('home');
