@@ -1,6 +1,6 @@
 @php
     $isAdoptionPage = request()->is('adoption*');
-    $isLoginPage = request()->is('login*');
+    $isLoginPage = request()->is('*login*');
     $isIndexAnimal = request()->is('animals*')
 @endphp
 

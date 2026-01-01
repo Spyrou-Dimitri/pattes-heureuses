@@ -14,7 +14,7 @@ class AdoptionObserver
 {
     public function created(Adoption $adoption): void
     {
-        Mail::to(config('mail.from.address'))->queue(new AdoptionCreatedMail($adoption));
+        Mail::to(config('mail.from.address'))->send(new AdoptionCreatedMail($adoption));
     }
 
     public function updated(Adoption $adoption): void
@@ -26,7 +26,7 @@ class AdoptionObserver
             && $adoption->animal->state !== AnimalStatus::INPROGRESS) {
             $adoption->animal->state = AnimalStatus::INPROGRESS;
             $adoption->animal->save();
-            Mail::to($adoption->email)->queue(new AdoptionAcceptedMail($adoption));
+            Mail::to($adoption->email)->send(new AdoptionAcceptedMail($adoption));
 
         }
 

@@ -18,7 +18,6 @@
 <body>
 <header class=""></header>
 
-
 <main>
     {{$slot}}
 </main>
