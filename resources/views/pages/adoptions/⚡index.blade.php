@@ -23,8 +23,11 @@ new class extends Component {
     public function adoptions()
     {
 
-        $adoptions = Adoption::query();
 
+        $adoptions = Adoption::query()
+            ->join('animals', 'adoptions.animal_id', '=', 'animals.id')
+            ->select('adoptions.*');
+        
         //Filtre barre de recherche
         if ($this->term !== '') {
             $adoptions->where('first_name', 'like', '%' . $this->term . '%')
