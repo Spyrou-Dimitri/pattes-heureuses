@@ -32,12 +32,12 @@ class UserFactory extends Factory
 
         return [
             'avatar' => $images[array_rand($images)],
-            'last_name' => fake()->lastName(),
-            'first_name' => fake()->firstName(),
-            'email' => fake()->unique()->safeEmail(),
+            'last_name' => '',
+            'first_name' => '',
+            'email' => '',
             'email_verified_at' => now(),
             'password' => static::$password ??= 'password',
-            'telephone' => fake()->phoneNumber(),
+            'telephone' => '',
             'role' => RoleVolunteer::cases()[array_rand(RoleVolunteer::cases())]->value,
             'sexe' => SexeVolunteer::cases()[array_rand(SexeVolunteer::cases())]->value,
             'remember_token' => Str::random(10),
