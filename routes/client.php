@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdoptionController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\LandingController;
@@ -18,7 +19,7 @@ use Laravel\Fortify\Features;
 
 Route::group([],function () {
     Route::get('/', [LandingController::class, 'index'])->name('home');
-    Route::view('/about', 'client.about')->name('about');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
     Route::get('/animals', [AnimalController::class, 'index'])
         ->name('animals.index');
     Route::get('/animals/{id}', [AnimalController::class, 'show'])
