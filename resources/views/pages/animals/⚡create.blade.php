@@ -163,18 +163,18 @@ new class extends Component {
         if (auth()->user()->isVolunteer()) {
             $validated['status'] = AnimalStatus::PENDING;
         }
-        if ($this->avatar) {
+        if ($validated['avatar']) {
             $new_original_file_name = uniqid() . '.' . config('animalavatars.image_type');
-            $full_path_to_original = $this->avatar->storeAs(
-                config('avatars.original_path'),
-                $new_original_file_name,
-                ['disk' => 's3', 'visibility' => 'public']);
-
+            $full_path_to_original = Storage::putFileAs(
+                config('animalavatars.original_path'),
+                $validated['avatar'],
+                $new_original_file_name
+            );
             if ($full_path_to_original) {
-                $this->avatar = $new_original_file_name;
-                ProcessUploadedImageJob::dispatchSync($full_path_to_original, $new_original_file_name);
+                $validated['avatar'] = $new_original_file_name;
+                ProcessUploadedImageJob::dispatch($full_path_to_original, $new_original_file_name);
             } else {
-                $this->avatar = '';
+                $validated['avatar'] = '';
             }
         }
 
@@ -185,7 +185,7 @@ new class extends Component {
             'sexe' => $validated['sexe'],
             'age' => $validated['age'],
             'author' => auth()->user()->last_name . ' ' . auth()->user()->first_name,
-            'avatar' => $this->avatar,
+            'avatar' => $validated['avatar'],
             'accept_kids' => $validated['acceptChildren'],
             'accept_dogs' => $validated['acceptDogs'],
             'accept_cats' => $validated['acceptCats'],
