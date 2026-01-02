@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdoptionController;
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MessageController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
@@ -16,9 +17,7 @@ use Laravel\Fortify\Features;
 
 
 Route::group([],function () {
-    Route::get('/', function () {
-        return view('client.home');
-    })->name('home');
+    Route::get('/', [LandingController::class, 'index'])->name('home');
     Route::view('/about', 'client.about')->name('about');
     Route::get('/animals', [AnimalController::class, 'index'])
         ->name('animals.index');

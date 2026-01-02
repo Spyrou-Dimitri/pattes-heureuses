@@ -1,28 +1,9 @@
-@php
-
-    $stats = [
-        [
-            'title' => __('client/home/stats/stats.card-adoption-title'),
-            'value' => '39',
-            'icon' => 'hearth',
-        ],
-        [
-            'title' => __('client/home/stats/stats.card-benevole-title'),
-            'value' => '48',
-            'icon' => 'benevole',
-        ],
-        [
-            'title' => __('client/home/stats/stats.card-animals-title'),
-            'value' => '29',
-            'icon' => 'paws',
-        ],
-        [
-            'title' => __('client/home/stats/stats.card-dispo-title'),
-            'value' => '19',
-            'icon' => 'house',
-        ]
-    ];
-@endphp
+@props([
+    'animals',
+    'adoptions_completed',
+    'volunteers',
+    'animals_adoptable',
+])
 
 <x-layouts.section :py="'basic'" :bg="'gray'">
     <x-layouts.grid class="md:gap-y-6">
@@ -35,13 +16,26 @@
             </p>
         </div>
         <ul class="md:col-span-full flex items-center mx-auto flex-col w-full gap-12 md:grid md:grid-cols-12 md:items-stretch">
-            @foreach($stats as $stat)
-                <x-cards.stat-card :title="$stat['title']"
-                                   :number="$stat['value']"
-                                   :icons="$stat['icon']">
+            <x-cards.stat-card :title="__('client/home/stats/stats.card-adoption-title')"
+                               :number="$adoptions_completed"
+                               :icons="'hearth'">
 
-                </x-cards.stat-card>
-            @endforeach
+            </x-cards.stat-card>
+            <x-cards.stat-card :title="__('client/home/stats/stats.card-benevole-title')"
+                               :number="$volunteers"
+                               :icons="'benevole'">
+
+            </x-cards.stat-card>
+            <x-cards.stat-card :title="__('client/home/stats/stats.card-animals-title')"
+                               :number="$animals"
+                               :icons="'paws'">
+
+            </x-cards.stat-card>
+            <x-cards.stat-card :title="__('client/home/stats/stats.card-dispo-title')"
+                               :number="$animals_adoptable"
+                               :icons="'house'">
+
+            </x-cards.stat-card>
 
         </ul>
     </x-layouts.grid>
