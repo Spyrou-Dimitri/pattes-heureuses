@@ -12,7 +12,7 @@
         'cta_href_title' => null,
         'adresse' => false,
         'filters' => false,
-
+        'is_animal_index',
         ]
 )
 

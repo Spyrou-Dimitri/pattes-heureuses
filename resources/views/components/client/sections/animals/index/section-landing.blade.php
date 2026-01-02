@@ -24,7 +24,7 @@
         <x-layouts.text-media :title="__('client/animals/index/landing.title')"
                               :level_title="'h2-landing'"
                               :paragraph="__('client/animals/index/landing.content')"
-                              :img_src_480="asset('img/400x400/animal-index-landing.png')"
+                              :img_src_480="asset('img/480x480/animal-index-landing.png')"
                               :img_src_600="asset('img/600x600/animal-index-landing.png')"
                               :img_src_800="asset('img/800x800/animal-index-landing.png')"
                               :img_alt="__('client/animals/index/landing.img_alt')"
