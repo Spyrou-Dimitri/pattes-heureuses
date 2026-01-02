@@ -94,11 +94,10 @@ new class extends Component {
         $avatarPath = $this->user->avatar;
         if (!empty($validated['new_avatar'])) {
             $avatarPath = uniqid() . '.' . config('animalavatars.image_type');
-            $fullPath = Storage::disk('s3')->putFileAs(
+            $fullPath = $validated['new_avatar']->storeAs(
                 config('animalavatars.original_path'),
-                $validated['new_avatar'],
                 $avatarPath,
-                'public'
+                ['disk' => 's3', 'visibility' => 'public']
             );
             if ($fullPath) {
                 ProcessUploadedImageJob::dispatchSync($fullPath, $avatarPath);
