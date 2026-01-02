@@ -94,10 +94,11 @@ new class extends Component {
         $avatarPath = $this->user->avatar;
         if (!empty($validated['new_avatar'])) {
             $avatarPath = uniqid() . '.' . config('animalavatars.image_type');
-            $fullPath = Storage::putFileAs(
+            $fullPath = Storage::disk('s3')->putFileAs(
                 config('animalavatars.original_path'),
                 $validated['new_avatar'],
-                $avatarPath
+                $avatarPath,
+                'public'
             );
             if ($fullPath) {
                 ProcessUploadedImageJob::dispatchSync($fullPath, $avatarPath);
@@ -145,7 +146,7 @@ new class extends Component {
                                 <img src="{{asset(str_replace('public/', '', $this->avatar))}}" alt=""
                                      class="img-type-file">
                                 @else
-                                    <img src="{{asset('upload_img/animals/originals/' . $this->avatar)}}" alt=""
+                                    <img src="{{Storage::disk('s3')->url('upload_img/animals/originals/' . $this->avatar)}}" alt=""
                                          class="img-type-file">
                                 @endif
                             @endif
