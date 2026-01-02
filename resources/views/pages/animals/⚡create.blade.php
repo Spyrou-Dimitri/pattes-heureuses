@@ -168,7 +168,7 @@ new class extends Component {
             $full_path_to_original = $this->avatar->storeAs(
                 config('animalavatars.original_path'),
                 $new_original_file_name,
-                's3'
+                ['disk' => 's3', 'visibility' => 'public']
             );
             if ($full_path_to_original) {
                 $this->avatar = $new_original_file_name;
