@@ -31,7 +31,5 @@ class Message extends Model
         }
         return $created->format('j M Y');
 
-
-
     }
 }

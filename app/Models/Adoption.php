@@ -40,4 +40,16 @@ class Adoption extends Model
     {
         return $this->morphMany(Note::class, 'notable');
     }
+
+    public function formatedForAdoptions() {
+        $created = $this->created_at;
+
+        if ($created->isToday()) {
+            return $created->format('H:i');
+        } elseif ($created->isCurrentYear()) {
+            return $created->format('j M');
+        }
+        return $created->format('j M Y');
+
+    }
 }

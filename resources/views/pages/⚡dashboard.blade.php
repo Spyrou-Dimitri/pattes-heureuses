@@ -303,7 +303,7 @@ new class extends Component {
                         {{$adoption_pending->telephone}}
                     </x-admin.td>
                     <x-admin.td>
-                        {{$adoption_pending->created_at}}
+                        {{$adoption_pending->formatedForAdoptions()}}
                     </x-admin.td>
                 </x-admin.tr>
             @endforeach
