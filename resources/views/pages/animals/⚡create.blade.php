@@ -165,11 +165,10 @@ new class extends Component {
         }
         if ($this->avatar) {
             $new_original_file_name = uniqid() . '.' . config('animalavatars.image_type');
-            $full_path_to_original = Storage::putFileAs(
-                config('animalavatars.original_path'),
-                $this->avatar,
-                $new_original_file_name
-            );
+            $full_path_to_original = $this->avatar->storeAs(
+                config('avatars.original_path'),
+                $new_original_file_name);
+
             if ($full_path_to_original) {
                 $this->avatar = $new_original_file_name;
                 ProcessUploadedImageJob::dispatch($full_path_to_original, $new_original_file_name);
