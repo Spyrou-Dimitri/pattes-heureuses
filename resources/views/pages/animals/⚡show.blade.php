@@ -84,14 +84,7 @@ new class extends Component {
                          class="w-full h-auto block aspect-square object-cover rounded-lg">
                 </picture>
                 @endif
-                    @php
-                        dd([
-                            'avatar_value' => $this->animal->avatar,
-                            'url_original' => Storage::disk('s3')->url('upload_img/animals/originals/' . $this->animal->avatar),
-                            'file_exists' => Storage::disk('s3')->exists('upload_img/animals/originals/' . $this->animal->avatar),
-                            'all_files' => Storage::disk('s3')->files('upload_img/animals/originals'),
-                        ]);
-                    @endphp
+                   
             </div>
             <div class="lg:col-span-6">
                 <x-cards.animal-data

@@ -9,6 +9,6 @@ return [
         'large' => ['width' => '930', 'height' => '930'],
     ],
     'jpeg_compression' => 80,
-    'original_path' => 'images/animals/originals',
-    'variant_pattern' => 'images/animals/variants/%sx%s'
+    'original_path' => 'upload_img/animals/originals',
+    'variant_pattern' => 'upload_img/animals/variants/%sx%s'
 ];
