@@ -5,6 +5,7 @@
         'src' => asset('img/800x800/adoption-step1.jpg'),
         'src_480x480' => asset('img/480x480/adoption-step1.jpg'),
         'src_600x600' => asset('img/600x600/adoption-step1.jpg'),
+        'route' => route('animals.index'),
         'alt' => 'Un homme et une femme qui cherche une information sur leur ordinateur'
     ],
     'form' => [
@@ -45,7 +46,7 @@
                     <x-layouts.article
                             :title="$step['title']"
                             :paragraph="$step['content']"
-                            :cta_href="isset($step['cta_href']) ? $step['cta_href'] : null"
+                            :cta_href="isset($adoptionImages[$key]['route']) ? $adoptionImages[$key]['route'] : null"
                             :cta_title="isset($step['cta_title']) ? $step['cta_title'] : null"
                             :cta="isset($step['cta_text']) ? $step['cta_text'] : null"
                             :img_src="$adoptionImages[$key]['src']"
