@@ -73,18 +73,18 @@ new #[Title('Create Post')] class extends Component {
     {
 
         $validated = $this->validate();
-        if ($validated['avatar']) {
+        if ($this->avatar) {
             $new_original_file_name = uniqid() . '.' . config('animalavatars.image_type');
-            $full_path_to_original = Storage::putFileAs(
+            $full_path_to_original = $this->avatar->storeAs(
                 config('animalavatars.original_path'),
-                $validated['avatar'],
-                $new_original_file_name
+                $new_original_file_name,
+                ['disk' => 's3', 'visibility' => 'public']
             );
             if ($full_path_to_original) {
-                $validated['avatar'] = $new_original_file_name;
+                $this->avatar = $new_original_file_name;
                 ProcessUploadedImageJob::dispatchSync($full_path_to_original, $new_original_file_name);
             } else {
-                $validated['avatar'] = '';
+                $this->avatar = '';
             }
         }
 

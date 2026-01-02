@@ -12,16 +12,16 @@
                 @else
                     <picture class="md:col-span-6">
                         <source media="(min-width:1330px)"
-                                srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
+                                srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
                         <source media="(min-width:1024px)"
-                                srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
+                                srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
                         <source media="(min-width:768px)"
-                                srcset="{{asset('upload_img/animals/variants/930x930/' . $animal->avatar)}}">
+                                srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/930x930/' . $animal->avatar)}}">
                         <source media="(min-width:576px)"
-                                srcset="{{asset('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
+                                srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/720x720/' . $animal->avatar)}}">
                         <source media="(max-width:575px)"
-                                srcset="{{asset('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
-                        <img src="{{asset('upload_img/animals/originals/' . $animal->avatar)}}" alt="Photo de {{$animal->name}}"
+                                srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/480x480/' . $animal->avatar)}}">
+                        <img src="{{Storage::disk('s3')->url('upload_img/animals/originals/' . $animal->avatar)}}" alt="Photo de {{$animal->name}}"
                              class="w-full h-auto block aspect-square object-cover rounded-lg">
                     </picture>
                 @endif

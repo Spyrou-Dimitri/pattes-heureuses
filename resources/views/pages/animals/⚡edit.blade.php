@@ -213,7 +213,7 @@ new class extends Component {
                                 @if(str_starts_with($this->avatar, 'public/img/animal/'))
                                     <img src="{{asset(str_replace('public/', '', $this->avatar))}}" alt="" class="img-type-file">
                                 @else
-                                    <img src="{{asset('upload_img/animals/originals/' . $this->avatar)}}" alt="" class="img-type-file">
+                                    <img src="{{Storage::disk('s3')->url('upload_img/animals/originals/' . $this->avatar)}}" alt="" class="img-type-file">
                                 @endif
                             @endif
                         </label>
