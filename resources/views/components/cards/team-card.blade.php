@@ -16,11 +16,7 @@
                  class="rounded-lg">
         @else
             <picture>
-                <source media="(min-width:768px)"
-                        srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/128x128/' . $img_src)}}">
-                <source media="(min-width:576px)"
-                        srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/720x720/' . $img_src)}}">
-                <source media="(max-width:575px)"
+                <source media="(max-width:1600px)"
                         srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/480x480/' . $img_src)}}">
                 <img class="rounded-lg"
                      src="{{Storage::disk('s3')->url('upload_img/animals/originals/' . $img_src)}}"
