@@ -41,7 +41,7 @@ class ProcessUploadedImageJob implements ShouldQueue
             Storage::disk('s3')->put(
                 $path . '/' . $this->new_original_file_name,
                 $variant->encodeByExtension($image_type, $jpeg_compression),
-                'public' 
+                'public'
             );
         }
     }
