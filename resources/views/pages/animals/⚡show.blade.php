@@ -88,8 +88,8 @@ new class extends Component {
                         dd([
                             'avatar_value' => $this->animal->avatar,
                             'url_original' => Storage::disk('s3')->url('upload_img/animals/originals/' . $this->animal->avatar),
-                            'config_url' => config('filesystems.disks.s3.url'),
-                            'config_bucket' => config('filesystems.disks.s3.bucket'),
+                            'file_exists' => Storage::disk('s3')->exists('upload_img/animals/originals/' . $this->animal->avatar),
+                            'all_files' => Storage::disk('s3')->files('upload_img/animals/originals'),
                         ]);
                     @endphp
             </div>
