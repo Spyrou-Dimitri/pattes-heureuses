@@ -89,7 +89,7 @@ new #[Title('Create Post')] class extends Component {
         }
 
         $newUser = User::create([
-            'avatar' => $validated['avatar'],
+            'avatar' => $this->avatar,
             'last_name' => $validated['lastName'],
             'first_name' => $validated['firstName'],
             'email' => $validated['email'],
