@@ -84,7 +84,7 @@ new class extends Component {
                          class="w-full h-auto block aspect-square object-cover rounded-lg">
                 </picture>
                 @endif
-                   
+
             </div>
             <div class="lg:col-span-6">
                 <x-cards.animal-data
