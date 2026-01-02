@@ -228,13 +228,13 @@ new class extends Component {
                         @else
                             <picture>
                                 <source media="(min-width:768px)"
-                                        srcset="{{asset('upload_img/animals/variants/128x128/' . $animal_pending->avatar)}}">
+                                        srcset="{{Storage::url('upload_img/animals/variants/128x128/' . $animal_pending->avatar)}}">
                                 <source media="(min-width:576px)"
-                                        srcset="{{asset('upload_img/animals/variants/720x720/' . $animal_pending->avatar)}}">
+                                        srcset="{{Storage::url('upload_img/animals/variants/720x720/' . $animal_pending->avatar)}}">
                                 <source media="(max-width:575px)"
-                                        srcset="{{asset('upload_img/animals/variants/480x480/' . $animal_pending->avatar)}}">
+                                        srcset="{{Storage::url('upload_img/animals/variants/480x480/' . $animal_pending->avatar)}}">
                                 <img class="img-table"
-                                     src="{{asset('upload_img/animals/originals/' . $animal_pending->avatar)}}"
+                                     src="{{Storage::url('upload_img/animals/originals/' . $animal_pending->avatar)}}"
                                      alt="Photo de {{$animal_pending->name}}">
                             </picture>
                         @endif
@@ -276,13 +276,13 @@ new class extends Component {
                           @else
                             <picture>
                                 <source media="(min-width:768px)"
-                                        srcset="{{asset('upload_img/animals/variants/128x128/' . $adoption_pending->animal->avatar)}}">
+                                        srcset="{{Storage::url('upload_img/animals/variants/128x128/' . $adoption_pending->animal->avatar)}}">
                                 <source media="(min-width:576px)"
-                                        srcset="{{asset('upload_img/animals/variants/720x720/' . $adoption_pending->animal->avatar)}}">
+                                        srcset="{{Storage::url('upload_img/animals/variants/720x720/' . $adoption_pending->animal->avatar)}}">
                                 <source media="(max-width:575px)"
-                                        srcset="{{asset('upload_img/animals/variants/480x480/' . $adoption_pending->animal->avatar)}}">
+                                        srcset="{{Storage::url('upload_img/animals/variants/480x480/' . $adoption_pending->animal->avatar)}}">
                                 <img class="img-table"
-                                     src="{{asset('upload_img/animals/originals/' . $adoption_pending->animal->avatar)}}"
+                                     src="{{Storage::url('upload_img/animals/originals/' . $adoption_pending->animal->avatar)}}"
                                      alt="Photo de {{$adoption_pending->animal->name}}">
                             </picture>
                         @endif

@@ -27,7 +27,7 @@ new class extends Component {
         $adoptions = Adoption::query()
             ->join('animals', 'adoptions.animal_id', '=', 'animals.id')
             ->select('adoptions.*');
-        
+
         //Filtre barre de recherche
         if ($this->term !== '') {
             $adoptions->where('first_name', 'like', '%' . $this->term . '%')
