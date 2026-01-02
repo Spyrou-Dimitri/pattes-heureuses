@@ -171,7 +171,7 @@ class DatabaseSeeder extends Seeder
 
         $createdAnimals = [];
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $sexe = $i % 2 === 0 ? SexeAnimal::Male : SexeAnimal::Female;
             $name = $sexe === SexeAnimal::Male
                 ? $maleNames[$i % count($maleNames)]
