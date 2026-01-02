@@ -228,13 +228,13 @@ new class extends Component {
                         @else
                             <picture>
                                 <source media="(min-width:768px)"
-                                        srcset="{{Storage::url('upload_img/animals/variants/128x128/' . $animal_pending->avatar)}}">
+                                        srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/128x128/' . $animal_pending->avatar)}}">
                                 <source media="(min-width:576px)"
-                                        srcset="{{Storage::url('upload_img/animals/variants/720x720/' . $animal_pending->avatar)}}">
+                                        srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/720x720/' . $animal_pending->avatar)}}">
                                 <source media="(max-width:575px)"
-                                        srcset="{{Storage::url('upload_img/animals/variants/480x480/' . $animal_pending->avatar)}}">
+                                        srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/480x480/' . $animal_pending->avatar)}}">
                                 <img class="img-table"
-                                     src="{{Storage::url('upload_img/animals/originals/' . $animal_pending->avatar)}}"
+                                     src="{{Storage::disk('s3')->url('upload_img/animals/originals/' . $animal_pending->avatar)}}"
                                      alt="Photo de {{$animal_pending->name}}">
                             </picture>
                         @endif
