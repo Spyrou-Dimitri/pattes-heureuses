@@ -21,12 +21,12 @@
             @else
                 <picture>
                     <source media="(min-width:768px)"
-                            srcset="{{asset('upload_img/animals/variants/480x480/' . $img_src)}}">
+                            srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/480x480/' . $img_src)}}">
                     <source media="(min-width:576px)"
-                            srcset="{{asset('upload_img/animals/variants/720x720/' . $img_src)}}">
+                            srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/720x720/' . $img_src)}}">
                     <source media="(max-width:575px)"
-                            srcset="{{asset('upload_img/animals/variants/480x480/' . $img_src)}}">
-                    <img src="{{asset('upload_img/animals/originals/' . $img_src)}}"
+                            srcset="{{Storage::disk('s3')->url('upload_img/animals/variants/480x480/' . $img_src)}}">
+                    <img src="{{Storage::disk('s3')->url('upload_img/animals/originals/' . $img_src)}}"
                          alt="Photo de {{$name}}"
                          class="w-full h-auto block aspect-square object-cover rounded-lg">
                 </picture>
