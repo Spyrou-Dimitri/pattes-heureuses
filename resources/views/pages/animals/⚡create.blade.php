@@ -163,16 +163,16 @@ new class extends Component {
         if (auth()->user()->isVolunteer()) {
             $validated['status'] = AnimalStatus::PENDING;
         }
-        if ($this->avatar) {
-            $new_original_file_name = uniqid() . '.' . config('avatars.avatar_type');
-
-            $full_path_to_original = $this->avatar->storeAs(
-                config('avatars.original_path'),
-                $new_original_file_name);
-
+        if ($validated['avatar']) {
+            $new_original_file_name = uniqid() . '.' . config('animalavatars.image_type');
+            $full_path_to_original = Storage::putFileAs(
+                config('animalavatars.original_path'),
+                $validated['avatar'],
+                $new_original_file_name
+            );
             if ($full_path_to_original) {
                 $validated['avatar'] = $new_original_file_name;
-                ProcessUploadedImageJob::dispatchSync($full_path_to_original, $new_original_file_name);
+                ProcessUploadedImageJob::dispatch($full_path_to_original, $new_original_file_name);
             } else {
                 $validated['avatar'] = '';
             }
