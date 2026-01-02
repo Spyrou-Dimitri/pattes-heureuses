@@ -167,7 +167,8 @@ new class extends Component {
             $new_original_file_name = uniqid() . '.' . config('animalavatars.image_type');
             $full_path_to_original = $this->avatar->storeAs(
                 config('animalavatars.original_path'),
-                $new_original_file_name
+                $new_original_file_name,
+                's3'
             );
             if ($full_path_to_original) {
                 $this->avatar = $new_original_file_name;
