@@ -11,10 +11,10 @@ enum AdoptionStatus: string
     public function color(): string
     {
         return match ($this) {
-            self::Pending    => 'border-yellow-400 text-yellow-400',
-            self::InProgress  => 'border-green-500 text-green-500',
-            self::Completed  => 'border-blue-500 text-blue-500',
-            self::Cancelled   => 'border-gray-400 text-gray-400',
+            self::Pending    => 'border-2 border-yellow-400 bg-yellow-400 text-white duration-300 hover:bg-transparent hover:text-yellow-400 hover:duration-300',
+            self::InProgress => 'border-2 border-green-500 bg-green-500 text-white duration-300 hover:bg-transparent hover:text-green-500 hover:duration-300',
+            self::Completed  => 'border-2 border-blue-500 bg-blue-500 text-white duration-300 hover:bg-transparent hover:text-blue-500 hover:duration-300',
+            self::Cancelled  => 'border-2 border-gray-400 bg-gray-400 text-white duration-300 hover:bg-transparent hover:text-gray-400 hover:duration-300',
         };
     }
 

@@ -58,6 +58,11 @@ new class extends Component {
         return redirect()->route('adoptions-show', $id);
     }
 
+    public function change_status($adoptionId)
+    {
+        $this->dispatch('open_modal', ['form' => 'modals::adoptions.change-status', 'model_id' => $adoptionId]);
+    }
+
 
 };
 ?>
@@ -83,7 +88,7 @@ new class extends Component {
         </ul>
 
     </x-admin.section>
-    <x-admin.section :title="__('admin/animals/index.table_title')">
+    <x-admin.section :title="'Liste des adoptions'">
         <div class="flex flex-col gap-4 justify-between md:items-center md:flex-row flex-wrap">
             <ul class="flex gap-4 md:gap-8 text-poppins flex-wrap">
                 <li>
@@ -140,10 +145,13 @@ new class extends Component {
                         {{$adoption->email}}
                     </x-admin.td>
                     <x-admin.td>
-                        <span
-                            class="{{$adoption->status->color()}} border-2 p-2 rounded-lg bg-gray-50 font-poppins font-semibold">
-                            {{$adoption->status->label() }}
-                        </span>
+                        <button wire:click.stop="change_status({{$adoption->id}})"
+                                class="cursor-pointer rounded-lg gap-2 border-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 {{$adoption->status->color()}}">
+                            <svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true">
+                                <circle cx="5" cy="5" r="4" fill="currentColor"/>
+                            </svg>
+                            {{$adoption->status->label()}}
+                        </button>
                     </x-admin.td>
 
                 </x-admin.tr>
