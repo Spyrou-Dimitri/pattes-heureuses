@@ -3,17 +3,13 @@
  'title' => '',
   'cta_title' => '',
    'class' => '',
-   'route' => ''])
-
-@php
-    $notifications_dashboard = Animal::where('state', AnimalStatus::PENDING)->count() + Adoption::where('status', AdoptionStatus::Pending)->count();
-    $notifications_animals = Animal::where('state', AnimalStatus::PENDING)->count();
-    $notifications_adoptions = Adoption::where('status', AdoptionStatus::Pending)->count();
-@endphp
+   'route' => '',
+   'notifications' => 0])
 <li class="lg:w-full">
     <a href="{{ $href }}"
        title="{{$title}}"
        class="nav-link-admin flex flex-row gap-2  items-center p-4 rounded-lg {{ request()->routeIs($route) ? 'active-admin' : '' }}">
+
         @switch($slot)
             @case('Dashboard')
                 <svg width="20" height="20" viewBox="0 0 16 16"
@@ -113,31 +109,12 @@
         <span>
             {{$slot}}
         </span>
-        @switch($route)
-            @case('dashboard')
-                @if($notifications_dashboard > 0)
-                    <span class="text-lg  bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
-                        {{$notifications_dashboard}}
-                    </span>
-                @endif
+        @if($notifications > 0)
+            <span class="text-lg bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
+                {{$notifications}}
+            </span>
+        @endif
 
-                @break
-            @case('animals')
-                @if($notifications_animals > 0)
-                    <span class="text-lg  bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
-                        {{$notifications_animals}}
-                    </span>
-                @endif
-                @break
-            @case('adoptions')
-                @if($notifications_adoptions > 0)
-                    <span class="text-lg  bg-red-600 w-7 h-7 align-middle text-white text-center rounded-full">
-                        {{$notifications_adoptions}}
-                    </span>
-                @endif
-
-                @break
-        @endswitch
 
     </a>
 </li>

@@ -1,39 +1,50 @@
 @php
-    $navigations = [
-        [
-            'title' => __('admin/nav.title'). ' ' .__('admin/nav.dashboard'),
-            'href' => route('dashboard'),
-            'label' => __('admin/nav.dashboard'),
-            'route' => 'dashboard'
-        ],
-        [
-            'title' => __('admin/nav.title'). ' ' .__('admin/nav.animals'),
-            'href' => route('animals'),
-            'label' => __('client/nav.animals'),
-            'route' => 'animals'
+    use App\Enums\AdoptionStatus;use App\Enums\AnimalStatus;use App\Models\Adoption;use App\Models\Animal;
+    $notifications_dashboard = Animal::where('state', AnimalStatus::PENDING)->count() + Adoption::where('status', AdoptionStatus::Pending)->count();
+        $notifications_animals = Animal::where('state', AnimalStatus::PENDING)->count();
+        $notifications_adoptions = Adoption::where('status', AdoptionStatus::Pending)->count();
+        $navigations = [
+            [
+                'title' => __('admin/nav.title'). ' ' .__('admin/nav.dashboard'),
+                'href' => route('dashboard'),
+                'label' => __('admin/nav.dashboard'),
+                'route' => 'dashboard',
+                'notifications' => $notifications_dashboard
+            ],
+            [
+                'title' => __('admin/nav.title'). ' ' .__('admin/nav.animals'),
+                'href' => route('animals'),
+                'label' => __('client/nav.animals'),
+                'route' => 'animals',
+                'notifications' => $notifications_animals
 
-        ],
-        [
-            'title' => __('admin/nav.title'). ' ' .__('admin/nav.messagery'),
-            'href' => route('messagery-index'),
-            'label' => __('admin/nav.messagery'),
-            'route' => 'messagery'
+            ],
+            [
+                'title' => __('admin/nav.title'). ' ' .__('admin/nav.messagery'),
+                'href' => route('messagery-index'),
+                'label' => __('admin/nav.messagery'),
+                'route' => 'messagery',
+                'notifications' => 0,
 
-        ],
-        [
-            'title' => __('admin/nav.title'). ' ' .__('admin/nav.adoptions'),
-            'href' => route('adoptions'),
-            'label' => __('admin/nav.adoptions'),
-            'route' => 'adoptions'
 
-        ],
-        [
-            'title' => __('admin/nav.title'). ' ' .__('admin/nav.volunteers'),
-            'href' => route('volunteers'),
-            'label' => __('admin/nav.volunteers'),
-            'route' => 'volunteers'
-        ],
-]
+            ],
+            [
+                'title' => __('admin/nav.title'). ' ' .__('admin/nav.adoptions'),
+                'href' => route('adoptions'),
+                'label' => __('admin/nav.adoptions'),
+                'route' => 'adoptions',
+                            'notifications' => $notifications_adoptions
+
+            ],
+            [
+                'title' => __('admin/nav.title'). ' ' .__('admin/nav.volunteers'),
+                'href' => route('volunteers'),
+                'label' => __('admin/nav.volunteers'),
+                'route' => 'volunteers',
+                'notifications' => 0
+
+            ],
+    ]
 @endphp
 <div class="relative lg:fixed lg:top-0 lg:left-0 lg:h-screen lg:w-[250px] bg-white shadow-md">
     <nav class="relative flex flex-col px-8 py-6 max-w-full mx-auto lg:w-auto lg:justify-between lg:min-h-full">
@@ -109,7 +120,8 @@
                     <x-basics.navigation-link-admin
                         :href="$navigation['href']"
                         :title="$navigation['title']"
-                        :route="$navigation['route']">
+                        :route="$navigation['route']"
+                        :notifications="$navigation['notifications']">
                         {{$navigation['label']}}
                     </x-basics.navigation-link-admin>
 
@@ -128,7 +140,8 @@
                         </span>
                     </a>
                     @if(str_starts_with(auth()->user()->avatar, 'public/img/personnel/'))
-                        <img src="{{asset(str_replace('public/', '', auth()->user()->avatar))}}" alt="" class="img-profil">
+                        <img src="{{asset(str_replace('public/', '', auth()->user()->avatar))}}" alt=""
+                             class="img-profil">
                     @else
                         <img src="{{asset('upload_img/animals/originals/' . auth()->user()->avatar)}}" alt=""
                              class="img-profil">
