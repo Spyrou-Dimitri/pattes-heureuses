@@ -134,6 +134,10 @@ new class extends Component {
     {
         return Breed::whereIn('specie_id', $this->selectedSpecies)->get();
     }
+    public function change_status($animalId)
+    {
+        $this->dispatch('open_modal', ['form' => 'modals::animals.change-status', 'model_id' => $animalId]);
+    }
 
 };
 ?>
@@ -379,10 +383,13 @@ new class extends Component {
                         {{$animal->age . ' ans'}}
                     </x-admin.td>
                     <x-admin.td>
-                        <span
-                            class="{{$animal->state->color()}} border-2 p-2 rounded-lg font-poppins font-semibold">
-                            {{$animal->state->label() }}
-                        </span>
+                        <button wire:click.stop="change_status({{$animal->id}})"
+                                class="cursor-pointer rounded-lg gap-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 {{$animal->state->color()}}">
+                            <svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true">
+                                <circle cx="5" cy="5" r="4" fill="currentColor"/>
+                            </svg>
+                            {{$animal->state->label()}}
+                        </button>
                     </x-admin.td>
 
                 </x-admin.tr>
