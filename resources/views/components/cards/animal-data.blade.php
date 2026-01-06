@@ -31,7 +31,7 @@
         @can('change-status', User::class)
             @if($state)
                 <button wire:click="change_status"
-                        class="cursor-pointer text-2xl rounded-lg gap-2 border-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 bg-gray-50/2 {{$state->color()}}">
+                        class="cursor-pointer text-2xl rounded-lg gap-2 border-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 {{$state->color()}}">
                     <svg width="16" height="16" viewBox="0 0 10 10" aria-hidden="true">
                         <circle cx="5" cy="5" r="5" fill="currentColor"/>
                     </svg>

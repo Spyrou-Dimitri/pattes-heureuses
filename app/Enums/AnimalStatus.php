@@ -15,12 +15,12 @@ enum AnimalStatus: String
     public function color(): string
     {
         return match ($this) {
-            self::PENDING    => 'border-yellow-400 text-yellow-400',
-            self::ADOPTABLE  => 'border-green-500 text-green-500',
-            self::UNDERCARE  => 'border-blue-500 text-blue-500',
-            self::INPROGRESS => 'border-indigo-500 text-indigo-500',
-            self::ADOPTED    => 'border-purple-500 text-purple-500',
-            self::DECEASED   => 'border-gray-400 text-gray-400',
+            self::PENDING    => 'border border-yellow-400 bg-yellow-400 text-white duration-300 hover:bg-transparent hover:text-yellow-400 hover:duration-300',
+            self::ADOPTABLE  => 'border border-green-500 bg-green-500 text-white duration-300 hover:bg-transparent hover:text-green-500 hover:duration-300',
+            self::UNDERCARE  => 'border border-blue-500 bg-blue-500 text-white duration-300 hover:bg-transparent hover:text-blue-500 hover:duration-300',
+            self::INPROGRESS => 'border border-fuchsia-500 bg-fuchsia-500 text-white duration-300 hover:bg-transparent hover:text-fuchsia-500 hover:duration-300',
+            self::ADOPTED    => 'border border-purple-500 bg-purple-500 text-white duration-300 hover:bg-transparent hover:text-purple-500 hover:duration-300',
+            self::DECEASED   => 'border border-gray-400 bg-gray-400 text-white duration-300 hover:bg-transparent hover:text-gray-400 hover:duration-300',
         };
     }
     public function label(): string

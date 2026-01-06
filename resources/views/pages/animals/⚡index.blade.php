@@ -380,7 +380,7 @@ new class extends Component {
                     </x-admin.td>
                     <x-admin.td>
                         <span
-                            class="{{$animal->state->color()}} border-2 p-2 rounded-lg bg-gray-50 font-poppins font-semibold">
+                            class="{{$animal->state->color()}} border-2 p-2 rounded-lg font-poppins font-semibold">
                             {{$animal->state->label() }}
                         </span>
                     </x-admin.td>
