@@ -42,7 +42,7 @@ new class extends Component {
             $adoptions->where('status', $this->filter_tag);
         }
 
-        return $adoptions->orderBy('name', 'asc')->paginate(8);
+        return $adoptions->with('animal')->orderBy('name', 'asc')->paginate(8);
 
     }
 

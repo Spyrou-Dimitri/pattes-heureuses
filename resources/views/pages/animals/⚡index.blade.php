@@ -114,7 +114,7 @@ new class extends Component {
                 $animals->where($column, true);
             }
         }
-        return $animals->orderBy('name', 'asc')->paginate(8);
+        return $animals->with('breed.specie')->orderBy('name', 'asc')->paginate(8);
 
     }
 
