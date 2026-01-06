@@ -58,7 +58,7 @@ class AnimalController extends Controller
         }
 
 
-        $animals = $query->where('state', AnimalStatus::ADOPTABLE)->get();
+        $animals = $query->with('breed.specie')->where('state', AnimalStatus::ADOPTABLE)->get();
 
 
         return view('client.animals.index', compact('animals', 'all_species', 'all_breeds', 'all_coats', 'all_behaviors'));
