@@ -28,7 +28,6 @@
                 </svg>
             @endif
         </h3>
-        @can('change-status', User::class)
             @if($state)
                 <button wire:click="change_status"
                         class="cursor-pointer text-2xl rounded-lg gap-2 border-2 font-poppins flex flex-row items-center font-semibold py-2 px-3 {{$state->color()}}">
@@ -38,7 +37,6 @@
                     {{$state->label()}}
                 </button>
             @endif
-        @endcan
 
     </div>
     <dl class="flex flex-col gap-5 border-b-2 border-b-main-blue pb-5 items-center">
